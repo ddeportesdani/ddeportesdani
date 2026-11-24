@@ -265,7 +265,15 @@ footer p {font-size:13px;margin-top:8px}
       <p>Rellena el formulario y nos pondremos en contacto contigo.</p>
     </div>
     <div class="contact-wrap">
-      <form id="contactForm">
+     <form action="https://formsubmit.co/podcast@ddeportesdani.com"
+      method="POST"
+      enctype="multipart/form-data">
+
+<input type="hidden" name="_subject"
+       value="Nueva propuesta comercial - DDeportes Dani">
+
+<input type="text" name="_honey"
+       style="display:none">
         <label>
           Nombre de la empresa
           <input name="empresa" required placeholder="Nombre de tu empresa">
@@ -302,7 +310,16 @@ footer p {font-size:13px;margin-top:8px}
           <input type="checkbox" required style="width:auto">
           He leído y acepto la política de privacidad.
         </label>
-        <button class="btn" type="submit">ENVIAR SOLICITUD</button>
+        <label>
+  Adjuntar dossier comercial (PDF)
+  <input type="file"
+         name="attachment"
+         accept=".pdf,application/pdf">
+</label>
+
+<button class="btn" type="submit">
+  ENVIAR SOLICITUD
+</button>
         <p class="note">
           Al enviar se abrirá tu aplicación de correo con el mensaje
           preparado para podcast@ddeportesdani.com.
