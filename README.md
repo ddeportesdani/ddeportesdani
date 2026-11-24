@@ -1,16 +1,341 @@
-## Hi there 👋
 
-<!--
-**ddeportesdani/ddeportesdani** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DDeportes Dani. Colabora con un proyecto deportivo de comunicación, entrevistas y contenido digital.">
+<title>DDeportes Dani | Empresas y patrocinadores</title>
+<style>
+:root {
+  --navy:#101b2c;
+  --navy2:#172941;
+  --gold:#c9a75e;
+  --white:#ffffff;
+  --light:#f4f5f7;
+  --text:#263449;
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+body {
+  font-family:Arial, sans-serif;
+  color:var(--text);
+  line-height:1.65;
+}
+a {text-decoration:none;color:inherit}
+header {
+  background:var(--navy);
+  color:white;
+  padding:22px 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.logo {font-size:23px;font-weight:800;letter-spacing:1px}
+.logo span {color:var(--gold)}
+nav {display:flex;gap:24px;font-size:14px}
+nav a:hover {color:var(--gold)}
+.hero {
+  background:linear-gradient(120deg,#101b2c,#233b58);
+  color:white;
+  padding:110px 8%;
+  text-align:center;
+}
+.eyebrow {
+  color:var(--gold);
+  font-weight:bold;
+  letter-spacing:3px;
+  font-size:12px;
+}
+.hero h1 {
+  font-size:clamp(38px,6vw,65px);
+  line-height:1.12;
+  max-width:850px;
+  margin:22px auto;
+}
+.hero p {
+  max-width:650px;
+  margin:0 auto 32px;
+  color:#d9e0e9;
+  font-size:18px;
+}
+.btn {
+  display:inline-block;
+  background:var(--gold);
+  color:#101b2c;
+  padding:14px 28px;
+  border-radius:4px;
+  font-weight:bold;
+  transition:.2s;
+}
+.btn:hover {background:#e1c47f;transform:translateY(-2px)}
+section {padding:80px 8%}
+.section-title {text-align:center;margin-bottom:45px}
+.section-title h2 {font-size:34px;color:var(--navy)}
+.section-title p {color:#687487;margin-top:10px}
+.intro {max-width:850px;margin:auto;text-align:center}
+.intro p {font-size:18px}
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+}
+.card {
+  background:white;
+  border:1px solid #e6e9ee;
+  padding:30px 25px;
+  border-radius:7px;
+  box-shadow:0 8px 25px #1729410b;
+}
+.card .number {font-size:25px;color:var(--gold);font-weight:bold}
+.card h3 {color:var(--navy);margin:12px 0}
+.soft {background:var(--light)}
+.highlight {
+  background:var(--navy);
+  color:white;
+  text-align:center;
+}
+.highlight h2 {font-size:34px;margin-bottom:15px}
+.highlight p {max-width:700px;margin:0 auto 28px;color:#d9e0e9}
+.contact-wrap {
+  max-width:750px;
+  margin:auto;
+  background:white;
+  padding:35px;
+  border-radius:8px;
+  box-shadow:0 10px 35px #101b2c12;
+}
+form {display:grid;gap:16px}
+label {font-weight:bold;font-size:14px}
+input,select,textarea {
+  width:100%;
+  padding:13px;
+  margin-top:6px;
+  border:1px solid #d7dce4;
+  border-radius:4px;
+  font:inherit;
+}
+textarea {min-height:120px;resize:vertical}
+button {border:0;cursor:pointer;font-size:15px}
+.note {font-size:12px;color:#778195}
+footer {
+  background:#0a1422;
+  color:#cbd3df;
+  padding:35px 8%;
+  text-align:center;
+}
+footer strong {color:white}
+footer p {font-size:13px;margin-top:8px}
+@media(max-width:700px) {
+  header {flex-direction:column}
+  nav {flex-wrap:wrap;justify-content:center;gap:13px}
+  .hero {padding:75px 7%}
+  section {padding:60px 7%}
+  .contact-wrap {padding:22px}
+}
+</style>
+</head>
+<body>
 
-Here are some ideas to get you started:
+<header>
+  <a class="logo" href="#">DDEPORTES <span>DANI</span></a>
+  <nav>
+    <a href="#nosotros">El proyecto</a>
+    <a href="#servicios">Colaboraciones</a>
+    <a href="#plataformas">Plataformas</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+<main>
+  <section class="hero">
+    <div class="eyebrow">DEPORTE · COMUNICACIÓN · EMPRESA</div>
+    <h1>Tu marca también puede ser protagonista.</h1>
+    <p>
+      Conectamos empresas y marcas con el mundo del deporte
+      a través de contenidos, entrevistas y colaboraciones.
+      Construyamos juntos nuevas oportunidades.
+    </p>
+    <a href="#contacto" class="btn">QUIERO COLABORAR</a>
+  </section>
+
+  <section id="nosotros">
+    <div class="section-title">
+      <div class="eyebrow">DDEPORTES DANI</div>
+      <h2>Un proyecto con oportunidades</h2>
+    </div>
+    <div class="intro">
+      <p>
+        DDeportes Dani es un proyecto de comunicación deportiva
+        que busca conectar historias, protagonistas, aficionados
+        y empresas.
+      </p>
+      <p style="margin-top:18px">
+        Queremos crear relaciones de colaboración que aporten
+        visibilidad, valor y nuevas oportunidades tanto a las
+        marcas como al mundo del deporte.
+      </p>
+    </div>
+  </section>
+
+  <section class="soft" id="servicios">
+    <div class="section-title">
+      <div class="eyebrow">OPORTUNIDADES</div>
+      <h2>¿Cómo podemos colaborar?</h2>
+      <p>Propuestas adaptadas a empresas y marcas de cualquier sector.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="number">01</div>
+        <h3>Publicidad</h3>
+        <p>Promociona tu empresa y consigue visibilidad a través de nuestros canales digitales.</p>
+      </article>
+      <article class="card">
+        <div class="number">02</div>
+        <h3>Patrocinios</h3>
+        <p>Asocia tu marca a nuestros programas, entrevistas y contenidos deportivos.</p>
+      </article>
+      <article class="card">
+        <div class="number">03</div>
+        <h3>Entrevistas</h3>
+        <p>Da a conocer tu empresa, sus profesionales, su historia y sus proyectos.</p>
+      </article>
+      <article class="card">
+        <div class="number">04</div>
+        <h3>Promociones</h3>
+        <p>Presenta tus productos y servicios mediante acciones de comunicación.</p>
+      </article>
+      <article class="card">
+        <div class="number">05</div>
+        <h3>Colaboraciones</h3>
+        <p>Estudiamos propuestas personalizadas para crear relaciones beneficiosas.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="plataformas">
+    <div class="section-title">
+      <div class="eyebrow">PRESENCIA DIGITAL</div>
+      <h2>Conecta con DDeportes Dani</h2>
+      <p>Descubre nuestros contenidos y síguenos en nuestras plataformas.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <h3>Instagram</h3>
+        <p>Contenido y actualidad deportiva.</p>
+        <!-- Añadir aquí el enlace de Instagram -->
+      </article>
+      <article class="card">
+        <h3>TikTok</h3>
+        <p>Vídeos y contenido digital.</p>
+        <!-- Añadir aquí el enlace de TikTok -->
+      </article>
+      <article class="card">
+        <h3>YouTube</h3>
+        <p>Vídeos, entrevistas y programas.</p>
+        <!-- Añadir aquí el enlace de YouTube -->
+      </article>
+      <article class="card">
+        <h3>Spotify</h3>
+        <p>Escucha nuestros contenidos y episodios.</p>
+        <!-- Añadir aquí el enlace de Spotify -->
+      </article>
+      <article class="card">
+        <h3>Facebook</h3>
+        <p>Sigue nuestras novedades.</p>
+        <!-- Añadir aquí el enlace de Facebook -->
+      </article>
+    </div>
+  </section>
+
+  <section class="highlight">
+    <h2>Hagamos algo grande juntos.</h2>
+    <p>
+      Estamos abiertos a nuevas propuestas. Si representas a una
+      empresa, una marca o un negocio, queremos conocer tu idea.
+    </p>
+    <a href="#contacto" class="btn">HABLEMOS</a>
+  </section>
+
+  <section id="contacto" class="soft">
+    <div class="section-title">
+      <div class="eyebrow">CONTACTO PROFESIONAL</div>
+      <h2>Cuéntanos tu propuesta</h2>
+      <p>Rellena el formulario y nos pondremos en contacto contigo.</p>
+    </div>
+    <div class="contact-wrap">
+      <form id="contactForm">
+        <label>
+          Nombre de la empresa
+          <input name="empresa" required placeholder="Nombre de tu empresa">
+        </label>
+        <label>
+          Persona de contacto
+          <input name="persona" required placeholder="Tu nombre">
+        </label>
+        <label>
+          Correo electrónico
+          <input name="email" type="email" required placeholder="correo@empresa.com">
+        </label>
+        <label>
+          Teléfono (opcional)
+          <input name="telefono" type="tel" placeholder="Tu teléfono">
+        </label>
+        <label>
+          Tipo de colaboración
+          <select name="tipo" required>
+            <option value="">Selecciona una opción</option>
+            <option>Publicidad</option>
+            <option>Patrocinio</option>
+            <option>Entrevista</option>
+            <option>Promoción de productos o servicios</option>
+            <option>Colaboración personalizada</option>
+            <option>Otra propuesta</option>
+          </select>
+        </label>
+        <label>
+          Cuéntanos tu propuesta
+          <textarea name="mensaje" required placeholder="Explícanos qué tienes en mente..."></textarea>
+        </label>
+        <label style="font-weight:normal">
+          <input type="checkbox" required style="width:auto">
+          He leído y acepto la política de privacidad.
+        </label>
+        <button class="btn" type="submit">ENVIAR SOLICITUD</button>
+        <p class="note">
+          Al enviar se abrirá tu aplicación de correo con el mensaje
+          preparado para podcast@ddeportesdani.com.
+        </p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <strong>DDEPORTES DANI</strong>
+  <p>Deporte · Comunicación · Empresa</p>
+  <p><a href="mailto:podcast@ddeportesdani.com">podcast@ddeportesdani.com</a></p>
+  <p>© 2026 DDeportes Dani. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  const d = new FormData(this);
+  const subject = "Solicitud de colaboración - " + d.get("empresa");
+  const body =
+    "Empresa: " + d.get("empresa") + "\n" +
+    "Contacto: " + d.get("persona") + "\n" +
+    "Email: " + d.get("email") + "\n" +
+    "Teléfono: " + d.get("telefono") + "\n" +
+    "Colaboración: " + d.get("tipo") + "\n\n" +
+    "Propuesta:\n" + d.get("mensaje");
+  window.location.href =
+    "mailto:podcast@ddeportesdani.com?subject=" +
+    encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+});
+</script>
+
+</body>
+</html>
