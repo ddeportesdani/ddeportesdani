@@ -38,13 +38,22 @@ header {
 .logo {
   display: flex;
   align-items: center;
+  gap: 12px;
+  color: white;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .logo img {
-  height: 65px;
+  height: 55px;
   width: auto;
-  max-width: 220px;
   object-fit: contain;
+}
+
+.logo strong {
+  color: #80BCFF;
+}
 }
 
 .hero {
@@ -202,7 +211,8 @@ footer p {font-size:13px;margin-top:8px}
 
 <header>
 <a class="logo" href="#">
-  <img src="logo.jpg" alt="DDeportes Dani">
+  <img src="logo.jpg" alt="Logo DDeportes Dani">
+  <span>DDEPORTES <strong>DANI</strong></span>
 </a>
   <nav>
     <a href="#sobre-mi">Quién soy</a>
