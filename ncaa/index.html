@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta los deportistas españoles que compiten en el deporte universitario estadounidense. NCAA División I, II y III.">
+  <meta name="theme-color" content="#101b2c">
+  <title>Españoles en la NCAA | DDeportes Dani</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="../index.html">
+    DDEPORTES <span>DANI</span>
+  </a>
+
+  <nav>
+    <a href="../index.html">Inicio</a>
+    <a href="#deportistas">Deportistas</a>
+    <a href="#deportes">Deportes</a>
+    <a href="#proyecto">El proyecto</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">DEPORTE ESPAÑOL · ESTADOS UNIDOS</div>
+
+    <h1>ESPAÑOLES <span>EN LA NCAA</span></h1>
+
+    <p>
+      El talento español cruza el Atlántico.
+      Descubre a nuestros deportistas en las universidades
+      estadounidenses y sigue sus temporadas.
+    </p>
+
+    <a href="#deportistas" class="btn">DESCUBRIR DEPORTISTAS</a>
+
+    <div class="divisions">
+      <div><strong>I</strong><span>DIVISIÓN I</span></div>
+      <div><strong>II</strong><span>DIVISIÓN II</span></div>
+      <div><strong>III</strong><span>DIVISIÓN III</span></div>
+    </div>
+  </section>
+
+  <section id="deportes" class="sports">
+    <div class="section-heading">
+      <span class="eyebrow">TODAS LAS DISCIPLINAS</span>
+      <h2>El deporte español, sin fronteras</h2>
+      <p>Un espacio para seguir a nuestros deportistas en diferentes disciplinas.</p>
+    </div>
+
+    <div class="sports-grid">
+      <article>🏀 <span>Baloncesto</span></article>
+      <article>⚽ <span>Fútbol</span></article>
+      <article>🎾 <span>Tenis</span></article>
+      <article>🏊 <span>Natación</span></article>
+      <article>🏃 <span>Atletismo</span></article>
+      <article>⛳ <span>Golf</span></article>
+      <article>🏐 <span>Voleibol</span></article>
+      <article>🤸 <span>Gimnasia</span></article>
+      <article>🥍 <span>Otros deportes</span></article>
+    </div>
+  </section>
+
+  <section id="deportistas" class="directory">
+    <div class="section-heading">
+      <span class="eyebrow">DIRECTORIO</span>
+      <h2>Encuentra a nuestros deportistas</h2>
+      <p>Busca por nombre, deporte o división universitaria.</p>
+    </div>
+
+    <div class="filters">
+      <input
+        type="search"
+        id="search"
+        placeholder="Buscar deportista o universidad..."
+        aria-label="Buscar deportista o universidad"
+      >
+
+      <select id="sport">
+        <option value="">Todos los deportes</option>
+      </select>
+
+      <select id="division">
+        <option value="">Todas las divisiones</option>
+        <option value="I">División I</option>
+        <option value="II">División II</option>
+        <option value="III">División III</option>
+      </select>
+
+      <button id="clearFilters" type="button">Limpiar filtros</button>
+    </div>
+
+    <div class="directory-info">
+      <span id="resultsCount">Directorio en preparación</span>
+      <span>Temporada 2026-27</span>
+    </div>
+
+    <div id="athletes" class="athletes-grid" aria-live="polite">
+      <div class="empty-state">
+        <div class="empty-icon">🇪🇸</div>
+        <h3>Estamos preparando el directorio</h3>
+        <p>
+          Muy pronto podrás descubrir a los deportistas españoles
+          que compiten en las universidades estadounidenses.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyecto" class="project">
+    <span class="eyebrow">DDEPORTES DANI</span>
+    <h2>El talento español también se escribe en Estados Unidos.</h2>
+    <p>
+      Queremos dar visibilidad a los deportistas españoles que
+      compiten en el deporte universitario estadounidense,
+      acercando sus historias, resultados y trayectorias
+      a los aficionados españoles.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <strong>DDEPORTES DANI</strong>
+  <p>Deporte · Comunicación · Empresa</p>
+  <p>Españoles en la NCAA 🇪🇸</p>
+  <p>© 2026 DDeportes Dani. Todos los derechos reservados.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
