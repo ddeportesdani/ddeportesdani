@@ -134,6 +134,7 @@ async function loadAthletes() {
     let finished = false;
 
     while (!finished) {
+      console.log("SOLICITANDO PÁGINA DESDE:", from);
       const { data, error } = await db
         .from("deportistas")
         .select(`
