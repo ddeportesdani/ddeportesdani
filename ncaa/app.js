@@ -145,7 +145,7 @@ async function loadAthletes() {
       .order("apellido", { ascending: true });
 
     if (error) throw error;
-
+console.log("RESPUESTA SUPABASE:", data);
     athletes = data || [];
 
 
