@@ -1,33 +1,47 @@
 
 // ==========================================
-// DDEPORTES DANI - DIRECTORIO NCAA
+// DDEPORTES DANI - ESPAÑOLES EN LA NCAA
+// Directorio multideportivo
 // ==========================================
 
 const SUPABASE_URL = "https://qizogdfgjkgzjhdzhnmc.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3";
 
-// Conexión con Supabase
 const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
-// Elementos HTML
+// ELEMENTOS HTML
+
 const searchInput = document.getElementById("search");
 const sportSelect = document.getElementById("sport");
 const divisionSelect = document.getElementById("division");
 const stateSelect = document.getElementById("state");
 const communitySelect = document.getElementById("community");
 const clearButton = document.getElementById("clearFilters");
+
 const athletesContainer = document.getElementById("athletes");
 const resultsCount = document.getElementById("resultsCount");
+
+const totalAthletes = document.getElementById("totalAthletes");
+const totalUniversities = document.getElementById("totalUniversities");
+const totalSports = document.getElementById("totalSports");
 
 let athletes = [];
 
 // ==========================================
-// NORMALIZAR DIVISIONES
+// UTILIDADES
 // ==========================================
+
+function normalizeText(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
 
 function normalizeDivision(value) {
   const v = String(value || "").trim().toUpperCase();
@@ -47,12 +61,60 @@ function normalizeDivision(value) {
   return divisions[v] || v;
 }
 
+function getSportIcon(sport) {
+  const s = normalizeText(sport);
+
+  const icons = [
+    ["baloncesto", "🏀"],
+    ["basketball", "🏀"],
+    ["futbol", "⚽"],
+    ["soccer", "⚽"],
+    ["tenis", "🎾"],
+    ["tennis", "🎾"],
+    ["natacion", "🏊"],
+    ["swimming", "🏊"],
+    ["atletismo", "🏃"],
+    ["track", "🏃"],
+    ["cross country", "🏃"],
+    ["golf", "⛳"],
+    ["voleibol", "🏐"],
+    ["volleyball", "🏐"],
+    ["gimnasia", "🤸"],
+    ["gymnastics", "🤸"],
+    ["beisbol", "⚾"],
+    ["baseball", "⚾"],
+    ["softball", "🥎"],
+    ["hockey", "🏑"],
+    ["remo", "🚣"],
+    ["rowing", "🚣"],
+    ["esgrima", "🤺"],
+    ["fencing", "🤺"],
+    ["lucha", "🤼"],
+    ["wrestling", "🤼"],
+    ["lacrosse", "🥍"],
+    ["buceo", "🤿"],
+    ["diving", "🤿"],
+    ["ciclismo", "🚴"],
+    ["cycling", "🚴"],
+    ["equitacion", "🏇"],
+    ["equestrian", "🏇"],
+    ["water polo", "🤽"],
+    ["waterpolo", "🤽"]
+  ];
+
+  const match = icons.find(([keyword]) => s.includes(keyword));
+
+  return match ? match[1] : "🏅";
+}
+
 // ==========================================
-// CARGAR DEPORTISTAS DESDE SUPABASE
+// CARGAR DEPORTISTAS
 // ==========================================
 
 async function loadAthletes() {
-  resultsCount.textContent = "Cargando deportistas...";
+  if (resultsCount) {
+    resultsCount.textContent = "Cargando deportistas...";
+  }
 
   try {
     const { data, error } = await db
@@ -75,20 +137,28 @@ async function loadAthletes() {
     athletes = data || [];
 
     populateFilters();
+    updateStatistics();
     renderAthletes();
 
   } catch (error) {
     console.error("Error cargando deportistas:", error);
 
-    resultsCount.textContent = "No se pudo cargar el directorio.";
+    if (resultsCount) {
+      resultsCount.textContent =
+        "No se pudo cargar el directorio.";
+    }
 
-    athletesContainer.textContent =
-      "Estamos teniendo problemas para conectar con el directorio. Inténtalo de nuevo más tarde.";
+    if (athletesContainer) {
+      showMessage(
+        "Error de conexión",
+        "Estamos teniendo problemas para conectar con el directorio. Inténtalo de nuevo más tarde."
+      );
+    }
   }
 }
 
 // ==========================================
-// CREAR OPCIONES DE LOS FILTROS
+// FILTROS DINÁMICOS
 // ==========================================
 
 function populateSelect(select, values, defaultText) {
@@ -119,7 +189,7 @@ function populateSelect(select, values, defaultText) {
 function populateFilters() {
   const sports = [...new Set(
     athletes.map(a => a.deporte).filter(Boolean)
-  )].sort();
+  )].sort((a, b) => a.localeCompare(b, "es"));
 
   const states = [...new Set(
     athletes.map(a => a.estado).filter(Boolean)
@@ -127,7 +197,7 @@ function populateFilters() {
 
   const communities = [...new Set(
     athletes.map(a => a.comunidad).filter(Boolean)
-  )].sort();
+  )].sort((a, b) => a.localeCompare(b, "es"));
 
   const divisions = [...new Set(
     athletes.map(a => normalizeDivision(a.division)).filter(Boolean)
@@ -140,26 +210,94 @@ function populateFilters() {
 }
 
 // ==========================================
-// MOSTRAR TARJETAS
+// ESTADÍSTICAS GENERALES
+// ==========================================
+
+function updateStatistics() {
+  const universities = new Set(
+    athletes
+      .map(a => normalizeText(a.universidad))
+      .filter(Boolean)
+  );
+
+  const sports = new Set(
+    athletes
+      .map(a => normalizeText(a.deporte))
+      .filter(Boolean)
+  );
+
+  if (totalAthletes) {
+    totalAthletes.textContent = athletes.length;
+  }
+
+  if (totalUniversities) {
+    totalUniversities.textContent = universities.size;
+  }
+
+  if (totalSports) {
+    totalSports.textContent = sports.size;
+  }
+}
+
+// ==========================================
+// MENSAJES
+// ==========================================
+
+function showMessage(title, message) {
+  if (!athletesContainer) return;
+
+  const empty = document.createElement("div");
+  empty.className = "empty-state";
+
+  const icon = document.createElement("div");
+  icon.className = "empty-icon";
+  icon.textContent = "🇪🇸";
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = message;
+
+  empty.append(icon, heading, paragraph);
+  athletesContainer.replaceChildren(empty);
+}
+
+// ==========================================
+// CREAR TARJETA DE DEPORTISTA
 // ==========================================
 
 function createAthleteCard(athlete) {
   const card = document.createElement("article");
   card.className = "athlete-card";
 
+  const sportIcon = document.createElement("div");
+  sportIcon.className = "athlete-sport-icon";
+  sportIcon.textContent = getSportIcon(athlete.deporte);
+
+  const badge = document.createElement("span");
+  badge.className = "athlete-badge";
+
+  const division = normalizeDivision(athlete.division);
+
+  badge.textContent = division
+    ? "NCAA " + division
+    : "NCAA";
+
   const name = document.createElement("h3");
   name.textContent =
-    `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim();
+    `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
+    || "Nombre no indicado";
 
   const university = document.createElement("p");
   university.className = "athlete-university";
-  university.textContent = athlete.universidad || "Universidad no indicada";
+  university.textContent =
+    athlete.universidad || "Universidad no indicada";
 
   const details = document.createElement("div");
   details.className = "athlete-details";
 
   const fields = [
-    ["División", normalizeDivision(athlete.division)],
     ["Deporte", athlete.deporte],
     ["Estado", athlete.estado],
     ["Año universitario", athlete.ano_universidad],
@@ -181,89 +319,83 @@ function createAthleteCard(athlete) {
     details.appendChild(detail);
   });
 
-  const badge = document.createElement("span");
-  badge.className = "athlete-badge";
-  badge.textContent = "NCAA " + normalizeDivision(athlete.division);
-
-  card.append(badge, name, university, details);
+  card.append(
+    sportIcon,
+    badge,
+    name,
+    university,
+    details
+  );
 
   return card;
 }
 
 // ==========================================
-// FILTRAR Y MOSTRAR RESULTADOS
+// BUSCAR Y FILTRAR
 // ==========================================
 
 function renderAthletes() {
   if (!athletesContainer) return;
 
-  const search = (searchInput?.value || "")
-    .toLowerCase()
-    .trim();
-
+  const search = normalizeText(searchInput?.value);
   const sport = sportSelect?.value || "";
   const division = divisionSelect?.value || "";
   const state = stateSelect?.value || "";
   const community = communitySelect?.value || "";
 
   const filtered = athletes.filter(athlete => {
-    const searchable = [
+    const searchable = normalizeText([
       athlete.nombre,
       athlete.apellido,
       athlete.universidad,
       athlete.deporte,
       athlete.estado,
       athlete.comunidad
-    ].join(" ").toLowerCase();
+    ].join(" "));
 
     return (
       searchable.includes(search) &&
       (!sport || athlete.deporte === sport) &&
-      (!division || normalizeDivision(athlete.division) === normalizeDivision(division)) &&
+      (!division ||
+        normalizeDivision(athlete.division) ===
+        normalizeDivision(division)) &&
       (!state || athlete.estado === state) &&
       (!community || athlete.comunidad === community)
     );
   });
 
-  resultsCount.textContent =
-    filtered.length +
-    (filtered.length === 1
-      ? " deportista encontrado"
-      : " deportistas encontrados");
+  if (resultsCount) {
+    resultsCount.textContent =
+      filtered.length +
+      (filtered.length === 1
+        ? " DEPORTISTA ENCONTRADO"
+        : " DEPORTISTAS ENCONTRADOS");
+  }
 
   athletesContainer.replaceChildren();
 
   if (filtered.length === 0) {
-    const empty = document.createElement("div");
-    empty.className = "empty-state";
+    showMessage(
+      athletes.length
+        ? "No hay resultados"
+        : "Estamos preparando el directorio",
+      athletes.length
+        ? "Prueba con otros términos o modifica los filtros."
+        : "Pronto incorporaremos más deportistas españoles."
+    );
 
-    const heading = document.createElement("h3");
-    heading.textContent = athletes.length
-      ? "No hay resultados"
-      : "Estamos preparando el directorio";
-
-    const paragraph = document.createElement("p");
-    paragraph.textContent = athletes.length
-      ? "Prueba con otros términos o modifica los filtros."
-      : "Pronto incorporaremos los primeros deportistas españoles.";
-
-    empty.append(heading, paragraph);
-    athletesContainer.appendChild(empty);
     return;
   }
 
-  const grid = document.createElement("div");
-  grid.className = "athletes-cards";
-
   filtered.forEach(athlete => {
-    grid.appendChild(createAthleteCard(athlete));
+    athletesContainer.appendChild(
+      createAthleteCard(athlete)
+    );
   });
-
-  athletesContainer.appendChild(grid);
 }
 
 // ==========================================
-// EVENTOS DE BUSQUEDA Y FILTROS
+// EVENTOS
 // ==========================================
 
 [
@@ -288,6 +420,34 @@ if (clearButton) {
     renderAthletes();
   });
 }
+
+// ==========================================
+// ACCESO A DEPORTES DESDE LA PORTADA
+// ==========================================
+
+document.querySelectorAll("[data-sport]").forEach(link => {
+  link.addEventListener("click", () => {
+    const selectedSport = link.dataset.sport;
+
+    if (!sportSelect) return;
+
+    if (!selectedSport) {
+      sportSelect.value = "";
+    } else {
+      const option = [...sportSelect.options].find(
+        option =>
+          normalizeText(option.value) ===
+          normalizeText(selectedSport)
+      );
+
+      if (option) {
+        sportSelect.value = option.value;
+      }
+    }
+
+    renderAthletes();
+  });
+});
 
 // ==========================================
 // INICIAR DIRECTORIO
