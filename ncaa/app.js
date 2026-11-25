@@ -47,6 +47,8 @@ function normalizeSport(value) {
   return String(value || "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
+   .replace(/\u00A0/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
