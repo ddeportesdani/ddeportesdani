@@ -1,0 +1,281 @@
+
+:root {
+  --navy: #101b2c;
+  --navy2: #172941;
+  --gold: #c9a75e;
+  --white: #fff;
+  --light: #f4f5f7;
+  --text: #263449;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  line-height: 1.65;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.header {
+  background: var(--navy);
+  color: white;
+  padding: 22px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.logo span { color: var(--gold); }
+
+nav {
+  display: flex;
+  gap: 25px;
+  font-size: 14px;
+}
+
+nav a:hover { color: var(--gold); }
+
+.hero {
+  background: linear-gradient(120deg, #101b2c, #233b58);
+  color: white;
+  text-align: center;
+  padding: 85px 7% 55px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 72px);
+  line-height: 1.12;
+  margin: 22px auto;
+}
+
+.hero h1 span { color: var(--gold); }
+
+.hero > p {
+  max-width: 650px;
+  margin: 0 auto 28px;
+  color: #d9e0e9;
+  font-size: 18px;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 14px 28px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.btn:hover { background: #e1c47f; }
+
+.divisions {
+  display: flex;
+  justify-content: center;
+  gap: 55px;
+  margin-top: 55px;
+}
+
+.divisions div {
+  display: flex;
+  flex-direction: column;
+}
+
+.divisions strong {
+  color: var(--gold);
+  font-size: 35px;
+}
+
+.divisions span {
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+section { padding: 75px 8%; }
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-heading h2 {
+  color: var(--navy);
+  font-size: clamp(26px, 4vw, 36px);
+  margin: 12px 0;
+}
+
+.section-heading p { color: #687487; }
+
+.sports { background: white; }
+
+.sports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 16px;
+}
+
+.sports-grid article {
+  padding: 23px 12px;
+  text-align: center;
+  border: 1px solid #e6e9ee;
+  border-radius: 7px;
+  font-size: 28px;
+  transition: .2s;
+}
+
+.sports-grid article:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.sports-grid span {
+  display: block;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 7px;
+}
+
+.directory { background: var(--light); }
+
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto 25px;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+  min-width: 0;
+  padding: 14px;
+  background: white;
+  border: 1px solid #d7dce4;
+  border-radius: 5px;
+  font: inherit;
+}
+
+.filters button {
+  background: var(--navy);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.directory-info {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: space-between;
+  color: #687487;
+  font-size: 13px;
+}
+
+.athletes-grid {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.empty-state {
+  background: white;
+  padding: 55px 25px;
+  border: 1px solid #e6e9ee;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.empty-icon { font-size: 45px; }
+
+.empty-state h3 {
+  color: var(--navy);
+  margin: 15px 0 8px;
+  font-size: 23px;
+}
+
+.empty-state p {
+  max-width: 550px;
+  margin: auto;
+  color: #687487;
+}
+
+.project {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+}
+
+.project h2 {
+  font-size: clamp(27px, 4vw, 38px);
+  max-width: 750px;
+  margin: 15px auto;
+}
+
+.project p {
+  max-width: 700px;
+  margin: auto;
+  color: #d9e0e9;
+}
+
+footer {
+  background: #0a1422;
+  color: #cbd3df;
+  padding: 35px 8%;
+  text-align: center;
+}
+
+footer strong { color: white; }
+footer p { font-size: 13px; margin-top: 8px; }
+
+@media(max-width: 800px) {
+  .filters { grid-template-columns: 1fr 1fr; }
+  .filters input { grid-column: 1 / -1; }
+}
+
+@media(max-width: 600px) {
+  .header {
+    flex-direction: column;
+    padding: 20px 5%;
+  }
+
+  nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  section { padding: 55px 6%; }
+
+  .divisions { gap: 25px; }
+
+  .filters { grid-template-columns: 1fr; }
+  .filters input { grid-column: auto; }
+
+  .directory-info {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
