@@ -119,34 +119,62 @@ function getSportIcon(sport) {
 // CARGAR DEPORTISTAS
 // ==========================================
 
+
 async function loadAthletes() {
   if (resultsCount) {
     resultsCount.textContent = "Cargando deportistas...";
   }
 
   try {
-    console.log("Iniciando carga de deportistas...");
+    console.log("Iniciando carga completa de deportistas...");
 
-    const { data, error } = await db
-      .from("deportistas")
-      .select(`
-        id,
-        estado,
-        division,
-        nombre,
-        apellido,
-        deporte,
-        ano_universidad,
-        comunidad,
-        universidad
-      `)
-      .order("apellido", { ascending: true });
+    const PAGE_SIZE = 1000;
+    let allAthletes = [];
+    let from = 0;
+    let finished = false;
 
-    if (error) throw error;
+    while (!finished) {
+      const { data, error } = await db
+        .from("deportistas")
+        .select(`
+          id,
+          estado,
+          division,
+          nombre,
+          apellido,
+          deporte,
+          ano_universidad,
+          comunidad,
+          universidad
+        `)
+        .order("apellido", { ascending: true })
+        .order("id", { ascending: true })
+        .range(from, from + PAGE_SIZE - 1);
 
-    athletes = data || [];
+      if (error) throw error;
 
-    console.log("Deportistas cargados:", athletes.length);
+      const batch = data || [];
+
+      allAthletes = allAthletes.concat(batch);
+
+      console.log(
+        "Deportistas descargados:",
+        allAthletes.length
+      );
+
+      if (batch.length < PAGE_SIZE) {
+        finished = true;
+      } else {
+        from += PAGE_SIZE;
+      }
+    }
+
+    athletes = allAthletes;
+
+    console.log(
+      "TOTAL DE DEPORTISTAS CARGADOS:",
+      athletes.length
+    );
 
     populateFilters();
     updateStatistics();
@@ -163,11 +191,12 @@ async function loadAthletes() {
     if (athletesContainer) {
       showMessage(
         "Error de conexión",
-        "Estamos teniendo problemas para conectar con el directorio. Inténtalo de nuevo más tarde."
+        "No se pudo cargar el directorio completo. Inténtalo de nuevo más tarde."
       );
     }
   }
 }
+
 
 // ==========================================
 // FILTROS DINÁMICOS
