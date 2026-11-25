@@ -402,7 +402,7 @@ function renderAthletes() {
 
     return (
       searchable.includes(search) &&
-      (!sport || athlete.deporte === sport) &&
+      (!sport || normalizeSport(athlete.deporte) === normalizeSport(sport))
       (!division ||
         normalizeDivision(athlete.division) ===
         normalizeDivision(division)) &&
