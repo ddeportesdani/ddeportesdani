@@ -72,7 +72,39 @@
       <p>Busca por nombre, deporte o división universitaria.</p>
     </div>
 
-    <div class="filters">
+  
+<div class="filters">
+  <input
+    type="search"
+    id="search"
+    placeholder="Buscar deportista o universidad..."
+    aria-label="Buscar deportista o universidad"
+  >
+
+  <select id="sport">
+    <option value="">Todos los deportes</option>
+  </select>
+
+  <select id="division">
+    <option value="">Todas las divisiones</option>
+    <option value="D1">NCAA D1</option>
+    <option value="D2">NCAA D2</option>
+    <option value="D3">NCAA D3</option>
+  </select>
+
+  <select id="state">
+    <option value="">Todos los estados</option>
+  </select>
+
+  <select id="community">
+    <option value="">Todas las comunidades</option>
+  </select>
+
+  <button id="clearFilters" type="button">
+    Limpiar filtros
+  </button>
+</div>
+
       <input
         type="search"
         id="search"
@@ -130,6 +162,7 @@
   <p>© 2026 DDeportes Dani. Todos los derechos reservados.</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
 </body>
 </html>
