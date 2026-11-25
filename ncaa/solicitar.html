@@ -7,7 +7,110 @@
   <meta name="description" content="Propón un deportista español que compita en la NCAA.">
   <title>Proponer deportista | DDeportes Dani</title>
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .contact-wrap {
+      max-width: 850px;
+      margin: 45px auto;
+      padding: 35px;
+      background: #fff;
+      border-radius: 16px;
+      box-sizing: border-box;
+    }
+
+    #athleteForm {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 24px;
+    }
+
+    #athleteForm label {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    #athleteForm input,
+    #athleteForm select {
+      width: 100%;
+      min-height: 50px;
+      padding: 13px 15px;
+      border: 1px solid #d6dce3;
+      border-radius: 9px;
+      background: #fff;
+      font-size: 15px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    #athleteForm input:focus,
+    #athleteForm select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+    }
+
+    #athleteForm button {
+      grid-column: 1 / -1;
+      min-height: 52px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    #formMessage,
+    #athleteForm .note {
+      grid-column: 1 / -1;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    #formMessage {
+      font-weight: 600;
+    }
+
+    #athleteForm .note {
+      color: #777;
+      font-size: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+    }
+
+    .section-heading {
+      margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 18px;
+    }
+
+    .section-heading p {
+      line-height: 1.8;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 650px) {
+      .contact-wrap {
+        margin: 25px 12px;
+        padding: 22px 16px;
+      }
+
+      #athleteForm {
+        grid-template-columns: 1fr;
+        gap: 23px;
+      }
+
+      #athleteForm button,
+      #formMessage,
+      #athleteForm .note {
+        grid-column: 1;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <header class="header">
@@ -170,6 +273,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 const SUPABASE_URL = "https://qizogdfgjkgzjhdzhnmc.supabase.co";
 const SUPABASE_KEY = "1abed4f0-995f-4b0e-a5ac-a5bb34c8264e";
@@ -216,8 +320,6 @@ form.addEventListener("submit", async (event) => {
     "¡Propuesta enviada! Dani la revisará antes de publicarla.";
 });
 </script>
-</body>
-</html>
 
 </body>
 </html>
