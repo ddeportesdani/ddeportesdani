@@ -65,12 +65,76 @@
     </div>
   </section>
 
-  <section id="deportistas" class="directory">
-    <div class="section-heading">
-      <span class="eyebrow">DIRECTORIO</span>
-      <h2>Encuentra a nuestros deportistas</h2>
-      <p>Busca por nombre, deporte o división universitaria.</p>
+
+<section id="deportistas" class="directory">
+  <div class="section-heading">
+    <span class="eyebrow">EL TALENTO ESPAÑOL</span>
+    <h2>Encuentra a nuestros deportistas</h2>
+    <p>
+      Descubre dónde compiten, qué deporte practican
+      y cómo evoluciona su trayectoria universitaria.
+    </p>
+  </div>
+
+  <div class="filters">
+    <input
+      type="search"
+      id="search"
+      placeholder="🔍 Buscar deportista o universidad..."
+      aria-label="Buscar deportista o universidad"
+    >
+
+    <select id="sport">
+      <option value="">Todos los deportes</option>
+    </select>
+
+    <select id="division">
+      <option value="">Todas las divisiones</option>
+      <option value="D1">NCAA División I</option>
+      <option value="D2">NCAA División II</option>
+      <option value="D3">NCAA División III</option>
+    </select>
+
+    <select id="state">
+      <option value="">Todos los estados</option>
+    </select>
+
+    <select id="community">
+      <option value="">Todas las comunidades</option>
+    </select>
+
+    <button id="clearFilters" type="button">
+      Limpiar filtros
+    </button>
+  </div>
+
+  <div class="propose-athlete">
+    <a href="solicitar.html" class="btn">
+      + PROPONER DEPORTISTA
+    </a>
+  </div>
+
+  <div class="directory-info">
+    <span id="resultsCount">Cargando deportistas...</span>
+    <span>Temporada 2026-27</span>
+  </div>
+
+  <div
+    id="athletes"
+    class="athletes-grid"
+    aria-live="polite"
+  >
+    <div class="empty-state">
+      <div class="empty-icon">🇪🇸</div>
+      <h3>El talento español está aquí</h3>
+      <p>
+        Estamos preparando el directorio para que puedas
+        descubrir a nuestros deportistas universitarios.
+      </p>
     </div>
+  </div>
+</section>
+
 
   
 <div class="filters">
