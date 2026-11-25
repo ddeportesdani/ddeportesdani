@@ -43,6 +43,15 @@ function normalizeText(value) {
     .trim();
 }
 
+function normalizeSport(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
 function normalizeDivision(value) {
   const v = String(value || "").trim().toUpperCase();
 
