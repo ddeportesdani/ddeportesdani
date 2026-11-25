@@ -169,5 +169,55 @@
   <p>Españoles en la NCAA 🇪🇸</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://qizogdfgjkgzjhdzhnmc.supabase.co";
+const SUPABASE_KEY = "1abed4f0-995f-4b0e-a5ac-a5bb34c8264e";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const form = document.getElementById("athleteForm");
+const message = document.getElementById("formMessage");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const data = new FormData(form);
+
+  const athlete = {
+    nombre: data.get("nombre").trim(),
+    apellido: data.get("apellido").trim(),
+    universidad: data.get("universidad").trim(),
+    estado: data.get("estado"),
+    division: data.get("division"),
+    deporte: data.get("deporte").trim(),
+    ano_universidad: data.get("ano_universidad").trim(),
+    comunidad: data.get("comunidad")
+  };
+
+  message.textContent = "Enviando propuesta...";
+
+  const { error } = await supabaseClient
+    .from("solicitudes_deportistas")
+    .insert([athlete]);
+
+  if (error) {
+    console.error(error);
+    message.textContent =
+      "No se ha podido enviar. Inténtalo de nuevo.";
+    return;
+  }
+
+  form.reset();
+  message.textContent =
+    "¡Propuesta enviada! Dani la revisará antes de publicarla.";
+});
+</script>
+</body>
+</html>
+
 </body>
 </html>
