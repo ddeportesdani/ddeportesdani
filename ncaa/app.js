@@ -149,18 +149,40 @@ async function loadAthletes() {
 
 
 function populateFilters() {
-  const uniqueSports = new Map();
+  const sportsMap = new Map();
 
   athletes.forEach(a => {
-    if (!a.deporte) return;
+    const original = String(a.deporte || "").trim();
+    const key = normalizeSport(original);
 
-    const key = normalizeSport(a.deporte);
-
-    if (!uniqueSports.has(key)) {
-      uniqueSports.set(key, a.deporte.trim());
+    if (key && !sportsMap.has(key)) {
+      sportsMap.set(key, original);
     }
   });
 
+  const sports = Array.from(sportsMap.values())
+    .sort((a, b) => a.localeCompare(b, "es"));
+
+  console.log("Deportes originales:", athletes.map(a => a.deporte));
+  console.log("Deportes únicos:", sports);
+
+  const states = [...new Set(
+    athletes.map(a => a.estado).filter(Boolean)
+  )].sort();
+
+  const communities = [...new Set(
+    athletes.map(a => a.comunidad).filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b, "es"));
+
+  const divisions = [...new Set(
+    athletes.map(a => normalizeDivision(a.division)).filter(Boolean)
+  )].sort();
+
+  populateSelect(sportSelect, sports, "Todos los deportes");
+  populateSelect(stateSelect, states, "Todos los estados");
+  populateSelect(communitySelect, communities, "Todas las comunidades");
+  populateSelect(divisionSelect, divisions, "Todas las divisiones");
+}
 
 const sports = new Set(
   athletes
