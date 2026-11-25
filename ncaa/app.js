@@ -123,6 +123,7 @@ function getSportIcon(sport) {
 // ==========================================
 
 async function loadAthletes() {
+  console.log("INICIANDO CARGA DE DEPORTISTAS");
   if (resultsCount) {
     resultsCount.textContent = "Cargando deportistas...";
   }
