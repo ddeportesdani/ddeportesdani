@@ -142,14 +142,18 @@ section { padding: 75px 8%; }
 
 /* ESTADISTICAS */
 
+
+/* ESTADISTICAS COMERCIALES */
+
 .stats-section {
-  background: var(--navy);
+  background: #071b38;
   color: white;
+  padding: 80px 8%;
 }
 
 .stats-heading {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 38px;
 }
 
 .stats-heading h2 {
@@ -157,27 +161,59 @@ section { padding: 75px 8%; }
   margin: 12px 0;
 }
 
-.stats-heading p { color: #c4d5ea; }
+.stats-heading p {
+  color: #c4d5ea;
+}
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+.stats-container {
   max-width: 1000px;
   margin: auto;
 }
 
+.stats-main {
+  background: linear-gradient(120deg, #102d50, #164878);
+  border: 1px solid #315b83;
+  border-radius: 14px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.stats-main h3 {
+  font-size: clamp(42px, 7vw, 65px);
+  color: #80bcff;
+  margin: 8px 0;
+  line-height: 1.2;
+}
+
+.stats-main p {
+  color: #c4d5ea;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
 .stat-card {
-  background: var(--navy2);
-  padding: 30px 15px;
-  border-radius: 10px;
-  text-align: center;
+  background: #102d50;
+  padding: 28px;
+  border-radius: 12px;
   border: 1px solid #29486b;
+  transition: transform .2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card .stat-icon {
+  font-size: 27px;
 }
 
 .stat-card h3 {
-  font-size: clamp(30px, 4vw, 43px);
-  color: var(--blue);
+  font-size: clamp(30px, 5vw, 42px);
+  color: #80bcff;
   margin: 8px 0;
 }
 
@@ -186,7 +222,27 @@ section { padding: 75px 8%; }
   color: white;
 }
 
-.stat-card small { color: #c4d5ea; }
+.stat-card small {
+  color: #c4d5ea;
+}
+
+.stats-note {
+  text-align: center;
+  color: #c4d5ea;
+  font-size: 12px;
+  margin-top: 22px;
+}
+
+@media(max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-main {
+    padding: 23px;
+  }
+}
+
 
 /* PODCAST */
 
