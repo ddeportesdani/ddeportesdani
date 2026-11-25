@@ -137,17 +137,23 @@ async function loadAthletes() {
       console.log("SOLICITANDO PÁGINA DESDE:", from);
       const { data, error } = await db
         .from("deportistas")
-        .select(`
-          id,
-          estado,
-          division,
-          nombre,
-          apellido,
-          deporte,
-          ano_universidad,
-          comunidad,
-          universidad
-        `)
+.select(`
+  id,
+  estado,
+  division,
+  nombre,
+  apellido,
+  deporte,
+  ano_universidad,
+  comunidad,
+  universidad,
+  foto_url,
+  foto_competicion_url,
+  temporada,
+  estadisticas,
+  biografia
+`)
+
         .order("apellido", { ascending: true })
         .order("id", { ascending: true })
         .range(from, from + PAGE_SIZE - 1);
