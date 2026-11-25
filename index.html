@@ -4,27 +4,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="DDeportes Dani. Colabora conmigo y forma parte de mi proyecto de comunicación deportiva.">
+<meta name="description" content="DDeportes Dani. Colaboraciones, publicidad y patrocinios deportivos.">
 <title>DDeportes Dani | Colabora conmigo</title>
 
 <style>
 :root {
-  --navy:#061A40;
-  --blue:#0647A6;
-  --electric:#1677E8;
-  --white:#ffffff;
-  --light:#F1F6FC;
-  --text:#263449;
+  --navy: #071b38;
+  --navy2: #102d50;
+  --blue: #80bcff;
+  --gold: #80bcff;
+  --white: #ffffff;
+  --light: #f1f5fa;
+  --text: #263449;
 }
 
-* {box-sizing:border-box;margin:0;padding:0}
-html {scroll-behavior:smooth}
-body {
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  line-height:1.7;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-a {text-decoration:none;color:inherit}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  line-height: 1.65;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
 header {
   background: var(--navy);
@@ -36,187 +47,309 @@ header {
   gap: 20px;
   min-height: 65px;
 }
+
 .logo {
-  display: flex !important;
+  display: flex;
   align-items: center;
-  gap: 12px;
-  color: white !important;
+  gap: 10px;
+  color: white;
   font-size: 21px;
   font-weight: 800;
+  letter-spacing: 1px;
+  white-space: nowrap;
 }
 
-.logo span {
-  display: inline-block !important;
-  color: white !important;
-}
-
-.logo strong {
-  color: #80BCFF !important;
-}
-
-.hero {
-  background:linear-gradient(125deg,#061A40,#0647A6,#1677E8);
-  color:white;
-  padding:115px 8%;
-  text-align:center;
-}
-.eyebrow {
-  color:#80BCFF;
-  font-size:12px;
-  font-weight:bold;
-  letter-spacing:3px;
-}
-.hero h1 .texto-azul {
-  color: #80BCFF !important;
-  display: inline;
-}
-}
-.hero p {
-  max-width:700px;
-  margin:0 auto 32px;
-  color:#E1EDFF;
-  font-size:18px;
-}
-.btn {
-  display:inline-block;
-  background:var(--electric);
-  color:white;
-  padding:14px 28px;
-  border-radius:5px;
-  font-weight:bold;
-  transition:.2s;
-}
-.btn:hover {
-  background:#328DFA;
-  transform:translateY(-2px);
-}
-
-section {padding:80px 8%}
-.section-title {text-align:center;margin-bottom:45px}
-.section-title h2 {
-  font-size:34px;
-  color:var(--navy);
-  margin-top:8px;
-}
-.section-title p {color:#687487;margin-top:10px}
-
-.intro {
-  max-width:850px;
-  margin:auto;
-  text-align:center;
-  font-size:18px;
-}
-
-.soft {background:var(--light)}
-
-.cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:22px;
-}
-.card {
-  background:white;
-  border:1px solid #E1E9F3;
-  padding:30px 25px;
-  border-radius:9px;
-  box-shadow:0 8px 25px #061A4010;
-  transition:.2s;
-}
-.card:hover {
-  transform:translateY(-5px);
-  box-shadow:0 12px 30px #061A4020;
-}
-.number {
-  font-size:26px;
-  font-weight:bold;
-  color:var(--electric);
-}
-.card h3 {color:var(--navy);margin:12px 0}
-
-.highlight {
-  background:linear-gradient(120deg,#061A40,#0647A6);
-  color:white;
-  text-align:center;
-}
-.highlight h2 {font-size:34px;margin-bottom:15px}
-.highlight p {
-  max-width:700px;
-  margin:0 auto 28px;
-  color:#DFEAFA;
-}
-
-.platform {
-  text-align:center;
-}
-.platform h3 {color:var(--blue)}
-.platform p {margin-bottom:15px}
-
-.contact-wrap {
-  max-width:750px;
-  margin:auto;
-  background:white;
-  padding:35px;
-  border-radius:9px;
-  box-shadow:0 10px 35px #061A4012;
-}
-form {display:grid;gap:17px}
-label {font-weight:bold;font-size:14px}
-input,select,textarea {
-  width:100%;
-  padding:13px;
-  margin-top:6px;
-  border:1px solid #D7E0EC;
-  border-radius:5px;
-  font:inherit;
-}
-textarea {min-height:130px;resize:vertical}
-input:focus,select:focus,textarea:focus {
-  outline:2px solid #80BCFF;
-  border-color:var(--electric);
-}
-input[type="checkbox"] {
-  width:auto;
-  margin-right:8px;
-}
-input[type="file"] {background:#F7FAFE}
-button {border:0;cursor:pointer;font-size:15px}
-.note {font-size:12px;color:#778195}
-
-footer {
-  background:#061225;
-  color:#CBD8EA;
-  padding:38px 8%;
-  text-align:center;
-}
-footer strong {color:white}
-footer p {font-size:13px;margin-top:8px}
-
-@media(max-width:700px) {
-  header {flex-direction:column}
-  nav {flex-wrap:wrap;justify-content:center;gap:13px}
-  .hero {padding:75px 7%}
-  .logo img {
-  height: 42px;
+.logo img {
+  height: 40px;
   width: auto;
   max-width: 130px;
   object-fit: contain;
-  display: block;
-}
-  section {padding:60px 7%}
-  .contact-wrap {padding:22px}
-}
-  header .logo img {
-  height: 40px !important;
-  width: auto !important;
-  max-width: 130px !important;
-  object-fit: contain;
 }
 
-header .logo {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  font-size: 21px !important;
+.logo strong { color: var(--blue); }
+
+nav {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+}
+
+nav a:hover { color: var(--blue); }
+
+.hero {
+  background: linear-gradient(120deg, #071b38, #164878);
+  color: white;
+  padding: 105px 8%;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--blue);
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 6vw, 65px);
+  line-height: 1.12;
+  max-width: 900px;
+  margin: 22px auto;
+}
+
+.hero h1 .texto-azul {
+  color: var(--blue) !important;
+}
+
+.hero p {
+  max-width: 680px;
+  margin: 0 auto 32px;
+  color: #d9e5f3;
+  font-size: 18px;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--blue);
+  color: var(--navy);
+  padding: 14px 28px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: .2s;
+}
+
+.btn:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+section { padding: 75px 8%; }
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title h2 {
+  font-size: 34px;
+  color: var(--navy);
+}
+
+.section-title p {
+  color: #687487;
+  margin-top: 10px;
+}
+
+/* ESTADISTICAS */
+
+.stats-section {
+  background: var(--navy);
+  color: white;
+}
+
+.stats-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.stats-heading h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  margin: 12px 0;
+}
+
+.stats-heading p { color: #c4d5ea; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.stat-card {
+  background: var(--navy2);
+  padding: 30px 15px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #29486b;
+}
+
+.stat-card h3 {
+  font-size: clamp(30px, 4vw, 43px);
+  color: var(--blue);
+  margin: 8px 0;
+}
+
+.stat-card p {
+  font-weight: bold;
+  color: white;
+}
+
+.stat-card small { color: #c4d5ea; }
+
+/* PODCAST */
+
+.podcast-section {
+  background: var(--light);
+}
+
+.podcast-container {
+  max-width: 750px;
+  margin: auto;
+}
+
+.podcast-container iframe {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+}
+
+/* TARJETAS */
+
+.soft { background: var(--light); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e6e9ee;
+  padding: 30px 25px;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px #1729410b;
+}
+
+.card .number {
+  font-size: 25px;
+  color: #2875bd;
+  font-weight: bold;
+}
+
+.card h3 {
+  color: var(--navy);
+  margin: 12px 0;
+}
+
+/* PRESENTACION */
+
+.intro {
+  max-width: 850px;
+  margin: auto;
+  text-align: center;
+}
+
+.intro p { font-size: 18px; }
+
+/* CONTACTO */
+
+.highlight {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+}
+
+.highlight h2 {
+  font-size: 34px;
+  margin-bottom: 15px;
+}
+
+.highlight p {
+  max-width: 700px;
+  margin: 0 auto 28px;
+  color: #d9e0e9;
+}
+
+.contact-wrap {
+  max-width: 750px;
+  margin: auto;
+  background: white;
+  padding: 35px;
+  border-radius: 8px;
+  box-shadow: 0 10px 35px #101b2c12;
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 13px;
+  margin-top: 6px;
+  border: 1px solid #d7dce4;
+  border-radius: 4px;
+  font: inherit;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.privacy {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-weight: normal;
+}
+
+.privacy input {
+  width: auto;
+  margin-top: 5px;
+}
+
+.note {
+  font-size: 12px;
+  color: #778195;
+}
+
+footer {
+  background: #061326;
+  color: #cbd3df;
+  padding: 35px 8%;
+  text-align: center;
+}
+
+footer strong { color: white; }
+footer p { font-size: 13px; margin-top: 8px; }
+
+@media(max-width: 700px) {
+  header {
+    flex-direction: column;
+    padding: 12px 5%;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .logo img { height: 35px; }
+
+  .hero { padding: 75px 7%; }
+
+  section { padding: 55px 7%; }
+
+  .contact-wrap { padding: 22px; }
+
+  .stats-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -224,117 +357,132 @@ header .logo {
 <body>
 
 <header>
-<a class="logo" href="#">
-  <img src="logo.jpg" alt="Logo DDeportes Dani">
-  <span>DDEPORTES <strong>DANI</strong></span>
-</a>
+  <a class="logo" href="#">
+    <img src="logo.jpg" alt="Logo DDeportes Dani">
+    <span>DDEPORTES <strong>DANI</strong></span>
+  </a>
+
   <nav>
-<main>
-    <a href="#sobre-mi">Quién soy</a>
-    <a href="#proyecto">Mi proyecto</a>
-    <a href="#colaboraciones">Colabora conmigo</a>
-    <a href="#plataformas">Mis plataformas</a>
+    <a href="#comunidad">Mi comunidad</a>
+    <a href="#mi-podcast">Mi podcast</a>
+    <a href="#servicios">Colaboraciones</a>
     <a href="#contacto">Contacto</a>
   </nav>
 </header>
-</header>
-
-<section id="mi-podcast" class="soft">
-  <div class="section-title">
-    <div class="eyebrow">DDEPORTES DANI EN SPOTIFY</div>
-    <h2>Escucha mis últimos episodios</h2>
-    <p>Te invito a descubrir mi podcast.</p>
-  </div>
-
-  <div style="max-width:750px;margin:auto">
-    <iframe
-      style="border-radius:12px"
-      src="https://open.spotify.com/embed/show/1aGTxcUhdB43NSuspuUHQ2?utm_source=generator"
-      width="100%"
-      height="352"
-      frameborder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy">
-    </iframe>
-  </div>
-</section>
 
 <main>
-<main>
+
+<!-- 1. PRESENTACION COMERCIAL -->
 
 <section class="hero">
   <div class="eyebrow">DEPORTE · COMUNICACIÓN · EMPRESA</div>
-<h1>
-  Tu marca puede crecer conmigo.
-  <span class="texto-azul">Hagamos equipo.</span>
-</h1>
-    Soy Dani y quiero ofrecerte la oportunidad de formar
-    parte de mi proyecto deportivo. Busco empresas y marcas
-    que quieran crecer conmigo a través de la comunicación,
-    las entrevistas y el contenido digital.
+
+  <h1>
+    Tu marca puede crecer conmigo.
+    <span class="texto-azul">Hagamos equipo.</span>
+  </h1>
+
+  <p>
+    Quiero conectar empresas y marcas con el mundo del deporte
+    a través de mis contenidos, entrevistas y plataformas digitales.
+    Busco crear colaboraciones que aporten valor y visibilidad.
   </p>
+
   <a href="#contacto" class="btn">QUIERO COLABORAR</a>
 </section>
 
-<section id="sobre-mi">
-  <div class="section-title">
-    <div class="eyebrow">DETRÁS DEL PROYECTO</div>
-    <h2>Hola, soy Dani</h2>
-  </div>
-  <div class="intro">
+<!-- 2. ESTADISTICAS -->
+
+<section class="stats-section" id="comunidad">
+
+  <div class="stats-heading">
+    <div class="eyebrow">MI COMUNIDAD DIGITAL</div>
+    <h2>Una comunidad que no deja de crecer</h2>
     <p>
-      Soy el creador de DDeportes Dani, un proyecto de
-      comunicación deportiva que nace de mi pasión por
-      el deporte y por contar historias.
-    </p>
-    <p style="margin-top:18px">
-      Quiero seguir haciendo crecer este proyecto,
-      conectar con nuevos públicos y ofrecer a empresas
-      y marcas la oportunidad de formar parte de este camino.
+      Mi proyecto conecta con miles de aficionados al deporte
+      a través de diferentes plataformas digitales.
     </p>
   </div>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <h3>39.000</h3>
+      <p>Instagram</p>
+      <small>Entre dos cuentas</small>
+    </div>
+
+    <div class="stat-card">
+      <h3>20.200</h3>
+      <p>TikTok</p>
+      <small>Seguidores</small>
+    </div>
+
+    <div class="stat-card">
+      <h3>4 M+</h3>
+      <p>Visualizaciones</p>
+      <small>Mensuales aproximadas</small>
+    </div>
+
+  </div>
+
 </section>
 
-<section class="soft" id="proyecto">
-  <div class="section-title">
-    <div class="eyebrow">MI VISIÓN</div>
-    <h2>Un proyecto con oportunidades</h2>
-    <p>Quiero conectar el mundo empresarial con mi pasión por el deporte.</p>
-  </div>
+<!-- 3. PODCAST SPOTIFY -->
 
-  <div class="intro">
+<section class="podcast-section" id="mi-podcast">
+
+  <div class="section-title">
+    <div class="eyebrow">DDEPORTES DANI EN SPOTIFY</div>
+    <h2>Escucha mi podcast</h2>
     <p>
-      A través de mis entrevistas, programas y contenidos
-      digitales, quiero dar visibilidad al deporte y crear
-      nuevas oportunidades de colaboración para las empresas
-      que quieran apostar por mi proyecto.
+      Entrevistas, conversaciones y actualidad deportiva.
+      Te invito a descubrir mis episodios.
     </p>
   </div>
+
+  <div class="podcast-container">
+
+    <iframe
+      src="https://open.spotify.com/embed/show/1aGTxcUhdB43NSuspuUHQ2?utm_source=generator"
+      height="352"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+
+  </div>
+
 </section>
 
-<section id="colaboraciones">
+<!-- 4. SERVICIOS -->
+
+<section class="soft" id="servicios">
+
   <div class="section-title">
-    <div class="eyebrow">OPORTUNIDADES PARA TU MARCA</div>
-    <h2>¿Cómo puedes colaborar conmigo?</h2>
-    <p>Estoy abierto a diferentes propuestas y formas de colaboración.</p>
+    <div class="eyebrow">OPORTUNIDADES</div>
+    <h2>¿Cómo puedo colaborar con tu empresa?</h2>
+    <p>
+      Quiero desarrollar propuestas adaptadas a cada marca y negocio.
+    </p>
   </div>
 
   <div class="cards">
+
     <article class="card">
       <div class="number">01</div>
-      <h3>Patrocinios</h3>
+      <h3>Publicidad</h3>
       <p>
-        Quiero ofrecerte la posibilidad de asociar tu marca
-        a mis programas, entrevistas y contenidos deportivos.
+        Dar visibilidad a tu empresa y promocionar tu marca
+        a través de mis canales digitales.
       </p>
     </article>
 
     <article class="card">
       <div class="number">02</div>
-      <h3>Publicidad</h3>
+      <h3>Patrocinios</h3>
       <p>
-        Puedo dar visibilidad a tu empresa y ayudarte
-        a presentar tus productos y servicios.
+        Asociar tu marca a mis programas, entrevistas
+        y contenidos deportivos.
       </p>
     </article>
 
@@ -342,8 +490,8 @@ header .logo {
       <div class="number">03</div>
       <h3>Entrevistas</h3>
       <p>
-        Me gustaría dar a conocer tu empresa, tu historia,
-        tu actividad y las personas que están detrás de ella.
+        Dar a conocer tu empresa, sus profesionales,
+        su historia y sus proyectos.
       </p>
     </article>
 
@@ -351,123 +499,141 @@ header .logo {
       <div class="number">04</div>
       <h3>Promociones</h3>
       <p>
-        Puedo presentar tus productos y servicios mediante
-        diferentes acciones de comunicación.
+        Presentar tus productos y servicios mediante
+        acciones de comunicación.
       </p>
     </article>
 
     <article class="card">
       <div class="number">05</div>
-      <h3>Colaboraciones especiales</h3>
+      <h3>Colaboraciones personalizadas</h3>
       <p>
-        Estoy abierto a estudiar propuestas personalizadas
-        que puedan aportar valor a ambas partes.
+        Estudiar nuevas propuestas para crear
+        relaciones beneficiosas.
       </p>
     </article>
+
   </div>
+
 </section>
 
-<section class="highlight">
-  <h2>Quiero que formes parte de mi proyecto.</h2>
-  <p>
-    Busco empresas, marcas y negocios que quieran apostar
-    por DDeportes Dani. Me gustaría conocerte, escuchar
-    tu propuesta y estudiar cómo podemos colaborar.
-  </p>
-  <a href="#contacto" class="btn">HABLEMOS DE TU MARCA</a>
-</section>
+<!-- 5. PLATAFORMAS -->
 
 <section id="plataformas">
+
   <div class="section-title">
     <div class="eyebrow">PRESENCIA DIGITAL</div>
-    <h2>Mis plataformas</h2>
-    <p>Te invito a descubrir y seguir mi contenido.</p>
+    <h2>Encuéntrame en redes sociales</h2>
+    <p>
+      Descubre mis contenidos y sígueme en mis plataformas.
+    </p>
   </div>
 
   <div class="cards">
-    <article class="card platform">
+
+    <article class="card">
       <h3>Instagram</h3>
-      <p>Comparto contenido y actualidad deportiva.</p>
-      <!-- Sustituir # por tu enlace -->
-      <a href="#" class="btn">VISITAR</a>
+      <p>Contenido y actualidad deportiva.</p>
+      <!-- Añadir enlace de Instagram -->
     </article>
 
-    <article class="card platform">
+    <article class="card">
       <h3>TikTok</h3>
-      <p>Publico vídeos y contenido digital.</p>
-      <!-- Sustituir # por tu enlace -->
-      <a href="#" class="btn">VISITAR</a>
+      <p>Vídeos y contenido digital.</p>
+      <!-- Añadir enlace de TikTok -->
     </article>
 
-    <article class="card platform">
+    <article class="card">
       <h3>YouTube</h3>
-      <p>Comparto vídeos, entrevistas y programas.</p>
-      <!-- Sustituir # por tu enlace -->
-      <a href="#" class="btn">VISITAR</a>
+      <p>Vídeos, entrevistas y programas.</p>
+      <!-- Añadir enlace de YouTube -->
     </article>
 
-    <article class="card platform">
+    <article class="card">
       <h3>Spotify</h3>
-      <p>Te invito a escuchar mis contenidos y episodios.</p>
-      <!-- Sustituir # por tu enlace -->
-      <a href="#" class="btn">ESCUCHAR</a>
+      <p>Escucha mis episodios y contenidos.</p>
+      <a href="https://open.spotify.com/show/1aGTxcUhdB43NSuspuUHQ2"
+         target="_blank" rel="noopener">
+        Escuchar podcast
+      </a>
     </article>
 
-    <article class="card platform">
+    <article class="card">
       <h3>Facebook</h3>
-      <p>Comparto novedades y publicaciones del proyecto.</p>
-      <!-- Sustituir # por tu enlace -->
-      <a href="#" class="btn">VISITAR</a>
+      <p>Sigue mis novedades.</p>
+      <!-- Añadir enlace de Facebook -->
     </article>
+
   </div>
+
 </section>
 
-<section class="soft" id="contacto">
+<!-- 6. LLAMADA A LA ACCION -->
+
+<section class="highlight">
+
+  <h2>Hagamos algo grande juntos.</h2>
+
+  <p>
+    Estoy abierto a nuevas propuestas.
+    Si representas a una empresa, una marca o un negocio,
+    quiero conocer tu idea.
+  </p>
+
+  <a href="#contacto" class="btn">HABLEMOS</a>
+
+</section>
+
+<!-- 7. CONTACTO -->
+
+<section id="contacto" class="soft">
+
   <div class="section-title">
     <div class="eyebrow">CONTACTO PROFESIONAL</div>
-    <h2>¿Te gustaría colaborar conmigo?</h2>
+    <h2>Cuéntame tu propuesta</h2>
     <p>
-      Cuéntame quién eres, qué empresa representas
-      y qué propuesta tienes en mente.
+      Rellena el formulario y me pondré en contacto contigo.
     </p>
   </div>
 
   <div class="contact-wrap">
-    <form
-      action="https://formsubmit.co/podcast@ddeportesdani.com"
-      method="POST"
-      enctype="multipart/form-data">
+
+    <form action="https://formsubmit.co/podcast@ddeportesdani.com"
+          method="POST"
+          enctype="multipart/form-data">
 
       <input type="hidden" name="_subject"
-        value="Nueva propuesta comercial - DDeportes Dani">
+             value="Nueva propuesta comercial - DDeportes Dani">
+
+      <input type="hidden" name="_captcha" value="true">
 
       <input type="hidden" name="_template" value="table">
 
       <input type="text" name="_honey"
-        style="display:none">
+             style="display:none">
 
       <label>
         Nombre de la empresa
-        <input type="text" name="empresa"
-          required placeholder="Nombre de tu empresa">
+        <input name="empresa" required
+               placeholder="Nombre de tu empresa">
       </label>
 
       <label>
         Persona de contacto
-        <input type="text" name="persona"
-          required placeholder="Tu nombre">
+        <input name="persona" required
+               placeholder="Tu nombre">
       </label>
 
       <label>
         Correo electrónico
-        <input type="email" name="email"
-          required placeholder="correo@empresa.com">
+        <input name="email" type="email" required
+               placeholder="correo@empresa.com">
       </label>
 
       <label>
         Teléfono (opcional)
-        <input type="tel" name="telefono"
-          placeholder="Tu teléfono">
+        <input name="telefono" type="tel"
+               placeholder="Tu teléfono">
       </label>
 
       <label>
@@ -492,39 +658,46 @@ header .logo {
       <label>
         Adjuntar dossier comercial (PDF)
         <input type="file" name="attachment"
-          accept=".pdf,application/pdf">
+               accept=".pdf,application/pdf">
       </label>
 
-      <label style="font-weight:normal">
+      <label class="privacy">
         <input type="checkbox" name="privacidad"
-          value="Aceptada" required>
-        He leído y acepto la política de privacidad.
+               required>
+        <span>He leído y acepto la política de privacidad.</span>
       </label>
 
       <button class="btn" type="submit">
-        ENVIAR PROPUESTA
+        ENVIAR SOLICITUD
       </button>
 
       <p class="note">
-        Recibiré tu propuesta en mi correo profesional.
-        Me pondré en contacto contigo para valorar
-        las posibilidades de colaboración.
+        Tus datos se utilizarán para gestionar tu propuesta comercial.
+        Consulta la política de privacidad antes de enviar el formulario.
       </p>
+
     </form>
+
   </div>
+
 </section>
 
 </main>
 
 <footer>
+
   <strong>DDEPORTES DANI</strong>
+
   <p>Deporte · Comunicación · Empresa</p>
+
   <p>
     <a href="mailto:podcast@ddeportesdani.com">
       podcast@ddeportesdani.com
     </a>
   </p>
+
   <p>© 2026 DDeportes Dani. Todos los derechos reservados.</p>
+
 </footer>
 
 </body>
