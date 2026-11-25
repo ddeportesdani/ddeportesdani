@@ -145,7 +145,40 @@ async function loadAthletes() {
 
     athletes = data || [];
 
-    populateFilters();
+
+function populateFilters() {
+  const uniqueSports = new Map();
+
+  athletes.forEach(a => {
+    if (!a.deporte) return;
+
+    const key = normalizeSport(a.deporte);
+
+    if (!uniqueSports.has(key)) {
+      uniqueSports.set(key, a.deporte.trim());
+    }
+  });
+
+  const sports = [...uniqueSports.values()]
+    .sort((a, b) => a.localeCompare(b, "es"));
+
+  const states = [...new Set(
+    athletes.map(a => a.estado?.trim()).filter(Boolean)
+  )].sort();
+
+  const communities = [...new Set(
+    athletes.map(a => a.comunidad?.trim()).filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b, "es"));
+
+  const divisions = [...new Set(
+    athletes.map(a => normalizeDivision(a.division)).filter(Boolean)
+  )].sort();
+
+  populateSelect(sportSelect, sports, "Todos los deportes");
+  populateSelect(stateSelect, states, "Todos los estados");
+  populateSelect(communitySelect, communities, "Todas las comunidades");
+  populateSelect(divisionSelect, divisions, "Todas las divisiones");
+}
     updateStatistics();
     renderAthletes();
 
