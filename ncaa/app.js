@@ -365,72 +365,130 @@ function showMessage(title, message) {
 // CREAR TARJETA DE DEPORTISTA
 // ==========================================
 
-function createAthleteCard(athlete) {
 
+function createAthleteCard(athlete) {
   const card = document.createElement("article");
   card.className = "athlete-card";
 
-  const sportIcon = document.createElement("div");
-  sportIcon.className = "athlete-sport-icon";
-  sportIcon.textContent = getSportIcon(athlete.deporte);
+  // Fotografía principal
+  const photoWrapper = document.createElement("div");
+  photoWrapper.className = "athlete-photo";
 
+  if (athlete.foto_url) {
+    const img = document.createElement("img");
+    img.src = athlete.foto_url;
+    img.alt = `Foto de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
+    img.loading = "lazy";
+
+    img.onerror = () => {
+      photoWrapper.replaceChildren();
+      photoWrapper.classList.add("no-photo");
+      photoWrapper.textContent = getSportIcon(athlete.deporte);
+    };
+
+    photoWrapper.appendChild(img);
+  } else {
+    photoWrapper.classList.add("no-photo");
+    photoWrapper.textContent = getSportIcon(athlete.deporte);
+  }
+
+  // División
   const badge = document.createElement("span");
   badge.className = "athlete-badge";
 
   const division = normalizeDivision(athlete.division);
+  badge.textContent = division ? `NCAA ${division}` : "NCAA";
 
-  badge.textContent = division
-    ? "NCAA " + division
-    : "NCAA";
-
+  // Nombre
   const name = document.createElement("h3");
-
   name.textContent =
     `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
     || "Nombre no indicado";
 
+  // Universidad
   const university = document.createElement("p");
   university.className = "athlete-university";
-
   university.textContent =
     athlete.universidad || "Universidad no indicada";
 
+  // Información
   const details = document.createElement("div");
   details.className = "athlete-details";
 
-  const fields = [
+  [
     ["Deporte", athlete.deporte],
     ["Estado", athlete.estado],
     ["Año universitario", athlete.ano_universidad],
     ["Comunidad", athlete.comunidad]
-  ];
-
-  fields.forEach(([label, value]) => {
-
+  ].forEach(([label, value]) => {
     if (!value) return;
 
-    const detail = document.createElement("p");
-
+    const p = document.createElement("p");
     const strong = document.createElement("strong");
-    strong.textContent = label + ": ";
-
-    const span = document.createElement("span");
-    span.textContent = value;
-
-    detail.append(strong, span);
-    details.appendChild(detail);
+    strong.textContent = `${label}: `;
+    p.append(strong, document.createTextNode(value));
+    details.appendChild(p);
   });
 
-  card.append(
-    sportIcon,
-    badge,
-    name,
-    university,
-    details
-  );
+  card.append(photoWrapper, badge, name, university, details);
+
+  // Estadísticas
+  const stats = athlete.estadisticas;
+
+  if (stats && typeof stats === "object" &&
+      !Array.isArray(stats) && Object.keys(stats).length) {
+
+    const statsSection = document.createElement("div");
+    statsSection.className = "athlete-stats";
+
+    const heading = document.createElement("h4");
+    heading.textContent = "ESTADÍSTICAS";
+    statsSection.appendChild(heading);
+
+    const statsGrid = document.createElement("div");
+    statsGrid.className = "athlete-stats-grid";
+
+    Object.entries(stats).slice(0, 4).forEach(([label, value]) => {
+      const item = document.createElement("div");
+
+      const number = document.createElement("strong");
+      number.textContent = String(value);
+
+      const caption = document.createElement("span");
+      caption.textContent = label;
+
+      item.append(number, caption);
+      statsGrid.appendChild(item);
+    });
+
+    statsSection.appendChild(statsGrid);
+    card.appendChild(statsSection);
+  }
+
+  // Segunda fotografía
+  if (athlete.foto_competicion_url) {
+    const competitionPhoto = document.createElement("img");
+    competitionPhoto.className = "athlete-competition-photo";
+    competitionPhoto.src = athlete.foto_competicion_url;
+    competitionPhoto.alt = `Competición: ${athlete.nombre || ""} ${athlete.apellido || ""}`;
+    competitionPhoto.loading = "lazy";
+
+    competitionPhoto.onerror = () => competitionPhoto.remove();
+
+    card.appendChild(competitionPhoto);
+  }
+
+  // Temporada
+  if (athlete.temporada) {
+    const season = document.createElement("p");
+    season.className = "athlete-season";
+    season.textContent = `Temporada ${athlete.temporada}`;
+    card.appendChild(season);
+  }
 
   return card;
 }
+
 
 // ==========================================
 // BUSCAR Y FILTRAR
