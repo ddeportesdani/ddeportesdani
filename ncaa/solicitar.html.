@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Propón un deportista español que compita en la NCAA.">
+  <title>Proponer deportista | DDeportes Dani</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">
+    DDEPORTES <span>DANI</span>
+  </a>
+  <nav>
+    <a href="index.html">Volver al directorio</a>
+  </nav>
+</header>
+
+<main>
+<section class="directory">
+
+  <div class="section-heading">
+    <span class="eyebrow">DDEPORTES DANI NCAA</span>
+    <h2>Propón un deportista</h2>
+    <p>
+      Ayúdanos a dar visibilidad al talento español
+      que compite en las universidades estadounidenses.
+    </p>
+  </div>
+
+  <div class="contact-wrap">
+
+    <form id="athleteForm">
+
+      <label>Nombre
+        <input name="nombre" required maxlength="80">
+      </label>
+
+      <label>Apellido
+        <input name="apellido" required maxlength="100">
+      </label>
+
+      <label>Universidad
+        <input name="universidad" required maxlength="150">
+      </label>
+
+      <label>Estado estadounidense
+        <select name="estado" required>
+          <option value="">Selecciona un estado</option>
+          <option>Alabama</option>
+          <option>Alaska</option>
+          <option>Arizona</option>
+          <option>Arkansas</option>
+          <option>California</option>
+          <option>Colorado</option>
+          <option>Connecticut</option>
+          <option>Delaware</option>
+          <option>Florida</option>
+          <option>Georgia</option>
+          <option>Hawaii</option>
+          <option>Idaho</option>
+          <option>Illinois</option>
+          <option>Indiana</option>
+          <option>Iowa</option>
+          <option>Kansas</option>
+          <option>Kentucky</option>
+          <option>Louisiana</option>
+          <option>Maine</option>
+          <option>Maryland</option>
+          <option>Massachusetts</option>
+          <option>Michigan</option>
+          <option>Minnesota</option>
+          <option>Mississippi</option>
+          <option>Missouri</option>
+          <option>Montana</option>
+          <option>Nebraska</option>
+          <option>Nevada</option>
+          <option>New Hampshire</option>
+          <option>New Jersey</option>
+          <option>New Mexico</option>
+          <option>New York</option>
+          <option>North Carolina</option>
+          <option>North Dakota</option>
+          <option>Ohio</option>
+          <option>Oklahoma</option>
+          <option>Oregon</option>
+          <option>Pennsylvania</option>
+          <option>Rhode Island</option>
+          <option>South Carolina</option>
+          <option>South Dakota</option>
+          <option>Tennessee</option>
+          <option>Texas</option>
+          <option>Utah</option>
+          <option>Vermont</option>
+          <option>Virginia</option>
+          <option>Washington</option>
+          <option>West Virginia</option>
+          <option>Wisconsin</option>
+          <option>Wyoming</option>
+        </select>
+      </label>
+
+      <label>División NCAA
+        <select name="division" required>
+          <option value="">Selecciona división</option>
+          <option value="D1">NCAA D1</option>
+          <option value="D2">NCAA D2</option>
+          <option value="D3">NCAA D3</option>
+        </select>
+      </label>
+
+      <label>Deporte
+        <input name="deporte" required maxlength="100"
+          placeholder="Ej. Baloncesto">
+      </label>
+
+      <label>Año de universidad
+        <input name="ano_universidad" required maxlength="50"
+          placeholder="Ej. Freshman, Sophomore, Junior, Senior">
+      </label>
+
+      <label>Comunidad autónoma
+        <select name="comunidad" required>
+          <option value="">Selecciona comunidad</option>
+          <option>Andalucía</option>
+          <option>Aragón</option>
+          <option>Asturias</option>
+          <option>Islas Baleares</option>
+          <option>Canarias</option>
+          <option>Cantabria</option>
+          <option>Castilla-La Mancha</option>
+          <option>Castilla y León</option>
+          <option>Cataluña</option>
+          <option>Comunidad Valenciana</option>
+          <option>Extremadura</option>
+          <option>Galicia</option>
+          <option>Comunidad de Madrid</option>
+          <option>Región de Murcia</option>
+          <option>Navarra</option>
+          <option>País Vasco</option>
+          <option>La Rioja</option>
+          <option>Ceuta</option>
+          <option>Melilla</option>
+        </select>
+      </label>
+
+      <button type="submit" class="btn">
+        ENVIAR PROPUESTA
+      </button>
+
+      <p id="formMessage" role="status"></p>
+
+      <p class="note">
+        Las propuestas serán revisadas por DDeportes Dani
+        antes de aparecer en el directorio.
+      </p>
+
+    </form>
+
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>DDEPORTES DANI</strong>
+  <p>Españoles en la NCAA 🇪🇸</p>
+</footer>
+
+</body>
+</html>
