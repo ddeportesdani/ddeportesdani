@@ -4,16 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Consulta los deportistas españoles que compiten en el deporte universitario estadounidense. NCAA División I, II y III.">
-  <meta name="theme-color" content="#101b2c">
+  <meta name="description" content="Directorio de deportistas españoles en la NCAA. Descubre sus universidades, deportes y divisiones.">
+  <meta name="theme-color" content="#003B7A">
   <title>Españoles en la NCAA | DDeportes Dani</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="header">
-  <a class="logo" href="../index.html">
-    DDEPORTES <span>DANI</span>
+  <a class="brand" href="../index.html">
+    <img
+      src="https://commons.wikimedia.org/wiki/Special:FilePath/NCAA_logo.svg"
+      alt="Logotipo NCAA"
+      class="ncaa-logo"
+    >
+    <span class="brand-text">
+      <strong>ESPAÑOLES EN LA NCAA</strong>
+      <small>BY DDEPORTES DANI</small>
+    </span>
   </a>
 
   <nav>
@@ -25,150 +33,89 @@
 </header>
 
 <main>
+
   <section class="hero">
-    <div class="eyebrow">DEPORTE ESPAÑOL · ESTADOS UNIDOS</div>
+    <div class="hero-content">
+      <span class="eyebrow">DEPORTE ESPAÑOL · ESTADOS UNIDOS</span>
 
-    <h1>ESPAÑOLES <span>EN LA NCAA</span></h1>
+      <h1>ESPAÑOLES<br><span>EN LA NCAA</span></h1>
 
-    <p>
-      El talento español cruza el Atlántico.
-      Descubre a nuestros deportistas en las universidades
-      estadounidenses y sigue sus temporadas.
-    </p>
+      <p>
+        Todo el talento español en el deporte universitario
+        estadounidense. Descubre sus historias, universidades
+        y disciplinas deportivas.
+      </p>
 
-    <a href="#deportistas" class="btn">DESCUBRIR DEPORTISTAS</a>
+      <a href="#deportistas" class="btn">
+        EXPLORAR DIRECTORIO
+      </a>
 
-    <div class="divisions">
-      <div><strong>I</strong><span>DIVISIÓN I</span></div>
-      <div><strong>II</strong><span>DIVISIÓN II</span></div>
-      <div><strong>III</strong><span>DIVISIÓN III</span></div>
+      <div class="divisions">
+        <a href="#deportistas">
+          <strong>I</strong>
+          <span>DIVISIÓN I</span>
+        </a>
+        <a href="#deportistas">
+          <strong>II</strong>
+          <span>DIVISIÓN II</span>
+        </a>
+        <a href="#deportistas">
+          <strong>III</strong>
+          <span>DIVISIÓN III</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat-card">
+      <strong id="totalAthletes">—</strong>
+      <span>DEPORTISTAS</span>
+    </div>
+    <div class="stat-card">
+      <strong id="totalUniversities">—</strong>
+      <span>UNIVERSIDADES</span>
+    </div>
+    <div class="stat-card">
+      <strong id="totalSports">—</strong>
+      <span>DEPORTES</span>
     </div>
   </section>
 
   <section id="deportes" class="sports">
     <div class="section-heading">
       <span class="eyebrow">TODAS LAS DISCIPLINAS</span>
-      <h2>El deporte español, sin fronteras</h2>
-      <p>Un espacio para seguir a nuestros deportistas en diferentes disciplinas.</p>
+      <h2>Un país. Muchos deportes.</h2>
+      <p>
+        Seguimos a los deportistas españoles en todas
+        las disciplinas del deporte universitario americano.
+      </p>
     </div>
 
     <div class="sports-grid">
-      <article>🏀 <span>Baloncesto</span></article>
-      <article>⚽ <span>Fútbol</span></article>
-      <article>🎾 <span>Tenis</span></article>
-      <article>🏊 <span>Natación</span></article>
-      <article>🏃 <span>Atletismo</span></article>
-      <article>⛳ <span>Golf</span></article>
-      <article>🏐 <span>Voleibol</span></article>
-      <article>🤸 <span>Gimnasia</span></article>
-      <article>🥍 <span>Otros deportes</span></article>
+      <a href="#deportistas" data-sport="Baloncesto">🏀 <span>Baloncesto</span></a>
+      <a href="#deportistas" data-sport="Fútbol">⚽ <span>Fútbol</span></a>
+      <a href="#deportistas" data-sport="Tenis">🎾 <span>Tenis</span></a>
+      <a href="#deportistas" data-sport="Natación">🏊 <span>Natación</span></a>
+      <a href="#deportistas" data-sport="Atletismo">🏃 <span>Atletismo</span></a>
+      <a href="#deportistas" data-sport="Golf">⛳ <span>Golf</span></a>
+      <a href="#deportistas" data-sport="Voleibol">🏐 <span>Voleibol</span></a>
+      <a href="#deportistas" data-sport="Gimnasia">🤸 <span>Gimnasia</span></a>
+      <a href="#deportistas" data-sport="">🥍 <span>Otros deportes</span></a>
     </div>
   </section>
 
-
-<section id="deportistas" class="directory">
-  <div class="section-heading">
-    <span class="eyebrow">EL TALENTO ESPAÑOL</span>
-    <h2>Encuentra a nuestros deportistas</h2>
-    <p>
-      Descubre dónde compiten, qué deporte practican
-      y cómo evoluciona su trayectoria universitaria.
-    </p>
-  </div>
-
-  <div class="filters">
-    <input
-      type="search"
-      id="search"
-      placeholder="🔍 Buscar deportista o universidad..."
-      aria-label="Buscar deportista o universidad"
-    >
-
-    <select id="sport">
-      <option value="">Todos los deportes</option>
-    </select>
-
-    <select id="division">
-      <option value="">Todas las divisiones</option>
-      <option value="D1">NCAA División I</option>
-      <option value="D2">NCAA División II</option>
-      <option value="D3">NCAA División III</option>
-    </select>
-
-    <select id="state">
-      <option value="">Todos los estados</option>
-    </select>
-
-    <select id="community">
-      <option value="">Todas las comunidades</option>
-    </select>
-
-    <button id="clearFilters" type="button">
-      Limpiar filtros
-    </button>
-  </div>
-
-  <div class="propose-athlete">
-    <a href="solicitar.html" class="btn">
-      + PROPONER DEPORTISTA
-    </a>
-  </div>
-
-  <div class="directory-info">
-    <span id="resultsCount">Cargando deportistas...</span>
-    <span>Temporada 2026-27</span>
-  </div>
-
-  <div
-    id="athletes"
-    class="athletes-grid"
-    aria-live="polite"
-  >
-    <div class="empty-state">
-      <div class="empty-icon">🇪🇸</div>
-      <h3>El talento español está aquí</h3>
+  <section id="deportistas" class="directory">
+    <div class="section-heading">
+      <span class="eyebrow">DIRECTORIO NACIONAL</span>
+      <h2>Encuentra a nuestros deportistas</h2>
       <p>
-        Estamos preparando el directorio para que puedas
-        descubrir a nuestros deportistas universitarios.
+        Busca por nombre, universidad, deporte, división
+        o procedencia.
       </p>
     </div>
-  </div>
-</section>
 
-
-  
-<div class="filters">
-  <input
-    type="search"
-    id="search"
-    placeholder="Buscar deportista o universidad..."
-    aria-label="Buscar deportista o universidad"
-  >
-
-  <select id="sport">
-    <option value="">Todos los deportes</option>
-  </select>
-
-  <select id="division">
-    <option value="">Todas las divisiones</option>
-    <option value="D1">NCAA D1</option>
-    <option value="D2">NCAA D2</option>
-    <option value="D3">NCAA D3</option>
-  </select>
-
-  <select id="state">
-    <option value="">Todos los estados</option>
-  </select>
-
-  <select id="community">
-    <option value="">Todas las comunidades</option>
-  </select>
-
-  <button id="clearFilters" type="button">
-    Limpiar filtros
-  </button>
-</div>
-
+    <div class="filters">
       <input
         type="search"
         id="search"
@@ -182,57 +129,70 @@
 
       <select id="division">
         <option value="">Todas las divisiones</option>
-        <option value="I">División I</option>
-        <option value="II">División II</option>
-        <option value="III">División III</option>
+        <option value="D1">NCAA División I</option>
+        <option value="D2">NCAA División II</option>
+        <option value="D3">NCAA División III</option>
       </select>
 
-      <button id="clearFilters" type="button">Limpiar filtros</button>
+      <select id="state">
+        <option value="">Todos los estados</option>
+      </select>
+
+      <select id="community">
+        <option value="">Todas las comunidades</option>
+      </select>
+
+      <button id="clearFilters" type="button">
+        LIMPIAR FILTROS
+      </button>
     </div>
 
-<div style="text-align:center; margin: 0 auto 25px;">
-  <a href="solicitar.html" class="btn">
-    + PROPONER DEPORTISTA
-  </a>
-</div>
+    <div class="propose-athlete">
+      <a href="solicitar.html" class="btn btn-outline">
+        + PROPONER DEPORTISTA
+      </a>
+    </div>
 
     <div class="directory-info">
-      <span id="resultsCount">Directorio en preparación</span>
-      <span>Temporada 2026-27</span>
+      <span id="resultsCount">Cargando directorio...</span>
+      <span>TEMPORADA 2026-27</span>
     </div>
 
     <div id="athletes" class="athletes-grid" aria-live="polite">
       <div class="empty-state">
         <div class="empty-icon">🇪🇸</div>
-        <h3>Estamos preparando el directorio</h3>
-        <p>
-          Muy pronto podrás descubrir a los deportistas españoles
-          que compiten en las universidades estadounidenses.
-        </p>
+        <h3>El talento español está aquí</h3>
+        <p>Estamos preparando el directorio.</p>
       </div>
     </div>
   </section>
 
   <section id="proyecto" class="project">
-    <span class="eyebrow">DDEPORTES DANI</span>
-    <h2>El talento español también se escribe en Estados Unidos.</h2>
+    <span class="eyebrow">DDEPORTES DANI PRESENTA</span>
+    <h2>El deporte español no tiene fronteras.</h2>
     <p>
-      Queremos dar visibilidad a los deportistas españoles que
-      compiten en el deporte universitario estadounidense,
-      acercando sus historias, resultados y trayectorias
-      a los aficionados españoles.
+      Un proyecto independiente para dar visibilidad a los
+      deportistas españoles que compiten en las universidades
+      estadounidenses, sin importar su deporte o división.
     </p>
+    <a href="#deportistas" class="btn">DESCUBRIR DEPORTISTAS</a>
   </section>
+
 </main>
 
 <footer>
-  <strong>DDEPORTES DANI</strong>
+  <div class="footer-brand">
+    <strong>DDEPORTES DANI</strong>
+    <span>ESPAÑOLES EN LA NCAA 🇪🇸</span>
+  </div>
   <p>Deporte · Comunicación · Empresa</p>
-  <p>Españoles en la NCAA 🇪🇸</p>
+  <p>Proyecto independiente de seguimiento del deporte universitario.</p>
   <p>© 2026 DDeportes Dani. Todos los derechos reservados.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
+
 </body>
 </html>
+
