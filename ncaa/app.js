@@ -184,20 +184,19 @@ function populateFilters() {
   populateSelect(divisionSelect, divisions, "Todas las divisiones");
 }
 
-const sports = new Set(
+const sports = [...new Set(
   athletes
     .map(a => normalizeSport(a.deporte))
     .filter(Boolean)
-);
-    .sort((a, b) => a.localeCompare(b, "es"));
+)].sort((a, b) => a.localeCompare(b, "es"));
 
-  const states = [...new Set(
-    athletes.map(a => a.estado?.trim()).filter(Boolean)
-  )].sort();
+const states = [...new Set(
+  athletes.map(a => a.estado?.trim()).filter(Boolean)
+)].sort();
 
-  const communities = [...new Set(
-    athletes.map(a => a.comunidad?.trim()).filter(Boolean)
-  )].sort((a, b) => a.localeCompare(b, "es"));
+const communities = [...new Set(
+  athletes.map(a => a.comunidad?.trim()).filter(Boolean)
+)].sort((a, b) => a.localeCompare(b, "es"));
 
   const divisions = [...new Set(
     athletes.map(a => normalizeDivision(a.division)).filter(Boolean)
