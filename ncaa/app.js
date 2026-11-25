@@ -159,7 +159,12 @@ function populateFilters() {
     }
   });
 
-  const sports = [...uniqueSports.values()]
+
+const sports = new Set(
+  athletes
+    .map(a => normalizeSport(a.deporte))
+    .filter(Boolean)
+);
     .sort((a, b) => a.localeCompare(b, "es"));
 
   const states = [...new Set(
