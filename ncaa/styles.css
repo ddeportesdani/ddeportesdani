@@ -278,4 +278,21 @@ footer p { font-size: 13px; margin-top: 8px; }
     flex-direction: column;
     gap: 5px;
   }
+  .athlete-card {
+  background: white;
+  border: 1px solid #e6e9ee;
+  border-radius: 7px;
+  padding: 25px;
+  margin-bottom: 15px;
+}
+
+.athlete-card h3 {
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.athlete-card p {
+  color: #687487;
+  font-size: 14px;
+}
 }
