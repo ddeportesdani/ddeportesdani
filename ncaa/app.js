@@ -5,7 +5,6 @@
 // ==========================================
 
 const SUPABASE_URL = "https://qizogdfgjkgzjhdzhnmc.supabase.co";
-
 const SUPABASE_KEY = "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3";
 
 const db = window.supabase.createClient(
@@ -13,7 +12,9 @@ const db = window.supabase.createClient(
   SUPABASE_KEY
 );
 
+// ==========================================
 // ELEMENTOS HTML
+// ==========================================
 
 const searchInput = document.getElementById("search");
 const sportSelect = document.getElementById("sport");
@@ -39,19 +40,15 @@ function normalizeText(value) {
   return String(value || "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim();
-}
-
-function normalizeSport(value) {
-  return String(value || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[\u0300-\u036f]/g, "")
-   .replace(/\u00A0/g, " ")
+    .replace(/[\u200B-\u200D\uFEFF]/g, "")
+    .replace(/\u00A0/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
+}
+
+function normalizeSport(value) {
+  return normalizeText(value);
 }
 
 function normalizeDivision(value) {
@@ -123,12 +120,13 @@ function getSportIcon(sport) {
 // ==========================================
 
 async function loadAthletes() {
-  console.log("INICIANDO CARGA DE DEPORTISTAS");
   if (resultsCount) {
     resultsCount.textContent = "Cargando deportistas...";
   }
 
   try {
+    console.log("Iniciando carga de deportistas...");
+
     const { data, error } = await db
       .from("deportistas")
       .select(`
@@ -145,69 +143,12 @@ async function loadAthletes() {
       .order("apellido", { ascending: true });
 
     if (error) throw error;
-console.log("RESPUESTA SUPABASE:", data);
+
     athletes = data || [];
 
+    console.log("Deportistas cargados:", athletes.length);
 
-function populateFilters() {
-  const sportsMap = new Map();
-
-  athletes.forEach(a => {
-    const original = String(a.deporte || "").trim();
-    const key = normalizeSport(original);
-
-    if (key && !sportsMap.has(key)) {
-      sportsMap.set(key, original);
-    }
-  });
-
-  const sports = Array.from(sportsMap.values())
-    .sort((a, b) => a.localeCompare(b, "es"));
-
-  console.log("Deportes originales:", athletes.map(a => a.deporte));
-  console.log("Deportes únicos:", sports);
-
-  const states = [...new Set(
-    athletes.map(a => a.estado).filter(Boolean)
-  )].sort();
-
-  const communities = [...new Set(
-    athletes.map(a => a.comunidad).filter(Boolean)
-  )].sort((a, b) => a.localeCompare(b, "es"));
-
-  const divisions = [...new Set(
-    athletes.map(a => normalizeDivision(a.division)).filter(Boolean)
-  )].sort();
-
-  populateSelect(sportSelect, sports, "Todos los deportes");
-  populateSelect(stateSelect, states, "Todos los estados");
-  populateSelect(communitySelect, communities, "Todas las comunidades");
-  populateSelect(divisionSelect, divisions, "Todas las divisiones");
-}
-
-const sports = [...new Set(
-  athletes
-    .map(a => normalizeSport(a.deporte))
-    .filter(Boolean)
-)].sort((a, b) => a.localeCompare(b, "es"));
-
-const states = [...new Set(
-  athletes.map(a => a.estado?.trim()).filter(Boolean)
-)].sort();
-
-const communities = [...new Set(
-  athletes.map(a => a.comunidad?.trim()).filter(Boolean)
-)].sort((a, b) => a.localeCompare(b, "es"));
-
-  const divisions = [...new Set(
-    athletes.map(a => normalizeDivision(a.division)).filter(Boolean)
-  )].sort();
-
-  populateSelect(sportSelect, sports, "Todos los deportes");
-  populateSelect(stateSelect, states, "Todos los estados");
-  populateSelect(communitySelect, communities, "Todas las comunidades");
-  populateSelect(divisionSelect, divisions, "Todas las divisiones");
-}
+    populateFilters();
     updateStatistics();
     renderAthletes();
 
@@ -258,26 +199,70 @@ function populateSelect(select, values, defaultText) {
 }
 
 function populateFilters() {
-  const sports = [...new Set(
-    athletes.map(a => a.deporte).filter(Boolean)
-  )].sort((a, b) => a.localeCompare(b, "es"));
+
+  // Eliminar deportes repetidos aunque tengan
+  // diferencias de mayúsculas, tildes o espacios.
+
+  const sportsMap = new Map();
+
+  athletes.forEach(a => {
+    const original = String(a.deporte || "")
+      .replace(/\u00A0/g, " ")
+      .trim();
+
+    const key = normalizeSport(original);
+
+    if (key && !sportsMap.has(key)) {
+      sportsMap.set(key, original);
+    }
+  });
+
+  const sports = [...sportsMap.values()]
+    .sort((a, b) => a.localeCompare(b, "es"));
 
   const states = [...new Set(
-    athletes.map(a => a.estado).filter(Boolean)
-  )].sort();
+    athletes
+      .map(a => String(a.estado || "").trim())
+      .filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b, "es"));
 
   const communities = [...new Set(
-    athletes.map(a => a.comunidad).filter(Boolean)
+    athletes
+      .map(a => String(a.comunidad || "").trim())
+      .filter(Boolean)
   )].sort((a, b) => a.localeCompare(b, "es"));
 
   const divisions = [...new Set(
-    athletes.map(a => normalizeDivision(a.division)).filter(Boolean)
+    athletes
+      .map(a => normalizeDivision(a.division))
+      .filter(Boolean)
   )].sort();
 
-  populateSelect(sportSelect, sports, "Todos los deportes");
-  populateSelect(stateSelect, states, "Todos los estados");
-  populateSelect(communitySelect, communities, "Todas las comunidades");
-  populateSelect(divisionSelect, divisions, "Todas las divisiones");
+  populateSelect(
+    sportSelect,
+    sports,
+    "Todos los deportes"
+  );
+
+  populateSelect(
+    stateSelect,
+    states,
+    "Todos los estados"
+  );
+
+  populateSelect(
+    communitySelect,
+    communities,
+    "Todas las comunidades"
+  );
+
+  populateSelect(
+    divisionSelect,
+    divisions,
+    "Todas las divisiones"
+  );
+
+  console.log("Deportes únicos:", sports);
 }
 
 // ==========================================
@@ -285,6 +270,7 @@ function populateFilters() {
 // ==========================================
 
 function updateStatistics() {
+
   const universities = new Set(
     athletes
       .map(a => normalizeText(a.universidad))
@@ -293,7 +279,7 @@ function updateStatistics() {
 
   const sports = new Set(
     athletes
-      .map(a => normalizeText(a.deporte))
+      .map(a => normalizeSport(a.deporte))
       .filter(Boolean)
   );
 
@@ -331,6 +317,7 @@ function showMessage(title, message) {
   paragraph.textContent = message;
 
   empty.append(icon, heading, paragraph);
+
   athletesContainer.replaceChildren(empty);
 }
 
@@ -339,6 +326,7 @@ function showMessage(title, message) {
 // ==========================================
 
 function createAthleteCard(athlete) {
+
   const card = document.createElement("article");
   card.className = "athlete-card";
 
@@ -356,12 +344,14 @@ function createAthleteCard(athlete) {
     : "NCAA";
 
   const name = document.createElement("h3");
+
   name.textContent =
     `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
     || "Nombre no indicado";
 
   const university = document.createElement("p");
   university.className = "athlete-university";
+
   university.textContent =
     athlete.universidad || "Universidad no indicada";
 
@@ -376,6 +366,7 @@ function createAthleteCard(athlete) {
   ];
 
   fields.forEach(([label, value]) => {
+
     if (!value) return;
 
     const detail = document.createElement("p");
@@ -406,6 +397,7 @@ function createAthleteCard(athlete) {
 // ==========================================
 
 function renderAthletes() {
+
   if (!athletesContainer) return;
 
   const search = normalizeText(searchInput?.value);
@@ -415,6 +407,7 @@ function renderAthletes() {
   const community = communitySelect?.value || "";
 
   const filtered = athletes.filter(athlete => {
+
     const searchable = normalizeText([
       athlete.nombre,
       athlete.apellido,
@@ -426,12 +419,20 @@ function renderAthletes() {
 
     return (
       searchable.includes(search) &&
-      (!sport || normalizeSport(athlete.deporte) === normalizeSport(sport))
+
+      (!sport ||
+        normalizeSport(athlete.deporte) ===
+        normalizeSport(sport)) &&
+
       (!division ||
         normalizeDivision(athlete.division) ===
         normalizeDivision(division)) &&
-      (!state || athlete.estado === state) &&
-      (!community || athlete.comunidad === community)
+
+      (!state ||
+        athlete.estado === state) &&
+
+      (!community ||
+        athlete.comunidad === community)
     );
   });
 
@@ -446,10 +447,12 @@ function renderAthletes() {
   athletesContainer.replaceChildren();
 
   if (filtered.length === 0) {
+
     showMessage(
       athletes.length
         ? "No hay resultados"
         : "Estamos preparando el directorio",
+
       athletes.length
         ? "Prueba con otros términos o modifica los filtros."
         : "Pronto incorporaremos más deportistas españoles."
@@ -469,19 +472,28 @@ function renderAthletes() {
 // EVENTOS
 // ==========================================
 
+// Buscador
+
+if (searchInput) {
+  searchInput.addEventListener("input", renderAthletes);
+}
+
+// Desplegables
+
 [
-  searchInput,
   sportSelect,
   divisionSelect,
   stateSelect,
   communitySelect
 ].filter(Boolean).forEach(control => {
-  control.addEventListener("input", renderAthletes);
   control.addEventListener("change", renderAthletes);
 });
 
+// Limpiar filtros
+
 if (clearButton) {
   clearButton.addEventListener("click", () => {
+
     if (searchInput) searchInput.value = "";
     if (sportSelect) sportSelect.value = "";
     if (divisionSelect) divisionSelect.value = "";
@@ -497,7 +509,9 @@ if (clearButton) {
 // ==========================================
 
 document.querySelectorAll("[data-sport]").forEach(link => {
+
   link.addEventListener("click", () => {
+
     const selectedSport = link.dataset.sport;
 
     if (!sportSelect) return;
@@ -505,10 +519,11 @@ document.querySelectorAll("[data-sport]").forEach(link => {
     if (!selectedSport) {
       sportSelect.value = "";
     } else {
+
       const option = [...sportSelect.options].find(
         option =>
-          normalizeText(option.value) ===
-          normalizeText(selectedSport)
+          normalizeSport(option.value) ===
+          normalizeSport(selectedSport)
       );
 
       if (option) {
@@ -525,3 +540,4 @@ document.querySelectorAll("[data-sport]").forEach(link => {
 // ==========================================
 
 loadAthletes();
+
