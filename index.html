@@ -410,6 +410,122 @@ footer p { font-size: 13px; margin-top: 8px; }
 
   .stats-grid { grid-template-columns: 1fr; }
 }
+  
+/* REDES SOCIALES */
+
+.social-section {
+  background: #f1f5fa;
+  padding: 75px 8%;
+}
+
+.social-grid {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.social-card {
+  background: #102d50;
+  border: 1px solid #29486b;
+  border-radius: 12px;
+  padding: 27px 15px;
+  text-align: center;
+  color: white;
+  transition: .25s;
+}
+
+.social-card:hover {
+  transform: translateY(-6px);
+  background: #164878;
+  box-shadow: 0 12px 25px #071b3820;
+}
+
+.social-card img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.social-card h3 {
+  font-size: 19px;
+  margin-bottom: 5px;
+}
+
+.social-card p {
+  color: #c4d5ea;
+  font-size: 13px;
+  margin-bottom: 17px;
+  overflow-wrap: anywhere;
+}
+
+.social-card span {
+  color: #80bcff;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+/* SPOTIFY */
+
+.spotify-section {
+  background: #071b38;
+  padding: 55px 8%;
+  color: white;
+}
+
+.spotify-content {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.spotify-logo {
+  width: 65px;
+  height: 65px;
+  flex-shrink: 0;
+}
+
+.spotify-content h2 {
+  font-size: clamp(23px, 3vw, 32px);
+  margin: 5px 0;
+}
+
+.spotify-content p {
+  color: #c4d5ea;
+  font-size: 14px;
+}
+
+.spotify-content .btn {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+@media(max-width: 800px) {
+  .social-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .spotify-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .spotify-content .btn {
+    margin: 5px auto 0;
+  }
+}
+
+@media(max-width: 400px) {
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 </head>
 
