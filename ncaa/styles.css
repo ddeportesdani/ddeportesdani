@@ -62,12 +62,13 @@ button, input, select {
 }
 
 .ncaa-logo {
-  width: 61px;
-  height: 61px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   background: white;
   border-radius: 50%;
-  padding: 3px;
+  padding: 2px;
+  flex-shrink: 0;
 }
 
 .brand-text {
