@@ -152,8 +152,12 @@ async function loadAthletes() {
         .order("id", { ascending: true })
         .range(from, from + PAGE_SIZE - 1);
 
-      if (error) throw error;
+if (error) {
+  console.error("ERROR DE SUPABASE:", error);
+  throw error;
+}
 
+console.log("REGISTROS RECIBIDOS EN ESTA PÁGINA:", data?.length);
       const batch = data || [];
 
       allAthletes = allAthletes.concat(batch);
