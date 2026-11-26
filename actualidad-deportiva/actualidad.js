@@ -240,8 +240,8 @@ function renderClassifieds() {
     $("classified-count").textContent = nominalCount;
   }
 
-  if ($("places-count")) {
-    $("places-count").textContent = placesCount;
+  $("classified-count").textContent = nominalCount;
+$("places-count").textContent = placesCount;
   }
 }
 
