@@ -389,18 +389,20 @@ if (athlete.foto_url) {
   image.src = athlete.foto_url;
   image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
 
-  image.style.cssText = `
-    width: 110px !important;
-    height: 110px !important;
-    min-width: 110px !important;
-    max-width: 110px !important;
-    min-height: 110px !important;
-    max-height: 110px !important;
-    object-fit: cover !important;
-    display: block !important;
-    border-radius: 50% !important;
-    flex: 0 0 110px !important;
-  `;
+  
+image.style.cssText = `
+  width: 135px !important;
+  height: 135px !important;
+  min-width: 135px !important;
+  max-width: 135px !important;
+  min-height: 135px !important;
+  max-height: 135px !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 50% !important;
+  flex: 0 0 135px !important;
+`;
+
 
   image.onerror = () => imageContainer.remove();
 
