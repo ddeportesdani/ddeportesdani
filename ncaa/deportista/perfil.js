@@ -16,6 +16,31 @@ function el(parent, tag, className, value) {
 }
 
 function validImage(url) {
+  
+function formatSpanishDate(value) {
+  if (!value) return "";
+
+  // Evitar problemas de zona horaria
+  const match = String(value).match(
+    /^(\d{4})-(\d{2})-(\d{2})$/
+  );
+
+  if (match) {
+    return `${match[3]}/${match[2]}/${match[1]}`;
+  }
+
+  const date = new Date(value);
+
+  if (isNaN(date.getTime())) return value;
+
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    timeZone: "UTC"
+  }).format(date);
+}
+
   try {
     return ["https:", "http:"].includes(new URL(url).protocol);
   } catch {
