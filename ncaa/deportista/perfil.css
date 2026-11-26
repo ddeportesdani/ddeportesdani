@@ -1,1 +1,257 @@
 
+.profile-page {
+  background: #F2F6FB;
+  min-height: 70vh;
+  padding: 45px 7% 80px;
+}
+
+.profile-back {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: #003B7A;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.profile-card {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,.06);
+}
+
+.profile-cover {
+  background: linear-gradient(120deg, #071D38, #003B7A);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  color: white;
+}
+
+.profile-main-photo {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid white;
+  flex-shrink: 0;
+}
+
+.profile-heading {
+  flex: 1;
+}
+
+.profile-heading .eyebrow {
+  color: #A9D4FF;
+}
+
+.profile-name {
+  font-size: clamp(27px, 5vw, 43px);
+  line-height: 1.15;
+  margin: 12px 0;
+}
+
+.profile-university {
+  color: #C9DDF2;
+  font-weight: bold;
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.profile-tag {
+  background: rgba(255,255,255,.15);
+  padding: 7px 12px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.profile-section {
+  padding: 30px 40px;
+  border-bottom: 1px solid #E9EEF4;
+}
+
+.profile-section h2 {
+  color: #071D38;
+  font-size: 23px;
+  margin-bottom: 20px;
+}
+
+.profile-biography {
+  color: #68788D;
+  font-size: 14px;
+  line-height: 1.9;
+  white-space: pre-line;
+}
+
+.profile-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.profile-detail-item {
+  background: #F2F6FB;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.profile-detail-item span {
+  display: block;
+  color: #68788D;
+  font-size: 11px;
+}
+
+.profile-detail-item strong {
+  display: block;
+  color: #003B7A;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.profile-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.profile-stat {
+  background: #F2F6FB;
+  padding: 18px;
+  text-align: center;
+  border-radius: 9px;
+}
+
+.profile-stat strong {
+  display: block;
+  color: #003B7A;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.profile-stat span {
+  display: block;
+  color: #68788D;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.profile-season {
+  color: #68788D;
+  margin: -10px 0 18px;
+  font-size: 12px;
+}
+
+.profile-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.profile-gallery img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 9px;
+}
+
+.profile-calendar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: #F2F6FB;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.profile-calendar-item strong {
+  color: #005EB8;
+  font-size: 12px;
+}
+
+.profile-calendar-item span {
+  font-size: 13px;
+  color: #25364B;
+}
+
+.profile-share {
+  padding: 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-share span {
+  color: #68788D;
+  font-size: 13px;
+}
+
+.profile-share button {
+  background: #003B7A;
+  color: white;
+  border: 0;
+  padding: 14px 25px;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.profile-share button:hover {
+  background: #005EB8;
+}
+
+.profile-error {
+  background: white;
+  padding: 45px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+@media(max-width:650px) {
+  .profile-page {
+    padding: 30px 5%;
+  }
+
+  .profile-cover {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .profile-main-photo {
+    width: 145px;
+    height: 145px;
+  }
+
+  .profile-meta {
+    justify-content: center;
+  }
+
+  .profile-section {
+    padding: 25px 20px;
+  }
+
+  .profile-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
