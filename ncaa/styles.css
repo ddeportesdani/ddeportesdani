@@ -563,12 +563,13 @@ footer p {
 
 /* MÓVILES */
 
+
 @media (max-width: 650px) {
-  .header {
-    flex-direction: column;
-    padding: 13px 5%;
-    gap: 12px;
+  .athlete-photo-container {
+    height: 150px;
   }
+}
+
 
   .brand {
     align-self: flex-start;
