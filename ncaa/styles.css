@@ -800,30 +800,23 @@ footer p {
 
 /* FORZAR TAMAÑO DE FOTOGRAFÍAS NCAA */
 
+
 .athlete-card .athlete-photo-container {
+  width: 110px !important;
   height: 110px !important;
-  min-height: 110px !important;
-  max-height: 110px !important;
-  width: 100% !important;
-  margin: 0 0 15px 0 !important;
+  margin: 0 auto 18px !important;
+  border-radius: 50% !important;
   overflow: hidden !important;
 }
 
 .athlete-card .athlete-photo {
   width: 100% !important;
-  height: 110px !important;
-  max-height: 110px !important;
+  height: 100% !important;
   object-fit: cover !important;
-  display: block !important;
+  object-position: center !important;
+  border-radius: 50% !important;
 }
 
-@media (max-width: 650px) {
-  .athlete-card .athlete-photo-container {
-    height: 110px !important;
-  }
-
-  .athlete-card .athlete-photo {
-    height: 110px !important;
   }
 }
 
