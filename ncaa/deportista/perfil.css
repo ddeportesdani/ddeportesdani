@@ -29,19 +29,25 @@
   align-items: center;
   gap: 30px;
   color: white;
+  min-width: 0;
 }
 
 .profile-main-photo {
   width: 180px;
   height: 180px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   border-radius: 50%;
   border: 5px solid white;
+  background: #fff;
   flex-shrink: 0;
+  display: block;
 }
 
 .profile-heading {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .profile-heading .eyebrow {
@@ -52,6 +58,7 @@
   font-size: clamp(27px, 5vw, 43px);
   line-height: 1.15;
   margin: 12px 0;
+  overflow-wrap: anywhere;
 }
 
 .profile-university {
@@ -77,6 +84,7 @@
 .profile-section {
   padding: 30px 40px;
   border-bottom: 1px solid #E9EEF4;
+  min-width: 0;
 }
 
 .profile-section h2 {
@@ -90,6 +98,7 @@
   font-size: 14px;
   line-height: 1.9;
   white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 
 .profile-detail-grid {
@@ -102,6 +111,7 @@
   background: #F2F6FB;
   padding: 15px;
   border-radius: 8px;
+  min-width: 0;
 }
 
 .profile-detail-item span {
@@ -115,6 +125,7 @@
   color: #003B7A;
   font-size: 14px;
   margin-top: 5px;
+  overflow-wrap: anywhere;
 }
 
 .profile-stat-grid {
@@ -125,16 +136,19 @@
 
 .profile-stat {
   background: #F2F6FB;
-  padding: 18px;
+  padding: 18px 10px;
   text-align: center;
   border-radius: 9px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .profile-stat strong {
   display: block;
   color: #003B7A;
-  font-size: 25px;
+  font-size: clamp(18px, 3vw, 25px);
   font-weight: 900;
+  overflow-wrap: anywhere;
 }
 
 .profile-stat span {
@@ -142,6 +156,7 @@
   color: #68788D;
   font-size: 11px;
   margin-top: 5px;
+  overflow-wrap: anywhere;
 }
 
 .profile-season {
@@ -159,8 +174,11 @@
 .profile-gallery img {
   width: 100%;
   height: 230px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: #F2F6FB;
   border-radius: 9px;
+  display: block;
 }
 
 .profile-calendar-item {
@@ -171,6 +189,7 @@
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 10px;
+  min-width: 0;
 }
 
 .profile-calendar-item strong {
@@ -181,6 +200,7 @@
 .profile-calendar-item span {
   font-size: 13px;
   color: #25364B;
+  overflow-wrap: anywhere;
 }
 
 .profile-share {
@@ -253,5 +273,8 @@
   .profile-gallery {
     grid-template-columns: 1fr;
   }
-}
 
+  .profile-gallery img {
+    height: 220px;
+  }
+}
