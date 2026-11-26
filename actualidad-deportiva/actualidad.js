@@ -57,17 +57,13 @@ function normalize(value) {
    MOSTRAR TARJETAS Y CONTADORES
 ========================================== */
 
+
 function renderClassifieds() {
-  const nominal = $("classified-athletes");
-  const places = $("classified-places");
+  const tbody = $("athletes");
 
-  if (!nominal || !places) {
-    console.error("Faltan los contenedores HTML de clasificados.");
-    return;
-  }
+  if (!tbody) return;
 
-  nominal.replaceChildren();
-  places.replaceChildren();
+  tbody.replaceChildren();
 
   const sport = $("sport-filter")?.value || "";
   const type = $("type-filter")?.value || "";
@@ -75,9 +71,11 @@ function renderClassifieds() {
   const filtered = classifiedData.filter(item => {
     if (!item.athlete) return false;
 
+    const athlete = item.athlete;
+
     return (
-      (!sport || item.athlete.deporte === sport) &&
-      (!type || normalize(item.athlete.tipo) === normalize(type))
+      (!sport || athlete.deporte === sport) &&
+      (!type || normalize(athlete.tipo) === normalize(type))
     );
   });
 
@@ -88,90 +86,72 @@ function renderClassifieds() {
     const athlete = item.athlete;
 
     const isPlace =
-      normalize(athlete.estado_clasificacion) === "plaza no nominal" ||
-      normalize(item.estado) === "plaza no nominal";
-
-    const card = el("article", "classified-card");
-
-    if (athlete.fotografia) {
-      const img = el("img");
-      img.src = safeLink(athlete.fotografia);
-      img.alt = athlete.nombre || "Deportista";
-      img.loading = "lazy";
-      card.append(img);
-    }
-
-    card.append(el(
-      "span",
-      "category",
-      normalize(athlete.tipo) === "paralimpico"
-        ? "DEPORTE PARALÍMPICO"
-        : "DEPORTE OLÍMPICO"
-    ));
-
-    card.append(el("h3", "", athlete.nombre || "Sin nombre"));
-    card.append(el("p", "", "Deporte: " + (athlete.deporte || "—")));
-    card.append(el("p", "", "Modalidad: " + (athlete.modalidad || "—")));
-    card.append(el("p", "", "Competición: " + (
-      item.competicion ||
-      athlete.competicion_clasificacion ||
-      "—"
-    )));
-
-    card.append(el(
-      "span",
-      isPlace ? "status non-nominal" : "status",
-      item.estado || athlete.estado_clasificacion || "Clasificado"
-    ));
-
-    if (athlete.federacion) {
-      card.append(el("p", "", "Federación: " + athlete.federacion));
-    }
-
-    if (item.fecha_clasificacion) {
-      card.append(el(
-        "p", "",
-        "Fecha: " + new Date(item.fecha_clasificacion + "T00:00:00")
-          .toLocaleDateString("es-ES")
-      ));
-    }
-
-    if (item.observaciones) {
-      card.append(el("p", "", item.observaciones));
-    }
-
-    if (item.fuente_url) {
-      const link = el("a", "more", "CONSULTAR FUENTE OFICIAL →");
-      link.href = safeLink(item.fuente_url);
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      card.append(link);
-    }
+      normalize(item.estado) === "plaza no nominal" ||
+      normalize(athlete.estado_clasificacion) === "plaza no nominal";
 
     if (isPlace) {
-      places.append(card);
       placesCount++;
     } else {
-      nominal.append(card);
       nominalCount++;
     }
+
+    const row = document.createElement("tr");
+
+    const values = [
+      athlete.nombre,
+      athlete.deporte,
+      item.competicion || athlete.competicion_clasificacion,
+      athlete.modalidad,
+      item.estado || athlete.estado_clasificacion
+    ];
+
+    values.forEach((value, index) => {
+      const cell = document.createElement("td");
+
+      if (index === 4) {
+        const badge = document.createElement("span");
+        badge.className = "status" + (isPlace ? " non-nominal" : "");
+        badge.textContent = value || "Pendiente";
+        cell.appendChild(badge);
+      } else {
+        cell.textContent = value || "—";
+      }
+
+      row.appendChild(cell);
+    });
+
+    tbody.appendChild(row);
   });
 
-  if (!nominalCount) {
-    nominal.append(el("p", "empty", "No hay clasificados nominales."));
+  if (!filtered.length) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+
+    cell.colSpan = 5;
+    cell.textContent = "No hay clasificados para estos filtros.";
+
+    row.appendChild(cell);
+    tbody.appendChild(row);
   }
 
-  if (!placesCount) {
-    places.append(el("p", "empty", "No hay plazas no nominales."));
-  }
+  // Contadores generales, sin aplicar filtros
+  const allNominal = classifiedData.filter(item =>
+    item.athlete &&
+    normalize(item.estado) !== "plaza no nominal" &&
+    normalize(item.athlete.estado_clasificacion) !== "plaza no nominal"
+  ).length;
 
-  if ($("classified-count")) {
-    $("classified-count").textContent = nominalCount;
-  }
+  const allPlaces = classifiedData.filter(item =>
+    item.athlete && (
+      normalize(item.estado) === "plaza no nominal" ||
+      normalize(item.athlete.estado_clasificacion) === "plaza no nominal"
+    )
+  ).length;
 
-  $("classified-count").textContent = nominalCount;
-$("places-count").textContent = placesCount;
-  }
+  $("classified-count").textContent = allNominal;
+  $("places-count").textContent = allPlaces;
+}
+
 }
 
 /* ==========================================
