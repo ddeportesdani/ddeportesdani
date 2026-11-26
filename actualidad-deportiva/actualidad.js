@@ -58,43 +58,70 @@ function normalize(value) {
    CARGAR CLASIFICADOS DESDE SUPABASE
 ========================================== */
 
+
 async function loadClassifieds() {
-  const tbody = $("athletes");
+  const tbody = document.getElementById("athletes");
 
   try {
-    if (tbody && classifiedData.length === 0) {
+    if (tbody) {
       tbody.innerHTML =
-        '<tr><td colspan="5">Cargando deportistas clasificados...</td></tr>';
+        '<tr><td colspan="5">Cargando clasificados...</td></tr>';
     }
 
-    const { data, error } = await supabaseClient
-      .from("clasificados")
-      .select(`
-        *,
-        athlete:athletes(*)
-      `);
+    // Obtener clasificados
+    const { data: clasificados, error: errorClasificados } =
+      await supabaseClient
+        .from("clasificados")
+        .select("*");
 
-    if (error) throw error;
+    if (errorClasificados) throw errorClasificados;
 
-    classifiedData = (data || []).filter(item => item.athlete);
+    // Obtener deportistas de actualidad
+    const { data: deportistas, error: errorDeportistas } =
+      await supabaseClient
+        .from("deportistas_actualidad")
+        .select("*");
+
+    if (errorDeportistas) throw errorDeportistas;
+
+    // Relacionar ambas tablas mediante el ID
+    const mapaDeportistas = new Map(
+      (deportistas || []).map(deportista => [
+        String(deportista.id),
+        deportista
+      ])
+    );
+
+    classifiedData = (clasificados || [])
+      .map(item => {
+        const deportista = mapaDeportistas.get(
+          String(item.deportistas_actualidad)
+        );
+
+        if (!deportista) return null;
+
+        return {
+          ...item,
+          athlete: deportista
+        };
+      })
+      .filter(Boolean);
 
     populateSportFilter();
     renderClassifieds();
 
-    console.log(
-      "Deportistas clasificados cargados:",
-      classifiedData.length
-    );
+    console.log("Clasificados cargados:", classifiedData);
 
   } catch (error) {
     console.error("Error cargando clasificados:", error);
 
     if (tbody) {
       tbody.innerHTML =
-        '<tr><td colspan="5">No se pudieron cargar los clasificados. Consulta la consola.</td></tr>';
+        '<tr><td colspan="5">Error cargando los clasificados.</td></tr>';
     }
   }
 }
+
 
 /* ==========================================
    MOSTRAR CLASIFICADOS Y CONTADORES
