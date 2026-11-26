@@ -367,238 +367,46 @@ function showMessage(title, message) {
 // CREAR TARJETA DE DEPORTISTA
 // ==========================================
 
-
-
-function createAthleteCard(athlete) {
-  const card = document.createElement("article");
-  card.className = "athlete-card";
-
-  
 // FOTOGRAFÍA PRINCIPAL
 if (athlete.foto_url) {
   const imageContainer = document.createElement("div");
   imageContainer.className = "athlete-photo-container";
 
+  imageContainer.style.cssText = `
+    width: 100%;
+    height: 120px;
+    max-height: 120px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 8px;
+  `;
+
   const image = document.createElement("img");
   image.className = "athlete-photo";
-  image.style.setProperty("width", "90px", "important");
-image.style.setProperty("height", "90px", "important");
-image.style.setProperty("max-width", "90px", "important");
-image.style.setProperty("max-height", "90px", "important");
-image.style.setProperty("object-fit", "cover", "important");
-image.style.setProperty("border-radius", "50%", "important");
-image.style.setProperty("display", "block", "important");
-
-imageContainer.style.setProperty("width", "90px", "important");
-imageContainer.style.setProperty("height", "90px", "important");
-imageContainer.style.setProperty("max-width", "90px", "important");
-imageContainer.style.setProperty("max-height", "90px", "important");
-imageContainer.style.setProperty("overflow", "hidden", "important");
-imageContainer.style.setProperty("margin", "0 auto 15px", "important");
   image.src = athlete.foto_url;
   image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
-  image.loading = "lazy";
+
+  image.style.cssText = `
+    width: 110px !important;
+    height: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    min-height: 110px !important;
+    max-height: 110px !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 50% !important;
+    flex: 0 0 110px !important;
+  `;
 
   image.onerror = () => imageContainer.remove();
 
   imageContainer.appendChild(image);
   card.appendChild(imageContainer);
 }
-
-
-  // ICONO DEL DEPORTE
-  const sportIcon = document.createElement("div");
-  sportIcon.className = "athlete-sport-icon";
-  sportIcon.textContent = getSportIcon(athlete.deporte);
-
-  // DIVISIÓN
-  const badge = document.createElement("span");
-  badge.className = "athlete-badge";
-
-  const division = normalizeDivision(athlete.division);
-
-  badge.textContent = division
-    ? "NCAA " + division
-    : "NCAA";
-
-  // NOMBRE
-  const name = document.createElement("h3");
-  name.textContent =
-    `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
-    || "Nombre no indicado";
-
-  // UNIVERSIDAD
-  const university = document.createElement("p");
-  university.className = "athlete-university";
-  university.textContent =
-    athlete.universidad || "Universidad no indicada";
-
-  // INFORMACIÓN GENERAL
-  const details = document.createElement("div");
-  details.className = "athlete-details";
-
-  const fields = [
-    ["Deporte", athlete.deporte],
-    ["Estado", athlete.estado],
-    ["Año universitario", athlete.ano_universidad],
-    ["Comunidad", athlete.comunidad],
-    ["Temporada", athlete.temporada]
-  ];
-
-  fields.forEach(([label, value]) => {
-    if (!value) return;
-
-    const detail = document.createElement("p");
-    const strong = document.createElement("strong");
-    strong.textContent = label + ": ";
-
-    const span = document.createElement("span");
-    span.textContent = value;
-
-    detail.append(strong, span);
-    details.appendChild(detail);
-  });
-
-  card.append(sportIcon, badge, name, university, details);
-
-  // BIOGRAFÍA
-  if (athlete.biografia) {
-    const biography = document.createElement("div");
-    biography.className = "athlete-biography";
-
-    const heading = document.createElement("h4");
-    heading.textContent = "Trayectoria";
-
-    const paragraph = document.createElement("p");
-    paragraph.textContent = athlete.biografia;
-
-    biography.append(heading, paragraph);
-    card.appendChild(biography);
-  }
-
-  // ESTADÍSTICAS
-  if (athlete.estadisticas) {
-    const statistics = document.createElement("div");
-    statistics.className = "athlete-statistics";
-
-    const heading = document.createElement("h4");
-    heading.textContent = "Estadísticas";
-
-    statistics.appendChild(heading);
-
-    const stats = athlete.estadisticas;
-
-    Object.entries(stats).forEach(([key, value]) => {
-      if (
-        value === null ||
-        value === undefined ||
-        typeof value === "object"
-      ) return;
-
-      const row = document.createElement("p");
-
-      const label = document.createElement("strong");
-      label.textContent = key
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, letter => letter.toUpperCase()) + ": ";
-
-      const content = document.createElement("span");
-      content.textContent = String(value);
-
-      row.append(label, content);
-      statistics.appendChild(row);
-    });
-
-    card.appendChild(statistics);
-  }
-
-  // FOTOGRAFÍA COMPITIENDO
-  if (athlete.foto_competicion_url) {
-    const competition = document.createElement("div");
-    competition.className = "athlete-competition";
-
-    const heading = document.createElement("h4");
-    heading.textContent = "En competición";
-
-    const image = document.createElement("img");
-    image.src = athlete.foto_competicion_url;
-    image.alt = `Imagen de ${athlete.nombre || ""} compitiendo`;
-    image.loading = "lazy";
-
-    image.onerror = () => competition.remove();
-
-    competition.append(heading, image);
-    card.appendChild(competition);
-  }
-
-  // CALENDARIO
-  if (Array.isArray(athlete.calendario) && athlete.calendario.length) {
-    const calendar = document.createElement("div");
-    calendar.className = "athlete-calendar";
-
-    const heading = document.createElement("h4");
-    heading.textContent = "Calendario deportivo";
-
-    calendar.appendChild(heading);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const events = [...athlete.calendario]
-      .filter(event => event.fecha && event.evento)
-      .sort((a, b) => a.fecha.localeCompare(b.fecha));
-
-    const upcoming = events.filter(event => {
-      const date = new Date(event.fecha + "T00:00:00");
-      return date >= today;
-    });
-
-    const displayedEvents = upcoming.length
-      ? upcoming.slice(0, 4)
-      : events.slice(-3).reverse();
-
-    displayedEvents.forEach(event => {
-      const item = document.createElement("div");
-      item.className = "calendar-event";
-
-      const date = document.createElement("span");
-      date.className = "calendar-date";
-
-      date.textContent = new Date(
-        event.fecha + "T12:00:00"
-      ).toLocaleDateString("es-ES", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-      });
-
-      const eventName = document.createElement("span");
-      eventName.className = "calendar-event-name";
-      eventName.textContent = event.evento;
-
-      item.append(date, eventName);
-
-      if (event.resultado) {
-        const result = document.createElement("span");
-        result.className = "calendar-result";
-        result.textContent = event.resultado;
-        item.appendChild(result);
-      }
-
-      calendar.appendChild(item);
-    });
-
-    const note = document.createElement("p");
-    note.className = "calendar-note";
-    note.textContent = "Calendario del equipo. La participación individual debe confirmarse.";
-
-    calendar.appendChild(note);
-    card.appendChild(calendar);
-  }
-
-  return card;
-}
-
 
 // ==========================================
 // BUSCAR Y FILTRAR
