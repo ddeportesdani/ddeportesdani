@@ -374,8 +374,8 @@ if (athlete.foto_url) {
 
   imageContainer.style.cssText = `
     width: 100%;
-    height: 120px;
-    max-height: 120px;
+   height: 145px;
+max-height: 145px;
     overflow: hidden;
     display: flex;
     justify-content: center;
