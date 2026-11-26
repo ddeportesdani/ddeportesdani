@@ -274,10 +274,13 @@ function showMessage(title, message) {
 
 // TARJETA DE DEPORTISTA
 
+
 function createAthleteCard(athlete) {
+
   const card = document.createElement("article");
   card.className = "athlete-card";
 
+  // FOTOGRAFÍA
   if (athlete.foto_url) {
     const imageContainer = document.createElement("div");
     imageContainer.className = "athlete-photo-container";
@@ -294,25 +297,31 @@ function createAthleteCard(athlete) {
     card.appendChild(imageContainer);
   }
 
+  // DEPORTE
   const sportIcon = document.createElement("div");
   sportIcon.className = "athlete-sport-icon";
   sportIcon.textContent = getSportIcon(athlete.deporte);
 
+  // DIVISIÓN
   const badge = document.createElement("span");
   badge.className = "athlete-badge";
 
   const division = normalizeDivision(athlete.division);
-  badge.textContent = division ? `NCAA ${division}` : "NCAA";
+  badge.textContent = division ? "NCAA " + division : "NCAA";
 
+  // NOMBRE
   const name = document.createElement("h3");
   name.textContent =
     `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
     || "Nombre no indicado";
 
+  // UNIVERSIDAD
   const university = document.createElement("p");
   university.className = "athlete-university";
-  university.textContent = athlete.universidad || "Universidad no indicada";
+  university.textContent =
+    athlete.universidad || "Universidad no indicada";
 
+  // INFORMACIÓN
   const details = document.createElement("div");
   details.className = "athlete-details";
 
@@ -327,6 +336,7 @@ function createAthleteCard(athlete) {
     if (!value) return;
 
     const detail = document.createElement("p");
+
     const strong = document.createElement("strong");
     strong.textContent = label + ": ";
 
@@ -337,14 +347,13 @@ function createAthleteCard(athlete) {
     details.appendChild(detail);
   });
 
+  // BOTÓN PERFIL INDIVIDUAL
   const profileButton = document.createElement("a");
+
   profileButton.className = "athlete-profile-button";
-  profileButton.href = `deportista/?id=${encodeURIComponent(athlete.id)}`;
-  profileButton.textContent = "VER PERFIL →";
-  profileButton.setAttribute(
-    "aria-label",
-    `Ver perfil de ${name.textContent}`
-  );
+  profileButton.textContent = "VER PERFIL COMPLETO →";
+  profileButton.href =
+    `deportista/index.html?id=${encodeURIComponent(athlete.id)}`;
 
   card.append(
     sportIcon,
@@ -357,6 +366,7 @@ function createAthleteCard(athlete) {
 
   return card;
 }
+
 
 // BUSCAR Y FILTRAR
 
