@@ -60,15 +60,14 @@ function normalize(value) {
 
 
 async function loadClassifieds() {
-  const tbody = document.getElementById("athletes");
+  const tbody = $("athletes");
 
   try {
     if (tbody) {
       tbody.innerHTML =
-        '<tr><td colspan="5">Cargando clasificados...</td></tr>';
+        '<tr><td colspan="5">Cargando deportistas...</td></tr>';
     }
 
-    // Obtener clasificados
     const { data: clasificados, error: errorClasificados } =
       await supabaseClient
         .from("clasificados")
@@ -76,7 +75,6 @@ async function loadClassifieds() {
 
     if (errorClasificados) throw errorClasificados;
 
-    // Obtener deportistas de actualidad
     const { data: deportistas, error: errorDeportistas } =
       await supabaseClient
         .from("deportistas_actualidad")
@@ -84,7 +82,6 @@ async function loadClassifieds() {
 
     if (errorDeportistas) throw errorDeportistas;
 
-    // Relacionar ambas tablas mediante el ID
     const mapaDeportistas = new Map(
       (deportistas || []).map(deportista => [
         String(deportista.id),
@@ -95,7 +92,7 @@ async function loadClassifieds() {
     classifiedData = (clasificados || [])
       .map(item => {
         const deportista = mapaDeportistas.get(
-          String(item.deportistas_actualidad)
+          String(item.deportista_id)
         );
 
         if (!deportista) return null;
@@ -110,16 +107,14 @@ async function loadClassifieds() {
     populateSportFilter();
     renderClassifieds();
 
-console.log("CLASIFICADOS:", clasificados);
-console.log("DEPORTISTAS:", deportistas);
-console.log("PRIMER CLASIFICADO:", clasificados?.[0]);
-console.log("PRIMER DEPORTISTA:", deportistas?.[0]);
+    console.log("CLASIFICADOS MOSTRADOS:", classifiedData);
+
   } catch (error) {
     console.error("Error cargando clasificados:", error);
 
     if (tbody) {
       tbody.innerHTML =
-        '<tr><td colspan="5">Error cargando los clasificados.</td></tr>';
+        '<tr><td colspan="5">Error cargando clasificados.</td></tr>';
     }
   }
 }
