@@ -8,8 +8,8 @@ const DATA_URL = "../data/actualidad.json";
 const REFRESH_INTERVAL = 5 * 60 * 1000;
 
 // CONFIGURACIÓN SUPABASE
-const SUPABASE_URL = "PEGA_AQUI_TU_URL";
-const SUPABASE_ANON_KEY = "PEGA_AQUI_TU_CLAVE_PUBLICA";
+const SUPABASE_URL = "Pqizogdfgjkgzjhdzhnmc";
+const SUPABASE_ANON_KEY = "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3";
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
