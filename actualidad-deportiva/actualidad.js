@@ -152,8 +152,6 @@ function renderClassifieds() {
   $("places-count").textContent = allPlaces;
 }
 
-}
-
 /* ==========================================
    FILTROS
 ========================================== */
