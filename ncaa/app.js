@@ -368,46 +368,48 @@ function showMessage(title, message) {
 // ==========================================
 
 // FOTOGRAFÍA PRINCIPAL
-if (athlete.foto_url) {
-  const imageContainer = document.createElement("div");
-  imageContainer.className = "athlete-photo-container";
 
-  imageContainer.style.cssText = `
-    width: 100%;
-   height: 145px;
-max-height: 145px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-    border-radius: 8px;
-  `;
+function createAthleteCard(athlete) {
 
-  const image = document.createElement("img");
-  image.className = "athlete-photo";
-  image.src = athlete.foto_url;
-  image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
+  const card = document.createElement("article");
+  card.className = "athlete-card";
 
-  
-image.style.cssText = `
-  width: 135px !important;
-  height: 135px !important;
-  min-width: 135px !important;
-  max-width: 135px !important;
-  min-height: 135px !important;
-  max-height: 135px !important;
-  object-fit: cover !important;
-  display: block !important;
-  border-radius: 50% !important;
-  flex: 0 0 135px !important;
-`;
+  // FOTOGRAFÍA
+  if (athlete.foto_url) {
 
+    const imageContainer = document.createElement("div");
 
-  image.onerror = () => imageContainer.remove();
+    imageContainer.style.cssText = `
+      width: 100%;
+      height: 145px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+    `;
 
-  imageContainer.appendChild(image);
-  card.appendChild(imageContainer);
+    const image = document.createElement("img");
+    image.src = athlete.foto_url;
+
+    image.style.cssText = `
+      width: 135px;
+      height: 135px;
+      min-width: 135px;
+      max-width: 135px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    `;
+
+    imageContainer.appendChild(image);
+    card.appendChild(imageContainer);
+  }
+
+  // AQUÍ DEBE CONTINUAR EL RESTO
+  // DE TU CÓDIGO DE LA TARJETA
+
+  return card;
 }
 
 // ==========================================
