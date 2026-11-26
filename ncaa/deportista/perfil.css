@@ -277,4 +277,42 @@
   .profile-gallery img {
     height: 220px;
   }
+  
+/* CALENDARIO: controlar nombres largos */
+
+.profile-calendar-item {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.profile-calendar-item span {
+  max-width: 100%;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Fechas y competiciones */
+
+.profile-calendar-item strong {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Mejorar la distribución en móvil */
+
+@media (max-width: 650px) {
+  .profile-calendar-item {
+    padding: 13px;
+  }
+
+  .profile-calendar-item span {
+    font-size: 12px;
+  }
+}
+
 }
