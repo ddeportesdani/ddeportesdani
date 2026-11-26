@@ -151,8 +151,10 @@ async function loadAthletes() {
   foto_competicion_url,
   temporada,
   estadisticas,
+  calendario,
   biografia
 `)
+
 
         .order("apellido", { ascending: true })
         .order("id", { ascending: true })
