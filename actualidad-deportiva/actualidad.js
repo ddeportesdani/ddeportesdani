@@ -110,8 +110,10 @@ async function loadClassifieds() {
     populateSportFilter();
     renderClassifieds();
 
-    console.log("Clasificados cargados:", classifiedData);
-
+console.log("CLASIFICADOS:", clasificados);
+console.log("DEPORTISTAS:", deportistas);
+console.log("PRIMER CLASIFICADO:", clasificados?.[0]);
+console.log("PRIMER DEPORTISTA:", deportistas?.[0]);
   } catch (error) {
     console.error("Error cargando clasificados:", error);
 
