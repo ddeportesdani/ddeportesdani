@@ -280,8 +280,16 @@ function renderProfile(athlete) {
 
     entries.forEach(([key, value]) => {
       const stat = el(grid, "div", "profile-stat");
-      el(stat, "strong", "", String(value));
-      el(stat, "span", "", statLabel(key, athlete.deporte));
+const isDate =
+  /fecha|date/i.test(key) &&
+  /^\d{4}-\d{2}-\d{2}/.test(String(value));
+
+el(
+  stat,
+  "strong",
+  "",
+  isDate ? formatSpanishDate(value) : String(value)
+);      el(stat, "span", "", statLabel(key, athlete.deporte));
     });
   }
 
