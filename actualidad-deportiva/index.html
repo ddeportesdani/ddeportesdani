@@ -4,7 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <meta name="description" content="Actualidad deportiva española. Noticias, clasificados olímpicos y paralímpicos, mínimas y sistemas de clasificación.">
+
 <title>Actualidad Deportiva | DDeportes Dani</title>
 
 <style>
@@ -15,8 +17,7 @@
   --bg: #f1f5fa;
   --text: #26364a;
   --muted: #687b91;
-  --white: #fff;
-  --border: #e4eaf0;
+  --white: #ffffff;
 }
 
 * {
@@ -33,8 +34,8 @@ html {
 body {
   font-family: Arial, sans-serif;
   color: var(--text);
-  background: white;
   line-height: 1.65;
+  background: white;
 }
 
 a {
@@ -47,8 +48,6 @@ a {
   margin: auto;
 }
 
-/* HEADER */
-
 header {
   background: var(--navy);
   color: white;
@@ -58,9 +57,8 @@ header {
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: relative;
+  z-index: 10;
 }
 
 .logo {
@@ -97,14 +95,13 @@ nav a:hover {
   color: var(--lightblue);
 }
 
-/* HERO */
-
 .hero {
   background: linear-gradient(115deg, #071b38, #164878);
   color: white;
   padding: 90px 0 105px;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .hero:after {
@@ -116,18 +113,13 @@ nav a:hover {
   border-radius: 50%;
   right: -100px;
   top: -100px;
-  pointer-events: none;
 }
 
 .eyebrow {
-  color: var(--blue);
+  color: var(--lightblue);
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 2px;
-}
-
-.hero .eyebrow {
-  color: var(--lightblue);
 }
 
 .hero h1 {
@@ -151,6 +143,8 @@ nav a:hover {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 3;
 }
 
 .btn {
@@ -171,8 +165,6 @@ nav a:hover {
   color: white;
 }
 
-/* QUICK LINKS */
-
 .quick {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -184,7 +176,7 @@ nav a:hover {
 
 .quick a {
   background: white;
-  border: 1px solid var(--border);
+  border: 1px solid #e5eaf0;
   border-radius: 10px;
   padding: 23px;
   box-shadow: 0 8px 25px #071b3810;
@@ -213,8 +205,6 @@ nav a:hover {
   color: var(--muted);
 }
 
-/* SECCIONES */
-
 section {
   padding: 75px 0;
 }
@@ -237,22 +227,16 @@ section {
   background: white;
 }
 
-.dark-section {
-  background: var(--bg);
-}
-
-/* NOTICIAS Y TARJETAS */
-
 .news-grid,
 .data-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
 .news-card,
 .data-card {
-  border: 1px solid var(--border);
+  border: 1px solid #e4eaf0;
   border-radius: 9px;
   overflow: hidden;
   background: white;
@@ -302,33 +286,9 @@ section {
   margin-top: 15px;
 }
 
-/* CLASIFICADOS */
-
-#clasificados {
+.dark-section {
   background: var(--bg);
-  scroll-margin-top: 90px;
 }
-
-.classified-container {
-  width: min(1120px, 90%);
-  margin: auto;
-}
-
-.classified-heading {
-  margin-bottom: 25px;
-}
-
-.classified-heading h2 {
-  color: var(--navy);
-  font-size: clamp(27px, 4vw, 37px);
-  margin: 8px 0;
-}
-
-.classified-heading p {
-  color: var(--muted);
-}
-
-/* FILTROS */
 
 .filters {
   display: flex;
@@ -344,23 +304,20 @@ section {
   background: white;
   min-width: 190px;
   color: var(--text);
-  font-size: 14px;
 }
-
-/* TABLA */
 
 .table-wrap {
   overflow-x: auto;
   background: white;
   border-radius: 9px;
-  border: 1px solid var(--border);
-  box-shadow: 0 5px 20px #071b3808;
+  border: 1px solid #e4eaf0;
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
   min-width: 650px;
+  background: white;
 }
 
 th,
@@ -378,22 +335,19 @@ th {
   text-transform: uppercase;
 }
 
-#athletes td {
+tbody td {
   color: #26364a !important;
   background: white;
-  font-weight: 500;
 }
 
-#athletes tr:hover td {
+tbody tr:hover {
   background: #f1f6fc;
 }
 
-/* ESTADOS */
-
 .status {
   display: inline-block;
-  color: #23794b !important;
-  background: #e4f5e9;
+  color: #23794b;
+  background: #dcfce7;
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 11px;
@@ -401,11 +355,9 @@ th {
 }
 
 .status.non-nominal {
-  background: #e8f2fc !important;
-  color: #164878 !important;
+  background: #dbeafe;
+  color: #1e40af;
 }
-
-/* AVISO */
 
 .notice {
   background: #e8f2fc;
@@ -414,16 +366,70 @@ th {
   margin-top: 20px;
   font-size: 13px;
   color: #17385d;
-  border-radius: 5px;
 }
 
-/* MINIMAS Y SISTEMAS */
-
-.data-grid {
-  margin-top: 20px;
+.classified-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin: 25px 0;
 }
 
-/* FUENTES */
+.classified-stats > div {
+  background: white;
+  padding: 22px;
+  border-radius: 9px;
+  border: 1px solid #e4eaf0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.classified-stats strong {
+  color: var(--navy);
+  font-size: 32px;
+}
+
+.classified-stats span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.classified-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  margin: 20px 0 35px;
+}
+
+.classified-card {
+  background: white;
+  padding: 22px;
+  border: 1px solid #e4eaf0;
+  border-radius: 9px;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.classified-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 7px;
+  margin-bottom: 14px;
+}
+
+.classified-card h3 {
+  color: var(--navy);
+  margin: 10px 0;
+  font-size: 19px;
+}
+
+.classified-card p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 7px 0;
+}
 
 .sources {
   display: flex;
@@ -444,7 +450,51 @@ th {
   color: #2875bd;
 }
 
-/* FOOTER */
+.minima-card {
+  background: white !important;
+  border: 1px solid #e1e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(7, 27, 56, .05);
+}
+
+.minima-card .data-content {
+  padding: 24px;
+}
+
+.minima-card h3 {
+  color: #071b38 !important;
+  margin: 12px 0;
+}
+
+.minima-card p {
+  color: #52657b !important;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.minima-mark {
+  color: #164878 !important;
+  background: #e8f2fc;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  font-size: 25px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 25px;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.loading {
+  color: var(--muted);
+  padding: 20px;
+}
 
 footer {
   background: var(--navy);
@@ -459,7 +509,23 @@ footer p {
   margin-top: 8px;
 }
 
-/* RESPONSIVE */
+#clasificados {
+  clear: both;
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#clasificados h2,
+#clasificados h3,
+#clasificados p {
+  color: var(--text);
+}
+
+#clasificados tbody td {
+  color: #26364a !important;
+  -webkit-text-fill-color: #26364a !important;
+}
 
 @media(max-width: 800px) {
   .quick {
@@ -468,7 +534,7 @@ footer p {
 
   .news-grid,
   .data-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -503,100 +569,10 @@ footer p {
   .filters select {
     width: 100%;
   }
-  
-/* =================================
-   ARREGLO DEFINITIVO CLASIFICADOS
-================================= */
 
-#clasificados {
-  position: relative;
-  clear: both;
-  width: 100%;
-  background: #f1f5fa !important;
-  padding: 75px 0;
-  color: #26364a !important;
-}
-
-#clasificados * {
-  box-sizing: border-box;
-}
-
-#clasificados h2,
-#clasificados h3,
-#clasificados p,
-#clasificados label {
-  color: #26364a !important;
-}
-
-#clasificados .classified-heading h2 {
-  color: #071b38 !important;
-}
-
-#clasificados .table-wrap {
-  background: #ffffff !important;
-}
-
-#clasificados table {
-  background: #ffffff !important;
-}
-
-#clasificados thead th {
-  background: #071b38 !important;
-  color: #ffffff !important;
-}
-
-#clasificados tbody,
-#clasificados tbody tr,
-#clasificados tbody td {
-  background: #ffffff !important;
-  color: #26364a !important;
-}
-
-#clasificados #athletes td {
-  color: #26364a !important;
-  -webkit-text-fill-color: #26364a !important;
-  font-weight: 600 !important;
-}
-
-#clasificados #athletes td span.status {
-  color: #166534 !important;
-  -webkit-text-fill-color: #166534 !important;
-  background: #dcfce7 !important;
-}
-
-#clasificados #athletes td span.status.non-nominal {
-  color: #1e40af !important;
-  -webkit-text-fill-color: #1e40af !important;
-  background: #dbeafe !important;
-}
-
-/* =================================
-   POSICIÓN DE ACCESOS RÁPIDOS
-================================= */
-
-.quick {
-  position: relative;
-  z-index: 2;
-  margin-top: -35px;
-  clear: both;
-}
-
-.hero {
-  position: relative;
-  z-index: 1;
-}
-
-.hero-buttons {
-  position: relative;
-  z-index: 3;
-}
-
-@media(max-width:550px) {
-  .quick {
-    margin-top: -25px;
+  .classified-stats {
+    grid-template-columns: 1fr;
   }
-}
-
 }
 </style>
 </head>
@@ -620,58 +596,10 @@ footer p {
 
 <main>
 
-<!-- HERO -->
-
 <section class="hero">
   <div class="container">
     <span class="eyebrow">DEPORTE · COMUNICACIÓN · ACTUALIDAD</span>
 
-    <h1>ACTUALIDAD<br><span>DEPORTIVA</span></h1>
-
-    <p>
-      El deporte español tiene su espacio.
-      Noticias, protagonistas, deportistas clasificados,
-      mínimas y sistemas de clasificación.
-    </p>
-
-    <div class="hero-buttons">
-      <a class="btn btn-primary" href="#noticias">VER ACTUALIDAD →</a>
-      <a class="btn btn-outline" href="#clasificados">CONSULTAR CLASIFICADOS</a>
-    </div>
-  </div>
-</section>
-
-<!-- ACCESOS RAPIDOS -->
-
-<div class="container quick">
-  <a href="#noticias">
-    <span class="number">01 / ACTUALIDAD</span>
-    <h3>Noticias deportivas</h3>
-    <p>Las novedades del deporte español.</p>
-  </a>
-
-  <a href="#clasificados">
-    <span class="number">02 / PROTAGONISTAS</span>
-    <h3>Deportistas clasificados</h3>
-    <p>Seguimiento de las plazas españolas.</p>
-  </a>
-
-  <a href="#minimas">
-    <span class="number">03 / MARCAS</span>
-    <h3>Mínimas y marcas</h3>
-    <p>Requisitos para competir.</p>
-  </a>
-
-  <a href="#sistemas">
-    <span class="number">04 / COMPETICIONES</span>
-    <h3>Sistemas de clasificación</h3>
-    <p>Cómo conseguir una plaza.</p>
-  </a>
-</div>
-
-<section class="hero">
-  <div class="container">
-    <span class="eyebrow">DEPORTE · COMUNICACIÓN · ACTUALIDAD</span>
     <h1>ACTUALIDAD<br><span>DEPORTIVA</span></h1>
 
     <p>
@@ -712,199 +640,183 @@ footer p {
     <p>Cómo conseguir una plaza.</p>
   </a>
 </div>
-
-<!-- NOTICIAS -->
 
 <section class="news-section" id="noticias">
-<div class="container">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">INFORMACIÓN DEPORTIVA</span>
+      <h2>Actualidad deportiva</h2>
+      <p>Noticias y novedades del deporte español.</p>
+    </div>
 
-  <div class="section-heading">
-    <span class="eyebrow">INFORMACIÓN DEPORTIVA</span>
-    <h2>Actualidad deportiva</h2>
-    <p>Noticias y novedades del deporte español.</p>
+    <div class="news-grid" id="news">
+      <article class="news-card">
+        <div class="news-image">🏅</div>
+        <div class="news-content">
+          <span class="category">Deporte español</span>
+          <h3>Próximamente, toda la actualidad deportiva</h3>
+          <p>Un espacio para seguir las noticias, resultados y protagonistas de nuestras disciplinas deportivas.</p>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">🏃</div>
+        <div class="news-content">
+          <span class="category">Camino a las grandes citas</span>
+          <h3>El camino hacia los grandes campeonatos</h3>
+          <p>Seguimiento de los procesos de clasificación y de los deportistas españoles.</p>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">♿</div>
+        <div class="news-content">
+          <span class="category">Deporte paralímpico</span>
+          <h3>El deporte paralímpico también es protagonista</h3>
+          <p>Clasificación, reglamentos, modalidades y protagonistas del deporte paralímpico.</p>
+        </div>
+      </article>
+    </div>
   </div>
-
-  <div class="news-grid" id="news">
-    <article class="news-card">
-      <div class="news-image">🏅</div>
-      <div class="news-content">
-        <span class="category">Deporte español</span>
-        <h3>Próximamente, toda la actualidad deportiva</h3>
-        <p>Un espacio para seguir las noticias, resultados y protagonistas de nuestras disciplinas deportivas.</p>
-      </div>
-    </article>
-
-    <article class="news-card">
-      <div class="news-image">🏃</div>
-      <div class="news-content">
-        <span class="category">Camino a las grandes citas</span>
-        <h3>El camino hacia los grandes campeonatos</h3>
-        <p>Seguimiento de los procesos de clasificación y de los deportistas españoles.</p>
-      </div>
-    </article>
-
-    <article class="news-card">
-      <div class="news-image">♿</div>
-      <div class="news-content">
-        <span class="category">Deporte paralímpico</span>
-        <h3>El deporte paralímpico también es protagonista</h3>
-        <p>Clasificación, reglamentos, modalidades y protagonistas del deporte paralímpico.</p>
-      </div>
-    </article>
-  </div>
-
-</div>
 </section>
 
-<!-- CLASIFICADOS -->
+<section class="dark-section" id="clasificados">
+  <div class="container">
 
-<section id="clasificados">
-<div class="classified-container">
+    <div class="section-heading">
+      <span class="eyebrow">CAMINO A LAS GRANDES CITAS</span>
+      <h2>Deportistas clasificados</h2>
+      <p>Consulta las plazas y clasificaciones españolas.</p>
+    </div>
 
-  <div class="classified-heading">
-    <span class="eyebrow">CAMINO A LAS GRANDES COMPETICIONES</span>
-    <h2>Deportistas clasificados</h2>
-    <p>
-      Consulta los deportistas españoles y las plazas conseguidas
-      para las próximas grandes competiciones.
-    </p>
+    <div class="classified-stats">
+      <div>
+        <strong id="classified-count">0</strong>
+        <span>Clasificados nominales</span>
+      </div>
+
+      <div>
+        <strong id="places-count">0</strong>
+        <span>Plazas no nominales</span>
+      </div>
+    </div>
+
+    <h3>Deportistas clasificados</h3>
+    <div id="classified-athletes" class="classified-grid"></div>
+
+    <h3>Plazas no nominales</h3>
+    <div id="classified-places" class="classified-grid"></div>
+
+    <div class="filters">
+      <select id="sport-filter">
+        <option value="">Todos los deportes</option>
+      </select>
+
+      <select id="type-filter">
+        <option value="">Todas las modalidades</option>
+        <option value="olimpico">Olímpico</option>
+        <option value="paralimpico">Paralímpico</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Deportista</th>
+            <th>Deporte</th>
+            <th>Competición</th>
+            <th>Modalidad</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody id="athletes">
+          <tr>
+            <td colspan="5">Cargando clasificados...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="notice">
+      Las plazas y clasificaciones se publicarán tras contrastarlas con los organismos y federaciones oficiales.
+    </div>
+
   </div>
-
-  <div class="filters">
-    <select id="sport-filter">
-      <option value="">Todos los deportes</option>
-    </select>
-
-    <select id="type-filter">
-      <option value="">Todas las modalidades</option>
-      <option value="olimpico">Olímpico</option>
-      <option value="paralimpico">Paralímpico</option>
-    </select>
-  </div>
-
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Deportista</th>
-          <th>Deporte</th>
-          <th>Competición</th>
-          <th>Modalidad</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-
-      <tbody id="athletes">
-        <tr>
-          <td colspan="5">Cargando clasificados...</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="notice">
-    Las plazas y clasificaciones se publicarán tras contrastarlas
-    con los organismos y federaciones oficiales.
-  </div>
-
-</div>
 </section>
-
-<!-- MINIMAS -->
 
 <section id="minimas">
-<div class="container">
+  <div class="container">
 
-  <div class="section-heading">
-    <span class="eyebrow">MARCAS Y REQUISITOS</span>
-    <h2>Mínimas y marcas</h2>
-    <p>Información sobre las marcas exigidas para acceder a campeonatos.</p>
+    <div class="section-heading">
+      <span class="eyebrow">MARCAS Y REQUISITOS</span>
+      <h2>Mínimas y marcas</h2>
+      <p>Consulta las marcas exigidas para acceder a campeonatos.</p>
+    </div>
+
+    <div class="data-grid" id="minimums">
+      <p class="loading">Cargando mínimas...</p>
+    </div>
+
   </div>
-
-  <div class="data-grid" id="minimums">
-    <article class="data-card">
-      <div class="data-content">
-        <h3>Mínimas olímpicas</h3>
-        <p>Marcas, rankings y periodos oficiales de clasificación.</p>
-      </div>
-    </article>
-
-    <article class="data-card">
-      <div class="data-content">
-        <h3>Mínimas paralímpicas</h3>
-        <p>Marcas, clases deportivas y criterios de acceso.</p>
-      </div>
-    </article>
-
-    <article class="data-card">
-      <div class="data-content">
-        <h3>Campeonatos internacionales</h3>
-        <p>Requisitos de acceso a campeonatos del mundo y de Europa.</p>
-      </div>
-    </article>
-  </div>
-
-</div>
 </section>
-
-<!-- SISTEMAS -->
 
 <section class="dark-section" id="sistemas">
-<div class="container">
+  <div class="container">
 
-  <div class="section-heading">
-    <span class="eyebrow">CÓMO CONSEGUIR UNA PLAZA</span>
-    <h2>Sistemas de clasificación</h2>
-    <p>Consulta los criterios oficiales de acceso a las grandes competiciones.</p>
+    <div class="section-heading">
+      <span class="eyebrow">CÓMO CONSEGUIR UNA PLAZA</span>
+      <h2>Sistemas de clasificación</h2>
+      <p>Consulta los criterios oficiales de acceso a las grandes competiciones.</p>
+    </div>
+
+    <div class="data-grid" id="systems">
+
+      <article class="data-card">
+        <div class="data-content">
+          <h3>Clasificación olímpica</h3>
+          <p>Vías de clasificación, rankings, cuotas y requisitos.</p>
+          <a class="more" href="https://olympics.com/" target="_blank" rel="noopener">CONSULTAR COI →</a>
+        </div>
+      </article>
+
+      <article class="data-card">
+        <div class="data-content">
+          <h3>Clasificación paralímpica</h3>
+          <p>Clases deportivas, criterios y procesos de clasificación.</p>
+          <a class="more" href="https://www.paralympic.org/" target="_blank" rel="noopener">CONSULTAR IPC →</a>
+        </div>
+      </article>
+
+      <article class="data-card">
+        <div class="data-content">
+          <h3>Selección española</h3>
+          <p>Criterios de selección de las federaciones nacionales.</p>
+          <a class="more" href="https://www.csd.gob.es/" target="_blank" rel="noopener">CONSULTAR CSD →</a>
+        </div>
+      </article>
+
+    </div>
   </div>
-
-  <div class="data-grid" id="systems">
-    <article class="data-card">
-      <div class="data-content">
-        <h3>Clasificación olímpica</h3>
-        <p>Vías de clasificación, rankings, cuotas y requisitos.</p>
-        <a class="more" href="https://olympics.com/" target="_blank" rel="noopener">CONSULTAR COI →</a>
-      </div>
-    </article>
-
-    <article class="data-card">
-      <div class="data-content">
-        <h3>Clasificación paralímpica</h3>
-        <p>Clases deportivas, criterios y procesos de clasificación.</p>
-        <a class="more" href="https://www.paralympic.org/" target="_blank" rel="noopener">CONSULTAR IPC →</a>
-      </div>
-    </article>
-
-    <article class="data-card">
-      <div class="data-content">
-        <h3>Selección española</h3>
-        <p>Criterios de selección de las federaciones nacionales.</p>
-        <a class="more" href="https://www.csd.gob.es/" target="_blank" rel="noopener">CONSULTAR CSD →</a>
-      </div>
-    </article>
-  </div>
-
-</div>
 </section>
 
-<!-- FUENTES -->
-
 <section>
-<div class="container">
+  <div class="container">
 
-  <div class="section-heading">
-    <span class="eyebrow">INFORMACIÓN CONTRASTADA</span>
-    <h2>Fuentes oficiales</h2>
-    <p>Consulta los organismos de referencia.</p>
+    <div class="section-heading">
+      <span class="eyebrow">INFORMACIÓN CONTRASTADA</span>
+      <h2>Fuentes oficiales</h2>
+      <p>Consulta los organismos de referencia.</p>
+    </div>
+
+    <div class="sources" id="sources">
+      <a href="https://www.coe.es/" target="_blank" rel="noopener">Comité Olímpico Español ↗</a>
+      <a href="https://www.paralimpicos.es/" target="_blank" rel="noopener">Comité Paralímpico Español ↗</a>
+      <a href="https://www.csd.gob.es/" target="_blank" rel="noopener">Consejo Superior de Deportes ↗</a>
+    </div>
+
   </div>
-
-  <div class="sources" id="sources">
-    <a href="https://www.coe.es/" target="_blank" rel="noopener">Comité Olímpico Español ↗</a>
-    <a href="https://www.paralimpicos.es/" target="_blank" rel="noopener">Comité Paralímpico Español ↗</a>
-    <a href="https://www.csd.gob.es/" target="_blank" rel="noopener">Consejo Superior de Deportes ↗</a>
-  </div>
-
-</div>
 </section>
 
 </main>
