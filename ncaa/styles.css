@@ -816,7 +816,15 @@ footer p {
   object-position: center !important;
   border-radius: 50% !important;
 }
+/* Ocultar fotografías y tarjetas mientras no hay resultados */
 
+#athletes:empty {
+  display: none !important;
+}
+
+#athletes:not(:empty) .athlete-photo-container {
+  display: block;
+}
   }
 }
 
