@@ -368,124 +368,218 @@ function showMessage(title, message) {
 // ==========================================
 
 
+
 function createAthleteCard(athlete) {
   const card = document.createElement("article");
   card.className = "athlete-card";
 
-  // Fotografía principal
-  const photoWrapper = document.createElement("div");
-  photoWrapper.className = "athlete-photo";
-
+  // FOTOGRAFÍA PRINCIPAL
   if (athlete.foto_url) {
-    const img = document.createElement("img");
-    img.src = athlete.foto_url;
-    img.alt = `Foto de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
-    img.loading = "lazy";
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "athlete-photo-container";
 
-    img.onerror = () => {
-      photoWrapper.replaceChildren();
-      photoWrapper.classList.add("no-photo");
-      photoWrapper.textContent = getSportIcon(athlete.deporte);
+    const image = document.createElement("img");
+    image.className = "athlete-photo";
+    image.src = athlete.foto_url;
+    image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
+    image.loading = "lazy";
+
+    image.onerror = () => {
+      imageContainer.remove();
     };
 
-    photoWrapper.appendChild(img);
-  } else {
-    photoWrapper.classList.add("no-photo");
-    photoWrapper.textContent = getSportIcon(athlete.deporte);
+    imageContainer.appendChild(image);
+    card.appendChild(imageContainer);
   }
 
-  // División
+  // ICONO DEL DEPORTE
+  const sportIcon = document.createElement("div");
+  sportIcon.className = "athlete-sport-icon";
+  sportIcon.textContent = getSportIcon(athlete.deporte);
+
+  // DIVISIÓN
   const badge = document.createElement("span");
   badge.className = "athlete-badge";
 
   const division = normalizeDivision(athlete.division);
-  badge.textContent = division ? `NCAA ${division}` : "NCAA";
 
-  // Nombre
+  badge.textContent = division
+    ? "NCAA " + division
+    : "NCAA";
+
+  // NOMBRE
   const name = document.createElement("h3");
   name.textContent =
     `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
     || "Nombre no indicado";
 
-  // Universidad
+  // UNIVERSIDAD
   const university = document.createElement("p");
   university.className = "athlete-university";
   university.textContent =
     athlete.universidad || "Universidad no indicada";
 
-  // Información
+  // INFORMACIÓN GENERAL
   const details = document.createElement("div");
   details.className = "athlete-details";
 
-  [
+  const fields = [
     ["Deporte", athlete.deporte],
     ["Estado", athlete.estado],
     ["Año universitario", athlete.ano_universidad],
-    ["Comunidad", athlete.comunidad]
-  ].forEach(([label, value]) => {
+    ["Comunidad", athlete.comunidad],
+    ["Temporada", athlete.temporada]
+  ];
+
+  fields.forEach(([label, value]) => {
     if (!value) return;
 
-    const p = document.createElement("p");
+    const detail = document.createElement("p");
     const strong = document.createElement("strong");
-    strong.textContent = `${label}: `;
-    p.append(strong, document.createTextNode(value));
-    details.appendChild(p);
+    strong.textContent = label + ": ";
+
+    const span = document.createElement("span");
+    span.textContent = value;
+
+    detail.append(strong, span);
+    details.appendChild(detail);
   });
 
-  card.append(photoWrapper, badge, name, university, details);
+  card.append(sportIcon, badge, name, university, details);
 
-  // Estadísticas
-  const stats = athlete.estadisticas;
-
-  if (stats && typeof stats === "object" &&
-      !Array.isArray(stats) && Object.keys(stats).length) {
-
-    const statsSection = document.createElement("div");
-    statsSection.className = "athlete-stats";
+  // BIOGRAFÍA
+  if (athlete.biografia) {
+    const biography = document.createElement("div");
+    biography.className = "athlete-biography";
 
     const heading = document.createElement("h4");
-    heading.textContent = "ESTADÍSTICAS";
-    statsSection.appendChild(heading);
+    heading.textContent = "Trayectoria";
 
-    const statsGrid = document.createElement("div");
-    statsGrid.className = "athlete-stats-grid";
+    const paragraph = document.createElement("p");
+    paragraph.textContent = athlete.biografia;
 
-    Object.entries(stats).slice(0, 4).forEach(([label, value]) => {
-      const item = document.createElement("div");
+    biography.append(heading, paragraph);
+    card.appendChild(biography);
+  }
 
-      const number = document.createElement("strong");
-      number.textContent = String(value);
+  // ESTADÍSTICAS
+  if (athlete.estadisticas) {
+    const statistics = document.createElement("div");
+    statistics.className = "athlete-statistics";
 
-      const caption = document.createElement("span");
-      caption.textContent = label;
+    const heading = document.createElement("h4");
+    heading.textContent = "Estadísticas";
 
-      item.append(number, caption);
-      statsGrid.appendChild(item);
+    statistics.appendChild(heading);
+
+    const stats = athlete.estadisticas;
+
+    Object.entries(stats).forEach(([key, value]) => {
+      if (
+        value === null ||
+        value === undefined ||
+        typeof value === "object"
+      ) return;
+
+      const row = document.createElement("p");
+
+      const label = document.createElement("strong");
+      label.textContent = key
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, letter => letter.toUpperCase()) + ": ";
+
+      const content = document.createElement("span");
+      content.textContent = String(value);
+
+      row.append(label, content);
+      statistics.appendChild(row);
     });
 
-    statsSection.appendChild(statsGrid);
-    card.appendChild(statsSection);
+    card.appendChild(statistics);
   }
 
-  // Segunda fotografía
+  // FOTOGRAFÍA COMPITIENDO
   if (athlete.foto_competicion_url) {
-    const competitionPhoto = document.createElement("img");
-    competitionPhoto.className = "athlete-competition-photo";
-    competitionPhoto.src = athlete.foto_competicion_url;
-    competitionPhoto.alt = `Competición: ${athlete.nombre || ""} ${athlete.apellido || ""}`;
-    competitionPhoto.loading = "lazy";
+    const competition = document.createElement("div");
+    competition.className = "athlete-competition";
 
-    competitionPhoto.onerror = () => competitionPhoto.remove();
+    const heading = document.createElement("h4");
+    heading.textContent = "En competición";
 
-    card.appendChild(competitionPhoto);
+    const image = document.createElement("img");
+    image.src = athlete.foto_competicion_url;
+    image.alt = `Imagen de ${athlete.nombre || ""} compitiendo`;
+    image.loading = "lazy";
+
+    image.onerror = () => competition.remove();
+
+    competition.append(heading, image);
+    card.appendChild(competition);
   }
 
-  // Temporada
-  if (athlete.temporada) {
-    const season = document.createElement("p");
-    season.className = "athlete-season";
-    season.textContent = `Temporada ${athlete.temporada}`;
-    card.appendChild(season);
+  // CALENDARIO
+  if (Array.isArray(athlete.calendario) && athlete.calendario.length) {
+    const calendar = document.createElement("div");
+    calendar.className = "athlete-calendar";
+
+    const heading = document.createElement("h4");
+    heading.textContent = "Calendario deportivo";
+
+    calendar.appendChild(heading);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const events = [...athlete.calendario]
+      .filter(event => event.fecha && event.evento)
+      .sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+    const upcoming = events.filter(event => {
+      const date = new Date(event.fecha + "T00:00:00");
+      return date >= today;
+    });
+
+    const displayedEvents = upcoming.length
+      ? upcoming.slice(0, 4)
+      : events.slice(-3).reverse();
+
+    displayedEvents.forEach(event => {
+      const item = document.createElement("div");
+      item.className = "calendar-event";
+
+      const date = document.createElement("span");
+      date.className = "calendar-date";
+
+      date.textContent = new Date(
+        event.fecha + "T12:00:00"
+      ).toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      });
+
+      const eventName = document.createElement("span");
+      eventName.className = "calendar-event-name";
+      eventName.textContent = event.evento;
+
+      item.append(date, eventName);
+
+      if (event.resultado) {
+        const result = document.createElement("span");
+        result.className = "calendar-result";
+        result.textContent = event.resultado;
+        item.appendChild(result);
+      }
+
+      calendar.appendChild(item);
+    });
+
+    const note = document.createElement("p");
+    note.className = "calendar-note";
+    note.textContent = "Calendario del equipo. La participación individual debe confirmarse.";
+
+    calendar.appendChild(note);
+    card.appendChild(calendar);
   }
 
   return card;
