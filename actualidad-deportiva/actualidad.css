@@ -547,3 +547,42 @@ th {
   background: #dbeafe;
   color: #1e40af;
 }
+
+/* ==========================================
+   CORRECCIÓN DE VISIBILIDAD DE CLASIFICADOS
+========================================== */
+
+#athletes td {
+  color: #202b38 !important;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#athletes tr:hover td {
+  background-color: #f1f6fc;
+}
+
+#athletes td .status {
+  color: #166534 !important;
+  background-color: #dcfce7;
+}
+
+#athletes td .status.non-nominal {
+  color: #1e40af !important;
+  background-color: #dbeafe;
+}
+
+/* Descripciones y observaciones */
+.classified-card p,
+.classified-card span,
+.classified-card h3 {
+  color: #202b38;
+}
+
+/* Texto de información */
+.classified-section,
+.classified-section p,
+.classified-section label {
+  color: #202b38;
+}
