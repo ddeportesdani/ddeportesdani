@@ -377,17 +377,14 @@ function renderAthletes() {
   // SI NO HAY FILTROS, NO MOSTRAR DEPORTISTAS
 
   if (!hasFilters) {
+  athletesContainer.replaceChildren();
 
-    athletesContainer.replaceChildren();
-
-    if (resultsCount) {
-      resultsCount.textContent =
-        "UTILIZA LOS FILTROS PARA DESCUBRIR DEPORTISTAS";
-    }
-
-    return;
+  if (resultsCount) {
+    resultsCount.textContent = "";
   }
 
+  return;
+}
   // FILTRAR DEPORTISTAS
 
   const filtered = athletes.filter(athlete => {
