@@ -10,7 +10,7 @@ const SUPABASE_ANON_KEY =
   "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3";
 
 const REFRESH_INTERVAL = 5 * 60 * 1000;
-const DATA_URL = "../data/actualidad.json";
+const DATA_URL = "/data/actualidad.json";
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
