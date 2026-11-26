@@ -520,3 +520,30 @@ th {
     grid-template-columns: 1fr;
   }
 }
+.notice {
+  background: #e2efff;
+  border-left: 5px solid #2875bd;
+  padding: 20px 24px;
+  margin-top: 25px;
+  color: #17385d;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.7;
+  border-radius: 5px;
+}
+
+#athletes td {
+  color: #26364a;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 18px;
+}
+
+#athletes tr:hover {
+  background: #f1f6fc;
+}
+
+.status.non-nominal {
+  background: #dbeafe;
+  color: #1e40af;
+}
