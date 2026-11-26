@@ -1,183 +1,178 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Actualidad deportiva española. Noticias, deportistas clasificados, mínimas y sistemas de clasificación olímpica y paralímpica.">
-  <title>Actualidad Deportiva | DDeportes Dani</title>
-  <link rel="stylesheet" href="../css/actualidad.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Actualidad deportiva española: noticias, clasificados olímpicos y paralímpicos, mínimas y sistemas de clasificación.">
+<title>Actualidad Deportiva | DDeportes Dani</title>
+<style>
+:root {
+  --navy:#101c2a;
+  --blue:#1c3045;
+  --gold:#f4c542;
+  --bg:#f4f6f8;
+  --text:#202b38;
+  --muted:#718096;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+.container{width:min(1160px,92%);margin:auto}
+header{background:var(--navy);color:white;padding:20px 0}
+.header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:900}
+.logo span{color:var(--gold)}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{font-size:13px;font-weight:bold}
+nav a:hover{color:var(--gold)}
+.hero{background:linear-gradient(100deg,#101c2a,#243d53);color:white;padding:90px 0}
+.eyebrow{font-size:11px;font-weight:900;letter-spacing:2px;color:#bd941e}
+.hero .eyebrow{color:var(--gold)}
+h1{font-size:clamp(42px,7vw,75px);line-height:1.05;margin:18px 0}
+h1 span{color:var(--gold)}
+.hero p{max-width:620px;color:#d9e1e9;font-size:17px;margin-bottom:25px}
+.btn{display:inline-block;background:var(--gold);color:var(--navy);padding:13px 22px;font-weight:900;border-radius:4px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:-28px}
+.quick a{background:white;padding:22px;border:1px solid #e3e8ed;border-radius:7px;box-shadow:0 5px 20px #0000000c}
+.quick strong{display:block;color:var(--navy);font-size:17px}
+.quick span{font-size:12px;color:var(--muted)}
+section{padding:70px 0}
+.section-title{font-size:34px;color:var(--navy);margin:8px 0}
+.section-desc{color:var(--muted);margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{padding:23px;border:1px solid #e3e8ed;border-radius:7px;background:white}
+.card h3{color:var(--navy);margin-bottom:10px}
+.card p{font-size:13px;color:var(--muted)}
+.card a{display:inline-block;margin-top:15px;font-size:12px;font-weight:bold;color:#806000}
+.dark-section{background:var(--bg)}
+.filters{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+select{padding:12px;border:1px solid #ddd;border-radius:5px;background:white;min-width:180px}
+.table-wrap{overflow-x:auto;background:white;border-radius:7px}
+table{border-collapse:collapse;width:100%;min-width:650px}
+th,td{padding:15px;text-align:left;border-bottom:1px solid #e5e9ee;font-size:13px}
+th{background:var(--navy);color:white}
+.status{color:#247347;font-weight:bold}
+.notice{background:#fff7dc;padding:18px;border-left:4px solid var(--gold);font-size:13px;margin-top:20px}
+footer{background:var(--navy);color:white;text-align:center;padding:40px 0}
+footer p{font-size:12px;color:#c3ced9;margin-top:8px}
+@media(max-width:750px){
+ .quick{grid-template-columns:repeat(2,1fr)}
+ .grid{grid-template-columns:1fr}
+ .hero{padding:65px 0}
+ nav{gap:12px}
+}
+@media(max-width:420px){
+ .quick{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container header-content">
-    <a href="/" class="brand">DDEPORTES <span>DANI</span></a>
-    <nav>
-      <a href="/">Inicio</a>
-      <a href="#noticias">Actualidad</a>
-      <a href="#clasificados">Clasificados</a>
-      <a href="#minimas">Mínimas</a>
-      <a href="#clasificacion">Sistemas</a>
-    </nav>
-  </div>
+<header>
+ <div class="container header">
+  <a href="/" class="logo">DDEPORTES <span>DANI</span></a>
+  <nav>
+   <a href="/">Inicio</a>
+   <a href="#noticias">Actualidad</a>
+   <a href="#clasificados">Clasificados</a>
+   <a href="#minimas">Mínimas</a>
+   <a href="#sistemas">Clasificación</a>
+  </nav>
+ </div>
 </header>
 
 <main>
-
 <section class="hero">
-  <div class="container hero-content">
-    <span class="eyebrow">DDEPORTES DANI · DEPORTE ESPAÑOL</span>
-    <h1>ACTUALIDAD<br><span>DEPORTIVA</span></h1>
-    <p>
-      El deporte español, al día.
-      Noticias, clasificaciones, mínimas, rankings
-      y sistemas de acceso a las grandes competiciones.
-    </p>
-    <a href="#clasificados" class="btn-primary">
-      CONSULTAR CLASIFICADOS →
-    </a>
-  </div>
+ <div class="container">
+  <span class="eyebrow">DDEPORTES DANI · DEPORTE ESPAÑOL</span>
+  <h1>ACTUALIDAD<br><span>DEPORTIVA</span></h1>
+  <p>El deporte español, al día. Noticias, clasificaciones, mínimas, rankings y sistemas de acceso a las grandes competiciones.</p>
+  <a href="#clasificados" class="btn">CONSULTAR CLASIFICADOS →</a>
+ </div>
 </section>
 
-<section class="container quick-links">
-  <a href="#noticias" class="quick-card">
-    <span>01</span>
-    <h3>Última hora</h3>
-    <p>Noticias deportivas</p>
-  </a>
-  <a href="#clasificados" class="quick-card">
-    <span>02</span>
-    <h3>Clasificados</h3>
-    <p>Deportistas españoles</p>
-  </a>
-  <a href="#minimas" class="quick-card">
-    <span>03</span>
-    <h3>Mínimas y marcas</h3>
-    <p>Requisitos oficiales</p>
-  </a>
-  <a href="#clasificacion" class="quick-card">
-    <span>04</span>
-    <h3>Clasificación</h3>
-    <p>Sistemas y criterios</p>
-  </a>
+<div class="container quick">
+ <a href="#noticias"><strong>Última hora</strong><span>Noticias deportivas</span></a>
+ <a href="#clasificados"><strong>Clasificados</strong><span>Deportistas españoles</span></a>
+ <a href="#minimas"><strong>Mínimas y marcas</strong><span>Requisitos oficiales</span></a>
+ <a href="#sistemas"><strong>Sistemas</strong><span>Criterios de clasificación</span></a>
+</div>
+
+<section id="noticias">
+ <div class="container">
+  <span class="eyebrow">INFORMACIÓN DEPORTIVA</span>
+  <h2 class="section-title">Última hora</h2>
+  <p class="section-desc">Las noticias más destacadas del deporte español.</p>
+  <div class="grid" id="news">
+   <article class="card">
+    <h3>Actualidad deportiva</h3>
+    <p>Próximamente publicaremos aquí las últimas noticias de las federaciones españolas y competiciones internacionales.</p>
+   </article>
+  </div>
+ </div>
 </section>
 
-<section class="section container" id="noticias">
-  <div class="section-heading">
-    <div>
-      <span class="eyebrow">INFORMACIÓN DEPORTIVA</span>
-      <h2>Última hora</h2>
-    </div>
-    <span class="live-label">ACTUALIDAD</span>
-  </div>
-  <div id="news-grid" class="news-grid">
-    <p class="loading">Cargando noticias...</p>
-  </div>
-</section>
-
-<section class="section classified-section" id="clasificados">
-  <div class="container">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">CAMINO A LAS GRANDES CITAS</span>
-        <h2>Deportistas clasificados</h2>
-        <p>Seguimiento de los representantes españoles.</p>
-      </div>
-    </div>
-
-    <div class="filters">
-      <select id="sport-filter">
-        <option value="">Todos los deportes</option>
-      </select>
-
-      <select id="event-filter">
-        <option value="">Todas las competiciones</option>
-      </select>
-
-      <select id="type-filter">
-        <option value="">Olímpico y paralímpico</option>
-        <option value="olimpico">Olímpico</option>
-        <option value="paralimpico">Paralímpico</option>
-      </select>
-    </div>
-
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Deportista</th>
-            <th>Deporte</th>
-            <th>Competición</th>
-            <th>Modalidad</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody id="athletes-table">
-          <tr>
-            <td colspan="5">Cargando clasificaciones...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="source-note" id="classified-update"></p>
-  </div>
-</section>
-
-<section class="section container" id="minimas">
-  <div class="section-heading">
-    <div>
-      <span class="eyebrow">MARCAS Y REQUISITOS</span>
-      <h2>Mínimas y marcas</h2>
-      <p>Consulta las exigencias para acceder a competiciones.</p>
-    </div>
-  </div>
-
+<section id="clasificados" class="dark-section">
+ <div class="container">
+  <span class="eyebrow">CAMINO A LAS GRANDES CITAS</span>
+  <h2 class="section-title">Deportistas clasificados</h2>
+  <p class="section-desc">Seguimiento de los deportistas españoles.</p>
   <div class="filters">
-    <select id="minimum-sport">
-      <option value="">Todos los deportes</option>
-    </select>
-    <select id="minimum-event">
-      <option value="">Todas las competiciones</option>
-    </select>
+   <select id="sport">
+    <option value="">Todos los deportes</option>
+   </select>
+   <select id="type">
+    <option value="">Todas las modalidades</option>
+    <option value="Olímpico">Olímpico</option>
+    <option value="Paralímpico">Paralímpico</option>
+   </select>
   </div>
-
-  <div id="minimum-grid" class="minimum-grid"></div>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Deportista</th><th>Deporte</th><th>Competición</th><th>Modalidad</th><th>Estado</th></tr></thead>
+    <tbody id="athletes">
+     <tr><td colspan="5">Todavía no hay deportistas publicados.</td></tr>
+    </tbody>
+   </table>
+  </div>
+  <div class="notice">Las clasificaciones se publicarán una vez contrastadas con las fuentes oficiales correspondientes.</div>
+ </div>
 </section>
 
-<section class="section systems-section" id="clasificacion">
-  <div class="container">
-    <span class="eyebrow">CÓMO CONSEGUIR UNA PLAZA</span>
-    <h2>Sistemas de clasificación</h2>
-    <p class="section-intro">
-      Conoce los criterios y procedimientos de acceso
-      a las principales competiciones deportivas.
-    </p>
-    <div id="systems-grid" class="systems-grid"></div>
+<section id="minimas">
+ <div class="container">
+  <span class="eyebrow">MARCAS Y REQUISITOS</span>
+  <h2 class="section-title">Mínimas y marcas</h2>
+  <p class="section-desc">Consulta las marcas y requisitos de acceso a competiciones.</p>
+  <div class="grid" id="minimums">
+   <article class="card"><h3>Información en preparación</h3><p>Próximamente incorporaremos las mínimas oficiales de las distintas disciplinas.</p></article>
   </div>
+ </div>
 </section>
 
-<section class="section container" id="fuentes">
-  <div class="section-heading">
-    <div>
-      <span class="eyebrow">INFORMACIÓN VERIFICADA</span>
-      <h2>Fuentes oficiales</h2>
-    </div>
+<section id="sistemas" class="dark-section">
+ <div class="container">
+  <span class="eyebrow">CÓMO CONSEGUIR UNA PLAZA</span>
+  <h2 class="section-title">Sistemas de clasificación</h2>
+  <p class="section-desc">Criterios de acceso a los grandes campeonatos deportivos.</p>
+  <div class="grid" id="systems">
+   <article class="card"><h3>Clasificación olímpica</h3><p>Información oficial sobre los procesos de clasificación olímpica.</p><a href="https://olympics.com/">CONSULTAR COI →</a></article>
+   <article class="card"><h3>Clasificación paralímpica</h3><p>Reglamentos, clases deportivas y criterios de acceso.</p><a href="https://www.paralympic.org/">CONSULTAR IPC →</a></article>
+   <article class="card"><h3>Deporte español</h3><p>Seguimiento de los criterios de selección de las federaciones nacionales.</p><a href="https://www.csd.gob.es/">CONSULTAR CSD →</a></article>
   </div>
-  <div id="sources-list" class="sources-list"></div>
+ </div>
 </section>
-
 </main>
 
-<footer class="footer">
-  <div class="container">
-    <a href="/" class="brand">DDEPORTES <span>DANI</span></a>
-    <p>Actualidad deportiva · Deporte español</p>
-    <p>Información contrastada con fuentes oficiales.</p>
-  </div>
+<footer>
+ <div class="container">
+  <a href="/" class="logo">DDEPORTES <span>DANI</span></a>
+  <p>Actualidad Deportiva · Deporte español</p>
+  <p>Información contrastada con fuentes oficiales.</p>
+ </div>
 </footer>
 
-<script src="../js/actualidad.js"></script>
 </body>
 </html>
