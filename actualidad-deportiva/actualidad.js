@@ -1,4 +1,5 @@
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/actualidad.js" defer></script>
 const DATA_URL = "../data/actualidad.json";
 const REFRESH_INTERVAL = 5 * 60 * 1000;
 
