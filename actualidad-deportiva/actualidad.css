@@ -586,3 +586,36 @@ th {
 .classified-section label {
   color: #202b38;
 }
+
+/* CORRECCIÓN DEFINITIVA DEL TEXTO */
+
+.classified-section,
+.classified-section * {
+  color: #202b38;
+}
+
+.classified-section h2,
+.classified-section h3 {
+  color: #101c2a !important;
+}
+
+#athletes td {
+  color: #202b38 !important;
+  background: #ffffff !important;
+}
+
+#athletes td span.status {
+  color: #166534 !important;
+  background: #dcfce7 !important;
+}
+
+#athletes td span.status.non-nominal {
+  color: #1e40af !important;
+  background: #dbeafe !important;
+}
+
+.classified-section p,
+.classified-section label,
+.classified-section div {
+  color: #202b38;
+}
