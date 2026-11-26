@@ -503,38 +503,6 @@ function createAthleteCard(athlete) {
     details.appendChild(stats);
   }
 
-  // CALENDARIO
-  if (athlete.calendario) {
-    const calendar = document.createElement("div");
-    calendar.className = "athlete-calendar";
-
-    const heading = document.createElement("h4");
-    heading.textContent = "Calendario";
-    calendar.appendChild(heading);
-
-    if (typeof athlete.calendario === "object") {
-      const entries = Array.isArray(athlete.calendario)
-        ? athlete.calendario
-        : Object.entries(athlete.calendario).map(([key, value]) =>
-            `${key}: ${value}`
-          );
-
-      entries.forEach(item => {
-        const p = document.createElement("p");
-        p.textContent = typeof item === "object"
-          ? JSON.stringify(item)
-          : item;
-        calendar.appendChild(p);
-      });
-    } else {
-      const p = document.createElement("p");
-      p.textContent = athlete.calendario;
-      calendar.appendChild(p);
-    }
-
-    details.appendChild(calendar);
-  }
-
   // MONTAR TARJETA COMPLETA
   card.append(
     sportIcon,
