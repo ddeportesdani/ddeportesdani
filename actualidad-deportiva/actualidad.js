@@ -3,6 +3,14 @@
 const DATA_URL = "../data/actualidad.json";
 const REFRESH_INTERVAL = 5 * 60 * 1000;
 
+const SUPABASE_URL = "TU_URL_DE_SUPABASE";
+const SUPABASE_ANON_KEY = "TU_CLAVE_PUBLICA";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
 let database = {
   news: [],
   athletes: [],
