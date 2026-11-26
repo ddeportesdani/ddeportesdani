@@ -369,6 +369,7 @@ function showMessage(title, message) {
 
 // FOTOGRAFÍA PRINCIPAL
 
+
 function createAthleteCard(athlete) {
 
   const card = document.createElement("article");
@@ -378,6 +379,7 @@ function createAthleteCard(athlete) {
   if (athlete.foto_url) {
 
     const imageContainer = document.createElement("div");
+    imageContainer.className = "athlete-photo-container";
 
     imageContainer.style.cssText = `
       width: 100%;
@@ -391,23 +393,156 @@ function createAthleteCard(athlete) {
 
     const image = document.createElement("img");
     image.src = athlete.foto_url;
+    image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
+    image.loading = "lazy";
 
     image.style.cssText = `
-      width: 135px;
-      height: 135px;
-      min-width: 135px;
-      max-width: 135px;
-      object-fit: cover;
-      border-radius: 50%;
-      display: block;
+      width: 135px !important;
+      height: 135px !important;
+      min-width: 135px !important;
+      max-width: 135px !important;
+      min-height: 135px !important;
+      max-height: 135px !important;
+      object-fit: cover !important;
+      border-radius: 50% !important;
+      display: block !important;
+      flex: 0 0 135px !important;
     `;
+
+    image.onerror = () => imageContainer.remove();
 
     imageContainer.appendChild(image);
     card.appendChild(imageContainer);
   }
 
-  // AQUÍ DEBE CONTINUAR EL RESTO
-  // DE TU CÓDIGO DE LA TARJETA
+  // ICONO DEL DEPORTE
+  const sportIcon = document.createElement("div");
+  sportIcon.className = "athlete-sport-icon";
+  sportIcon.textContent = getSportIcon(athlete.deporte);
+
+  // DIVISIÓN
+  const badge = document.createElement("span");
+  badge.className = "athlete-badge";
+
+  const division = normalizeDivision(athlete.division);
+
+  badge.textContent = division
+    ? "NCAA " + division
+    : "NCAA";
+
+  // NOMBRE
+  const name = document.createElement("h3");
+
+  name.textContent =
+    `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
+    || "Nombre no indicado";
+
+  // UNIVERSIDAD
+  const university = document.createElement("p");
+  university.className = "athlete-university";
+
+  university.textContent =
+    athlete.universidad || "Universidad no indicada";
+
+  // INFORMACIÓN
+  const details = document.createElement("div");
+  details.className = "athlete-details";
+
+  const fields = [
+    ["Deporte", athlete.deporte],
+    ["Estado", athlete.estado],
+    ["Año universitario", athlete.ano_universidad],
+    ["Comunidad", athlete.comunidad]
+  ];
+
+  fields.forEach(([label, value]) => {
+
+    if (!value) return;
+
+    const detail = document.createElement("p");
+
+    const strong = document.createElement("strong");
+    strong.textContent = label + ": ";
+
+    const span = document.createElement("span");
+    span.textContent = value;
+
+    detail.append(strong, span);
+    details.appendChild(detail);
+  });
+
+  // BIOGRAFÍA
+  if (athlete.biografia) {
+    const bio = document.createElement("p");
+    bio.className = "athlete-biography";
+    bio.textContent = athlete.biografia;
+    details.appendChild(bio);
+  }
+
+  // ESTADÍSTICAS
+  if (athlete.estadisticas) {
+    const stats = document.createElement("div");
+    stats.className = "athlete-statistics";
+
+    const heading = document.createElement("h4");
+    heading.textContent = "Estadísticas";
+    stats.appendChild(heading);
+
+    if (typeof athlete.estadisticas === "object") {
+      Object.entries(athlete.estadisticas).forEach(([key, value]) => {
+        const p = document.createElement("p");
+        p.textContent = `${key}: ${value}`;
+        stats.appendChild(p);
+      });
+    } else {
+      const p = document.createElement("p");
+      p.textContent = athlete.estadisticas;
+      stats.appendChild(p);
+    }
+
+    details.appendChild(stats);
+  }
+
+  // CALENDARIO
+  if (athlete.calendario) {
+    const calendar = document.createElement("div");
+    calendar.className = "athlete-calendar";
+
+    const heading = document.createElement("h4");
+    heading.textContent = "Calendario";
+    calendar.appendChild(heading);
+
+    if (typeof athlete.calendario === "object") {
+      const entries = Array.isArray(athlete.calendario)
+        ? athlete.calendario
+        : Object.entries(athlete.calendario).map(([key, value]) =>
+            `${key}: ${value}`
+          );
+
+      entries.forEach(item => {
+        const p = document.createElement("p");
+        p.textContent = typeof item === "object"
+          ? JSON.stringify(item)
+          : item;
+        calendar.appendChild(p);
+      });
+    } else {
+      const p = document.createElement("p");
+      p.textContent = athlete.calendario;
+      calendar.appendChild(p);
+    }
+
+    details.appendChild(calendar);
+  }
+
+  // MONTAR TARJETA COMPLETA
+  card.append(
+    sportIcon,
+    badge,
+    name,
+    university,
+    details
+  );
 
   return card;
 }
