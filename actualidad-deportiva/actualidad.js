@@ -116,7 +116,7 @@ async function loadClassifieds() {
       tbody.innerHTML =
         '<tr><td colspan="5">Error cargando clasificados.</td></tr>';
     }
-  }
+console.log("CLASIFICADOS MOSTRADOS:", classifiedData);  }
 }
 
 
