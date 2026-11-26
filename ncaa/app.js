@@ -479,30 +479,36 @@ function createAthleteCard(athlete) {
     details.appendChild(bio);
   }
 
-  // ESTADÍSTICAS
-  if (athlete.estadisticas) {
-    const stats = document.createElement("div");
-    stats.className = "athlete-statistics";
+ function createAthleteCard(athlete) {
 
-    const heading = document.createElement("h4");
-    heading.textContent = "Estadísticas";
-    stats.appendChild(heading);
+  // FOTOGRAFÍA
 
-    if (typeof athlete.estadisticas === "object") {
-      Object.entries(athlete.estadisticas).forEach(([key, value]) => {
-        const p = document.createElement("p");
-        p.textContent = `${key}: ${value}`;
-        stats.appendChild(p);
-      });
-    } else {
-      const p = document.createElement("p");
-      p.textContent = athlete.estadisticas;
-      stats.appendChild(p);
-    }
+  // ICONO DEL DEPORTE
 
-    details.appendChild(stats);
-  }
+  // DIVISIÓN
 
+  // NOMBRE
+
+  // UNIVERSIDAD
+
+  // INFORMACIÓN
+
+  // BIOGRAFÍA
+
+  // AQUÍ PEGAS EL NUEVO BLOQUE
+  // DE ESTADÍSTICAS DEPORTIVAS
+
+  // MONTAR TARJETA COMPLETA
+  card.append(
+    sportIcon,
+    badge,
+    name,
+    university,
+    details
+  );
+
+  return card;
+}
   // MONTAR TARJETA COMPLETA
   card.append(
     sportIcon,
