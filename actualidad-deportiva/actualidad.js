@@ -415,3 +415,16 @@ async function initialize() {
 }
 
 initialize();
+async function pruebaSupabase() {
+  const resultado = await window.supabase
+    .createClient(
+      "https://qizogdfgjkgzjhdzhnmc.supabase.co",
+      "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3"
+    )
+    .from("clasificados")
+    .select("*");
+
+  console.log("PRUEBA SUPABASE:", resultado);
+}
+
+pruebaSupabase();
