@@ -261,12 +261,27 @@ footer p{font-size:12px;color:#c4d5ea;margin-top:8px}
 </section>
 
 <section class="dark-section" id="clasificados">
-<div class="container">
-  <div class="section-heading">
-    <span class="eyebrow">CAMINO A LAS GRANDES CITAS</span>
-    <h2>Deportistas clasificados</h2>
-    <p>Consulta los deportistas españoles que consiguen su clasificación.</p>
+<div class="classified-stats">
+  <div>
+    <strong id="classified-count">0</strong>
+    <span>Clasificados nominales</span>
   </div>
+  <div>
+    <strong id="places-count">0</strong>
+    <span>Plazas no nominales</span>
+  </div>
+</div>
+
+<h3>Deportistas clasificados</h3>
+<div id="classified-athletes" class="classified-grid">
+  <p class="empty">Cargando clasificados...</p>
+</div>
+
+<h3>Plazas no nominales</h3>
+<div id="classified-places" class="classified-grid">
+  <p class="empty">Cargando plazas...</p>
+</div>
+
   <div class="filters">
     <select id="sport-filter">
       <option value="">Todos los deportes</option>
