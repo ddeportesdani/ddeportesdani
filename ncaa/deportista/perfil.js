@@ -319,8 +319,12 @@ function renderProfile(athlete) {
       const item = el(section, "div", "profile-calendar-item");
 
       if (event.fecha || event.date) {
-        el(item, "strong", "", event.fecha || event.date);
-      }
+       el(
+  item,
+  "strong",
+  "",
+  formatSpanishDate(event.fecha || event.date)
+);
 
       if (event.evento || event.nombre || event.event) {
         el(item, "span", "", event.evento || event.nombre || event.event);
