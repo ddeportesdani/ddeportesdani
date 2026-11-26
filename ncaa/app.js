@@ -381,6 +381,20 @@ if (athlete.foto_url) {
 
   const image = document.createElement("img");
   image.className = "athlete-photo";
+  image.style.setProperty("width", "90px", "important");
+image.style.setProperty("height", "90px", "important");
+image.style.setProperty("max-width", "90px", "important");
+image.style.setProperty("max-height", "90px", "important");
+image.style.setProperty("object-fit", "cover", "important");
+image.style.setProperty("border-radius", "50%", "important");
+image.style.setProperty("display", "block", "important");
+
+imageContainer.style.setProperty("width", "90px", "important");
+imageContainer.style.setProperty("height", "90px", "important");
+imageContainer.style.setProperty("max-width", "90px", "important");
+imageContainer.style.setProperty("max-height", "90px", "important");
+imageContainer.style.setProperty("overflow", "hidden", "important");
+imageContainer.style.setProperty("margin", "0 auto 15px", "important");
   image.src = athlete.foto_url;
   image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
   image.loading = "lazy";
