@@ -281,7 +281,12 @@ function showError() {
 });
 
 loadData();
-setInterval(loadData, REFRESH_INTERVAL);
+loadClassifieds();
+
+setInterval(() => {
+  loadData();
+  loadClassifieds();
+}, REFRESH_INTERVAL);
 
 async function loadClassifieds() {
   const { data, error } = await supabaseClient
