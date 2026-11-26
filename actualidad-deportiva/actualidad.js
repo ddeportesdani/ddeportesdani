@@ -4,8 +4,7 @@
    SUPABASE + CLASIFICADOS
 ========================================== */
 
-const SUPABASE_URL =
-  "https://qizogdfgjkgzjhdzhnmc.supabase.co";
+const SUPABASE_URL = "https://qizogdfgjkgzjhdzhnmc.supabase.co";
 
 const SUPABASE_ANON_KEY =
   "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3";
@@ -21,6 +20,7 @@ const supabaseClient = window.supabase.createClient(
 const $ = id => document.getElementById(id);
 
 let classifiedData = [];
+
 let database = {
   news: [],
   minimums: [],
@@ -39,7 +39,8 @@ function safeLink(url) {
   try {
     const parsed = new URL(url, location.origin);
     return ["https:", "http:"].includes(parsed.protocol)
-      ? parsed.href : "#";
+      ? parsed.href
+      : "#";
   } catch {
     return "#";
   }
@@ -54,13 +55,53 @@ function normalize(value) {
 }
 
 /* ==========================================
-   MOSTRAR TARJETAS Y CONTADORES
+   CARGAR CLASIFICADOS DESDE SUPABASE
 ========================================== */
 
+async function loadClassifieds() {
+  const tbody = $("athletes");
+
+  try {
+    if (tbody && classifiedData.length === 0) {
+      tbody.innerHTML =
+        '<tr><td colspan="5">Cargando deportistas clasificados...</td></tr>';
+    }
+
+    const { data, error } = await supabaseClient
+      .from("clasificados")
+      .select(`
+        *,
+        athlete:athletes(*)
+      `);
+
+    if (error) throw error;
+
+    classifiedData = (data || []).filter(item => item.athlete);
+
+    populateSportFilter();
+    renderClassifieds();
+
+    console.log(
+      "Deportistas clasificados cargados:",
+      classifiedData.length
+    );
+
+  } catch (error) {
+    console.error("Error cargando clasificados:", error);
+
+    if (tbody) {
+      tbody.innerHTML =
+        '<tr><td colspan="5">No se pudieron cargar los clasificados. Consulta la consola.</td></tr>';
+    }
+  }
+}
+
+/* ==========================================
+   MOSTRAR CLASIFICADOS Y CONTADORES
+========================================== */
 
 function renderClassifieds() {
   const tbody = $("athletes");
-
   if (!tbody) return;
 
   tbody.replaceChildren();
@@ -75,7 +116,10 @@ function renderClassifieds() {
 
     return (
       (!sport || athlete.deporte === sport) &&
-      (!type || normalize(athlete.tipo) === normalize(type))
+      (!type ||
+        normalize(athlete.tipo) === normalize(type) ||
+        normalize(item.estado) === normalize(type) ||
+        normalize(athlete.estado_clasificacion) === normalize(type))
     );
   });
 
@@ -134,7 +178,6 @@ function renderClassifieds() {
     tbody.appendChild(row);
   }
 
-  // Contadores generales, sin aplicar filtros
   const allNominal = classifiedData.filter(item =>
     item.athlete &&
     normalize(item.estado) !== "plaza no nominal" &&
@@ -148,8 +191,13 @@ function renderClassifieds() {
     )
   ).length;
 
-  $("classified-count").textContent = allNominal;
-  $("places-count").textContent = allPlaces;
+  if ($("classified-count")) {
+    $("classified-count").textContent = allNominal;
+  }
+
+  if ($("places-count")) {
+    $("places-count").textContent = allPlaces;
+  }
 }
 
 /* ==========================================
@@ -196,7 +244,9 @@ async function loadData() {
       cache: "no-store"
     });
 
-    if (!response.ok) throw new Error("Error cargando actualidad.json");
+    if (!response.ok) {
+      throw new Error("Error cargando actualidad.json");
+    }
 
     const incoming = await response.json();
 
@@ -322,16 +372,3 @@ async function initialize() {
 }
 
 initialize();
-async function pruebaSupabase() {
-  const resultado = await window.supabase
-    .createClient(
-      "https://qizogdfgjkgzjhdzhnmc.supabase.co",
-      "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3"
-    )
-    .from("clasificados")
-    .select("*");
-
-  console.log("PRUEBA SUPABASE:", resultado);
-}
-
-pruebaSupabase();
