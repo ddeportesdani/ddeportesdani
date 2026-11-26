@@ -373,24 +373,24 @@ function createAthleteCard(athlete) {
   const card = document.createElement("article");
   card.className = "athlete-card";
 
-  // FOTOGRAFÍA PRINCIPAL
-  if (athlete.foto_url) {
-    const imageContainer = document.createElement("div");
-    imageContainer.className = "athlete-photo-container";
+  
+// FOTOGRAFÍA PRINCIPAL
+if (athlete.foto_url) {
+  const imageContainer = document.createElement("div");
+  imageContainer.className = "athlete-photo-container";
 
-    const image = document.createElement("img");
-    image.className = "athlete-photo";
-    image.src = athlete.foto_url;
-    image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
-    image.loading = "lazy";
+  const image = document.createElement("img");
+  image.className = "athlete-photo";
+  image.src = athlete.foto_url;
+  image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
+  image.loading = "lazy";
 
-    image.onerror = () => {
-      imageContainer.remove();
-    };
+  image.onerror = () => imageContainer.remove();
 
-    imageContainer.appendChild(image);
-    card.appendChild(imageContainer);
-  }
+  imageContainer.appendChild(image);
+  card.appendChild(imageContainer);
+}
+
 
   // ICONO DEL DEPORTE
   const sportIcon = document.createElement("div");
