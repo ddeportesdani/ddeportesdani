@@ -658,6 +658,130 @@ footer p { font-size: 13px; margin-top: 8px; }
 }
 
 
+/* ACTUALIDAD DEPORTIVA - ACCESO DESDE PORTADA */
+
+.actualidad-home {
+  padding: 75px 8%;
+  background: #f1f5fa;
+}
+
+.actualidad-home-container {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  align-items: center;
+  gap: 35px;
+  background: linear-gradient(120deg, #071b38, #164878);
+  padding: 45px;
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 15px 35px #071b3820;
+}
+
+.actualidad-home-label {
+  color: #80bcff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.actualidad-home-text h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.2;
+  margin: 17px 0;
+}
+
+.actualidad-home-text p {
+  color: #d2e0ef;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+
+.actualidad-home-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+.actualidad-home-tags span {
+  border: 1px solid #80bcff70;
+  color: #c9e3ff;
+  border-radius: 30px;
+  padding: 7px 10px;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.actualidad-home-button {
+  display: inline-flex;
+  gap: 15px;
+  align-items: center;
+  background: #80bcff;
+  color: #071b38;
+  padding: 15px 19px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 900;
+  transition: .25s;
+}
+
+.actualidad-home-button:hover {
+  background: white;
+  transform: translateY(-3px);
+}
+
+.actualidad-home-button span {
+  font-size: 19px;
+}
+
+.actualidad-home-visual {
+  min-height: 230px;
+  border: 1px solid #80bcff60;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #164878, #102d50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.actualidad-home-icon {
+  font-size: 75px;
+  margin-bottom: 18px;
+}
+
+.actualidad-home-caption strong {
+  display: block;
+  font-size: 18px;
+}
+
+.actualidad-home-caption span {
+  display: block;
+  color: #c4d5ea;
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+@media(max-width:700px) {
+  .actualidad-home {
+    padding: 50px 5%;
+  }
+
+  .actualidad-home-container {
+    grid-template-columns: 1fr;
+    padding: 27px;
+  }
+
+  .actualidad-home-visual {
+    min-height: 170px;
+  }
+}
+
 </style>
 </head>
 
