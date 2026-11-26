@@ -370,7 +370,9 @@ function createAthleteCard(athlete) {
 
 // BUSCAR Y FILTRAR
 
+
 function renderAthletes() {
+
   if (!athletesContainer) return;
 
   const search = normalizeText(searchInput?.value);
@@ -379,7 +381,34 @@ function renderAthletes() {
   const state = stateSelect?.value || "";
   const community = communitySelect?.value || "";
 
+  // COMPROBAR SI HAY ALGÚN FILTRO ACTIVO
+
+  const hasFilters = Boolean(
+    search ||
+    sport ||
+    division ||
+    state ||
+    community
+  );
+
+  // SI NO HAY FILTROS, NO MOSTRAR DEPORTISTAS
+
+  if (!hasFilters) {
+
+    athletesContainer.replaceChildren();
+
+    if (resultsCount) {
+      resultsCount.textContent =
+        "UTILIZA LOS FILTROS PARA DESCUBRIR DEPORTISTAS";
+    }
+
+    return;
+  }
+
+  // FILTRAR DEPORTISTAS
+
   const filtered = athletes.filter(athlete => {
+
     const searchable = normalizeText([
       athlete.nombre,
       athlete.apellido,
@@ -391,10 +420,20 @@ function renderAthletes() {
 
     return (
       searchable.includes(search) &&
-      (!sport || normalizeSport(athlete.deporte) === normalizeSport(sport)) &&
-      (!division || normalizeDivision(athlete.division) === normalizeDivision(division)) &&
-      (!state || athlete.estado === state) &&
-      (!community || athlete.comunidad === community)
+
+      (!sport ||
+        normalizeSport(athlete.deporte) ===
+        normalizeSport(sport)) &&
+
+      (!division ||
+        normalizeDivision(athlete.division) ===
+        normalizeDivision(division)) &&
+
+      (!state ||
+        athlete.estado === state) &&
+
+      (!community ||
+        athlete.comunidad === community)
     );
   });
 
@@ -408,20 +447,27 @@ function renderAthletes() {
 
   athletesContainer.replaceChildren();
 
+  // SIN RESULTADOS
+
   if (filtered.length === 0) {
+
     showMessage(
-      athletes.length ? "No hay resultados" : "Estamos preparando el directorio",
-      athletes.length
-        ? "Prueba con otros términos o modifica los filtros."
-        : "Pronto incorporaremos más deportistas españoles."
+      "No hay resultados",
+      "Prueba con otros términos o modifica los filtros."
     );
+
     return;
   }
 
+  // MOSTRAR RESULTADOS
+
   filtered.forEach(athlete => {
-    athletesContainer.appendChild(createAthleteCard(athlete));
+    athletesContainer.appendChild(
+      createAthleteCard(athlete)
+    );
   });
 }
+
 
 // EVENTOS
 
