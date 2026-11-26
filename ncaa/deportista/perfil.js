@@ -17,21 +17,32 @@ function el(parent, tag, className, value) {
 
 function validImage(url) {
   
+
 function formatSpanishDate(value) {
   if (!value) return "";
 
-  // Evitar problemas de zona horaria
-  const match = String(value).match(
-    /^(\d{4})-(\d{2})-(\d{2})$/
-  );
+  const text = String(value).trim();
+
+  // Formato YYYY-MM-DD
+  const match = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
 
   if (match) {
     return `${match[3]}/${match[2]}/${match[1]}`;
   }
 
-  const date = new Date(value);
+  // Formato ISO con hora
+  const isoMatch = text.match(
+    /^(\d{4})-(\d{2})-(\d{2})T/
+  );
 
-  if (isNaN(date.getTime())) return value;
+  if (isoMatch) {
+    return `${isoMatch[3]}/${isoMatch[2]}/${isoMatch[1]}`;
+  }
+
+  // Otros formatos de fecha
+  const date = new Date(text);
+
+  if (Number.isNaN(date.getTime())) return text;
 
   return new Intl.DateTimeFormat("es-ES", {
     day: "2-digit",
@@ -40,6 +51,7 @@ function formatSpanishDate(value) {
     timeZone: "UTC"
   }).format(date);
 }
+
 
   try {
     return ["https:", "http:"].includes(new URL(url).protocol);
