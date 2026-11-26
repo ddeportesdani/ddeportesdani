@@ -1,16 +1,22 @@
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/actualidad.js" defer></script>
+
+/* ==========================================
+   DDEPORTES DANI - ACTUALIDAD DEPORTIVA
+   Supabase + actualidad.json
+========================================== */
+
 const DATA_URL = "../data/actualidad.json";
 const REFRESH_INTERVAL = 5 * 60 * 1000;
 
-const SUPABASE_URL = "TU_URL_DE_SUPABASE";
-const SUPABASE_ANON_KEY = "TU_CLAVE_PUBLICA";
+// CONFIGURACIÓN SUPABASE
+const SUPABASE_URL = "PEGA_AQUI_TU_URL";
+const SUPABASE_ANON_KEY = "PEGA_AQUI_TU_CLAVE_PUBLICA";
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY
 );
 
+// BASE DE DATOS LOCAL
 let database = {
   news: [],
   athletes: [],
@@ -20,7 +26,16 @@ let database = {
   updatedAt: null
 };
 
+let classifiedData = [];
+
 const $ = id => document.getElementById(id);
+
+function element(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
 
 function safeLink(url) {
   try {
@@ -32,20 +47,28 @@ function safeLink(url) {
   }
 }
 
-function element(tag, className, text) {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  if (text !== undefined) node.textContent = text;
-  return node;
+function normalize(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
+
+/* ==========================================
+   CARGAR JSON
+========================================== */
 
 async function loadData() {
   try {
-    const response = await fetch(DATA_URL + "?t=" + Date.now(), {
-      cache: "no-store"
-    });
+    const response = await fetch(
+      DATA_URL + "?t=" + Date.now(),
+      { cache: "no-store" }
+    );
 
-    if (!response.ok) throw new Error("No se pudieron cargar los datos");
+    if (!response.ok) {
+      throw new Error("No se pudo cargar actualidad.json");
+    }
 
     const incoming = await response.json();
 
@@ -58,87 +81,106 @@ async function loadData() {
       updatedAt: incoming.updatedAt || null
     };
 
-    renderAll();
+    renderNews();
+    renderAthletes();
+    renderMinimums();
+    renderSystems();
+    renderSources();
 
   } catch (error) {
-    console.error("Actualidad Deportiva:", error);
-    showError();
+    console.error("Error cargando JSON:", error);
   }
 }
 
-function renderAll() {
-  renderNews();
-  renderAthletes();
-  renderMinimums();
-  renderSystems();
-  renderSources();
-  populateFilters();
-
-  $("classified-update").textContent =
-    database.updatedAt
-      ? "Última actualización de datos: " +
-        new Date(database.updatedAt).toLocaleString("es-ES")
-      : "Fecha de actualización no disponible.";
-}
+/* ==========================================
+   NOTICIAS
+========================================== */
 
 function renderNews() {
-  const container = $("news-grid");
+  const container = $("news");
+  if (!container) return;
+
   container.replaceChildren();
 
   if (!database.news.length) {
-    container.append(element("p", "empty", "No hay noticias publicadas."));
+    container.append(
+      element("p", "empty", "No hay noticias publicadas.")
+    );
     return;
   }
 
   database.news.forEach(item => {
     const card = element("article", "news-card");
 
+    const image = element("div", "news-image", "🏅");
+
     if (item.image) {
       const img = element("img");
       img.src = safeLink(item.image);
       img.alt = item.title || "Noticia deportiva";
       img.loading = "lazy";
-      card.append(img);
+      img.style.width = "100%";
+      img.style.height = "180px";
+      img.style.objectFit = "cover";
+      image.replaceChildren(img);
     }
 
-    const body = element("div", "news-body");
-    body.append(element("span", "news-category", item.category || "Deporte"));
-    body.append(element("h3", "", item.title || "Noticia"));
+    card.append(image);
 
+    const body = element("div", "news-content");
+
+    body.append(element(
+      "span",
+      "category",
+      item.category || "Deporte"
+    ));
+
+    body.append(element("h3", "", item.title || "Noticia"));
     body.append(element("p", "", item.summary || ""));
 
-    if (item.publishedAt) {
-      body.append(element("p", "", new Date(item.publishedAt).toLocaleDateString("es-ES")));
+    if (item.url) {
+      const link = element("a", "more", "LEER NOTICIA →");
+      link.href = safeLink(item.url);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      body.append(link);
     }
 
-    const link = element("a", "read-more", "LEER NOTICIA →");
-    link.href = safeLink(item.url);
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-
-    body.append(link);
     card.append(body);
     container.append(card);
   });
 }
 
+/* ==========================================
+   DEPORTISTAS DEL JSON
+========================================== */
+
 function renderAthletes() {
-  const tbody = $("athletes-table");
+  const tbody = $("athletes");
+  if (!tbody) return;
+
   tbody.replaceChildren();
 
-  const sport = $("sport-filter").value;
-  const event = $("event-filter").value;
-  const type = $("type-filter").value;
+  const sport = $("sport-filter")?.value || "";
+  const type = $("type-filter")?.value || "";
 
-  const filtered = database.athletes.filter(a =>
-    (!sport || a.sport === sport) &&
-    (!event || a.event === event) &&
-    (!type || a.type === type)
-  );
+  const filtered = database.athletes.filter(a => {
+    const athleteSport = a.sport || a.deporte;
+    const athleteType = a.type || a.tipo;
+
+    return (
+      (!sport || athleteSport === sport) &&
+      (!type || normalize(athleteType) === normalize(type))
+    );
+  });
 
   if (!filtered.length) {
     const row = element("tr");
-    const cell = element("td", "", "No hay deportistas para estos filtros.");
+    const cell = element(
+      "td",
+      "",
+      "No hay deportistas adicionales en el archivo de actualidad."
+    );
     cell.colSpan = 5;
     row.append(cell);
     tbody.append(row);
@@ -149,79 +191,97 @@ function renderAthletes() {
     const row = element("tr");
 
     [
-      a.name,
-      a.sport,
-      a.event,
-      a.type === "paralimpico" ? "Paralímpico" : "Olímpico"
-    ].forEach(value => row.append(element("td", "", value || "—")));
-
-    const statusCell = element("td");
-    statusCell.append(element("span", "status", a.status || "Pendiente"));
-    row.append(statusCell);
+      a.name || a.nombre,
+      a.sport || a.deporte,
+      a.event || a.competicion,
+      a.type || a.tipo,
+      a.status || a.estado || "Pendiente"
+    ].forEach(value => {
+      row.append(element("td", "", value || "—"));
+    });
 
     tbody.append(row);
   });
 }
 
+/* ==========================================
+   MINIMAS
+========================================== */
+
 function renderMinimums() {
-  const container = $("minimum-grid");
+  const container = $("minimums");
+  if (!container) return;
+
   container.replaceChildren();
 
-  const sport = $("minimum-sport").value;
-  const event = $("minimum-event").value;
-
-  const filtered = database.minimums.filter(m =>
-    (!sport || m.sport === sport) &&
-    (!event || m.event === event)
-  );
-
-  if (!filtered.length) {
-    container.append(element("p", "empty", "No hay mínimas disponibles."));
+  if (!database.minimums.length) {
+    container.append(
+      element("p", "empty", "No hay mínimas publicadas.")
+    );
     return;
   }
 
-  filtered.forEach(m => {
-    const card = element("article", "minimum-card");
-    card.append(element("h3", "", m.sport || "Deporte"));
-    card.append(element("p", "", "Competición: " + (m.event || "—")));
-    card.append(element("p", "", "Prueba: " + (m.discipline || "—")));
-    card.append(element("p", "", "Marca: " + (m.mark || "Consultar documento")));
-    card.append(element("p", "", "Periodo: " + (m.period || "No indicado")));
+  database.minimums.forEach(m => {
+    const card = element("article", "data-card");
+    const body = element("div", "data-content");
 
-    if (m.source) {
-      const link = element("a", "read-more", "CONSULTAR FUENTE OFICIAL →");
-      link.href = safeLink(m.source);
+    body.append(element("h3", "", m.sport || m.deporte || "Deporte"));
+    body.append(element("p", "", "Competición: " + (m.event || m.competicion || "—")));
+    body.append(element("p", "", "Prueba: " + (m.discipline || m.modalidad || "—")));
+    body.append(element("p", "", "Marca: " + (m.mark || m.minima || "Consultar documento")));
+
+    if (m.source || m.fuente_url) {
+      const link = element("a", "more", "CONSULTAR FUENTE →");
+      link.href = safeLink(m.source || m.fuente_url);
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      card.append(link);
+      body.append(link);
     }
 
+    card.append(body);
     container.append(card);
   });
 }
+
+/* ==========================================
+   SISTEMAS DE CLASIFICACION
+========================================== */
 
 function renderSystems() {
   const container = $("systems-grid");
+  if (!container) return;
+
   container.replaceChildren();
 
   database.systems.forEach(item => {
-    const card = element("article", "system-card");
-    card.append(element("h3", "", item.sport || "Deporte"));
-    card.append(element("p", "", item.event || ""));
-    card.append(element("p", "", item.description || ""));
+    const card = element("article", "data-card");
+    const body = element("div", "data-content");
 
-    const link = element("a", "read-more", "VER SISTEMA DE CLASIFICACIÓN →");
-    link.href = safeLink(item.url);
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
+    body.append(element("h3", "", item.sport || "Deporte"));
+    body.append(element("p", "", item.event || ""));
+    body.append(element("p", "", item.description || ""));
 
-    card.append(link);
+    if (item.url) {
+      const link = element("a", "more", "VER SISTEMA →");
+      link.href = safeLink(item.url);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      body.append(link);
+    }
+
+    card.append(body);
     container.append(card);
   });
 }
 
+/* ==========================================
+   FUENTES
+========================================== */
+
 function renderSources() {
   const container = $("sources-list");
+  if (!container) return;
+
   container.replaceChildren();
 
   database.sources.forEach(source => {
@@ -233,19 +293,213 @@ function renderSources() {
   });
 }
 
-function populateFilters() {
-  setOptions("sport-filter", database.athletes.map(a => a.sport));
-  setOptions("event-filter", database.athletes.map(a => a.event));
-  setOptions("minimum-sport", database.minimums.map(a => a.sport));
-  setOptions("minimum-event", database.minimums.map(a => a.event));
+/* ==========================================
+   CARGAR CLASIFICADOS DESDE SUPABASE
+========================================== */
+
+async function loadClassifieds() {
+  try {
+    console.log("Cargando clasificados desde Supabase...");
+
+    const { data: classifications, error: classError } =
+      await supabaseClient
+        .from("clasificados")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (classError) throw classError;
+
+    if (!classifications || classifications.length === 0) {
+      classifiedData = [];
+      renderClassifieds();
+      return;
+    }
+
+    const ids = [
+      ...new Set(classifications.map(c => c.deportista_id))
+    ];
+
+    const { data: athletes, error: athleteError } =
+      await supabaseClient
+        .from("deportistas_actualidad")
+        .select("*")
+        .in("id", ids);
+
+    if (athleteError) throw athleteError;
+
+    const athleteMap = new Map(
+      (athletes || []).map(a => [String(a.id), a])
+    );
+
+    classifiedData = classifications.map(c => ({
+      ...c,
+      athlete: athleteMap.get(String(c.deportista_id))
+    }));
+
+    console.log("Clasificados recibidos:", classifiedData);
+
+    renderClassifieds();
+
+  } catch (error) {
+    console.error("Error cargando clasificados:", error);
+
+    const nominal = $("classified-athletes");
+    const places = $("classified-places");
+
+    if (nominal) {
+      nominal.replaceChildren(
+        element("p", "empty", "No se han podido cargar los clasificados.")
+      );
+    }
+
+    if (places) {
+      places.replaceChildren();
+    }
+  }
 }
 
-function setOptions(id, values) {
-  const select = $(id);
-  const previous = select.value;
-  const first = select.options[0];
+/* ==========================================
+   MOSTRAR CLASIFICADOS
+========================================== */
 
-  select.replaceChildren(first);
+function renderClassifieds() {
+  const nominal = $("classified-athletes");
+  const places = $("classified-places");
+
+  if (!nominal || !places) {
+    console.error("No se encuentran los contenedores de clasificados.");
+    return;
+  }
+
+  nominal.replaceChildren();
+  places.replaceChildren();
+
+  const sport = $("sport-filter")?.value || "";
+  const type = $("type-filter")?.value || "";
+
+  const filtered = classifiedData.filter(item => {
+    if (!item.athlete) return false;
+
+    const athlete = item.athlete;
+
+    return (
+      (!sport || athlete.deporte === sport) &&
+      (!type || normalize(athlete.tipo) === normalize(type))
+    );
+  });
+
+  let nominalCount = 0;
+  let placesCount = 0;
+
+  filtered.forEach(item => {
+    const athlete = item.athlete;
+
+    const isPlace =
+      normalize(item.estado) === "plaza no nominal";
+
+    const card = element("article", "classified-card");
+
+    if (athlete.fotografia) {
+      const img = element("img");
+      img.src = safeLink(athlete.fotografia);
+      img.alt = athlete.nombre || "Deportista";
+      img.loading = "lazy";
+      card.append(img);
+    }
+
+    card.append(element("span", "category",
+      athlete.tipo === "paralimpico" ? "PARALÍMPICO" : "OLÍMPICO"
+    ));
+
+    card.append(element("h3", "", athlete.nombre || "Sin nombre"));
+    card.append(element("p", "", athlete.deporte || "—"));
+
+    if (athlete.modalidad) {
+      card.append(element("p", "", "Modalidad: " + athlete.modalidad));
+    }
+
+    card.append(element("p", "", item.competicion || "—"));
+
+    card.append(element(
+      "span",
+      isPlace ? "status non-nominal" : "status",
+      item.estado || "Pendiente"
+    ));
+
+    if (athlete.federacion) {
+      card.append(element("p", "", athlete.federacion));
+    }
+
+    if (item.fecha_clasificacion) {
+      card.append(element(
+        "p",
+        "",
+        "Fecha: " + new Date(
+          item.fecha_clasificacion + "T00:00:00"
+        ).toLocaleDateString("es-ES")
+      ));
+    }
+
+    if (item.observaciones) {
+      card.append(element("p", "", item.observaciones));
+    }
+
+    if (item.fuente_url) {
+      const link = element("a", "more", "CONSULTAR FUENTE →");
+      link.href = safeLink(item.fuente_url);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      card.append(link);
+    }
+
+    if (isPlace) {
+      places.append(card);
+      placesCount++;
+    } else {
+      nominal.append(card);
+      nominalCount++;
+    }
+  });
+
+  if (!nominalCount) {
+    nominal.append(element(
+      "p", "empty", "No hay clasificados nominales."
+    ));
+  }
+
+  if (!placesCount) {
+    places.append(element(
+      "p", "empty", "No hay plazas no nominales."
+    ));
+  }
+
+  if ($("classified-count")) {
+    $("classified-count").textContent = nominalCount;
+  }
+
+  if ($("places-count")) {
+    $("places-count").textContent = placesCount;
+  }
+}
+
+/* ==========================================
+   FILTROS
+========================================== */
+
+function populateFilters() {
+  const select = $("sport-filter");
+  if (!select) return;
+
+  const values = [
+    ...classifiedData.map(c => c.athlete?.deporte),
+    ...database.athletes.map(a => a.sport || a.deporte)
+  ];
+
+  const previous = select.value;
+
+  select.replaceChildren(
+    element("option", "", "Todos los deportes")
+  );
 
   [...new Set(values.filter(Boolean))]
     .sort()
@@ -260,128 +514,49 @@ function setOptions(id, values) {
   }
 }
 
-function showError() {
-  $("news-grid").replaceChildren(
-    element("p", "empty", "No ha sido posible cargar las noticias. Inténtalo más tarde.")
-  );
-  $("athletes-table").replaceChildren();
-  const row = element("tr");
-  const cell = element("td", "", "Datos temporalmente no disponibles.");
-  cell.colSpan = 5;
-  row.append(cell);
-  $("athletes-table").append(row);
-}
+/* ==========================================
+   INICIALIZACION
+========================================== */
 
-["sport-filter", "event-filter", "type-filter"].forEach(id => {
-  $(id).addEventListener("change", renderAthletes);
-});
+function initialize() {
+  const sportFilter = $("sport-filter");
+  const typeFilter = $("type-filter");
 
-["minimum-sport", "minimum-event"].forEach(id => {
-  $(id).addEventListener("change", renderMinimums);
-});
-
-loadData();
-loadClassifieds();
-
-setInterval(() => {
-  loadData();
-  loadClassifieds();
-}, REFRESH_INTERVAL);
-
-async function loadClassifieds() {
-  const { data, error } = await supabaseClient
-    .from("clasificados")
-    .select(`
-      id,
-      deportista_id,
-      competicion,
-      estado,
-      fecha_clasificacion,
-      fuente_url,
-      observaciones,
-      deportistas_actualidad (
-        nombre,
-        deporte,
-        modalidad,
-        tipo,
-        fotografia,
-        federacion
-      )
-    `)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Error cargando clasificados:", error);
-    return;
+  if (sportFilter) {
+    sportFilter.addEventListener("change", () => {
+      renderAthletes();
+      renderClassifieds();
+    });
   }
 
-  renderClassifieds(data || []);
-}
+  if (typeFilter) {
+    typeFilter.addEventListener("change", () => {
+      renderAthletes();
+      renderClassifieds();
+    });
+  }
 
-function renderClassifieds(data) {
-  const nominal = $("classified-athletes");
-  const nonNominal = $("classified-places");
+  loadData();
 
-  nominal.replaceChildren();
-  nonNominal.replaceChildren();
-
-  data.forEach(item => {
-    const athlete = item.deportistas_actualidad;
-
-    if (!athlete) return;
-
-    const card = element("article", "classified-card");
-
-    if (athlete.fotografia) {
-      const img = element("img");
-      img.src = safeLink(athlete.fotografia);
-      img.alt = athlete.nombre || "Deportista";
-      img.loading = "lazy";
-      card.append(img);
-    }
-
-    card.append(element("h3", "", athlete.nombre));
-    card.append(element("p", "", athlete.deporte));
-    card.append(element("p", "", athlete.modalidad || "—"));
-    card.append(element("p", "", athlete.tipo === "paralimpico"
-      ? "Paralímpico" : "Olímpico"));
-
-    card.append(element("p", "", item.competicion));
-
-    const isNonNominal =
-      item.estado?.toLowerCase() === "plaza no nominal";
-
-    card.append(element(
-      "span",
-      isNonNominal ? "status non-nominal" : "status",
-      item.estado
-    ));
-
-    if (item.fecha_clasificacion) {
-      card.append(element(
-        "p",
-        "",
-        new Date(item.fecha_clasificacion + "T00:00:00")
-          .toLocaleDateString("es-ES")
-      ));
-    }
-
-    if (item.fuente_url) {
-      const link = element("a", "read-more", "FUENTE OFICIAL →");
-      link.href = safeLink(item.fuente_url);
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      card.append(link);
-    }
-
-    (isNonNominal ? nonNominal : nominal).append(card);
+  loadClassifieds().then(() => {
+    populateFilters();
+    renderClassifieds();
+    renderAthletes();
   });
 
-  $("classified-count").textContent = data.filter(
-    item => item.estado?.toLowerCase() === "clasificado"
-  ).length;
+  setInterval(() => {
+    loadData();
 
-  $("places-count").textContent = data.filter(
-    item => item.estado?.toLowerCase() === "plaza no nominal"
-  ).length;
+    loadClassifieds().then(() => {
+      populateFilters();
+      renderClassifieds();
+      renderAthletes();
+    });
+  }, REFRESH_INTERVAL);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initialize);
+} else {
+  initialize();
 }
