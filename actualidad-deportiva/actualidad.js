@@ -282,3 +282,101 @@ function showError() {
 
 loadData();
 setInterval(loadData, REFRESH_INTERVAL);
+
+async function loadClassifieds() {
+  const { data, error } = await supabaseClient
+    .from("clasificados")
+    .select(`
+      id,
+      deportista_id,
+      competicion,
+      estado,
+      fecha_clasificacion,
+      fuente_url,
+      observaciones,
+      deportistas_actualidad (
+        nombre,
+        deporte,
+        modalidad,
+        tipo,
+        fotografia,
+        federacion
+      )
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error cargando clasificados:", error);
+    return;
+  }
+
+  renderClassifieds(data || []);
+}
+
+function renderClassifieds(data) {
+  const nominal = $("classified-athletes");
+  const nonNominal = $("classified-places");
+
+  nominal.replaceChildren();
+  nonNominal.replaceChildren();
+
+  data.forEach(item => {
+    const athlete = item.deportistas_actualidad;
+
+    if (!athlete) return;
+
+    const card = element("article", "classified-card");
+
+    if (athlete.fotografia) {
+      const img = element("img");
+      img.src = safeLink(athlete.fotografia);
+      img.alt = athlete.nombre || "Deportista";
+      img.loading = "lazy";
+      card.append(img);
+    }
+
+    card.append(element("h3", "", athlete.nombre));
+    card.append(element("p", "", athlete.deporte));
+    card.append(element("p", "", athlete.modalidad || "—"));
+    card.append(element("p", "", athlete.tipo === "paralimpico"
+      ? "Paralímpico" : "Olímpico"));
+
+    card.append(element("p", "", item.competicion));
+
+    const isNonNominal =
+      item.estado?.toLowerCase() === "plaza no nominal";
+
+    card.append(element(
+      "span",
+      isNonNominal ? "status non-nominal" : "status",
+      item.estado
+    ));
+
+    if (item.fecha_clasificacion) {
+      card.append(element(
+        "p",
+        "",
+        new Date(item.fecha_clasificacion + "T00:00:00")
+          .toLocaleDateString("es-ES")
+      ));
+    }
+
+    if (item.fuente_url) {
+      const link = element("a", "read-more", "FUENTE OFICIAL →");
+      link.href = safeLink(item.fuente_url);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      card.append(link);
+    }
+
+    (isNonNominal ? nonNominal : nominal).append(card);
+  });
+
+  $("classified-count").textContent = data.filter(
+    item => item.estado?.toLowerCase() === "clasificado"
+  ).length;
+
+  $("places-count").textContent = data.filter(
+    item => item.estado?.toLowerCase() === "plaza no nominal"
+  ).length;
+}
