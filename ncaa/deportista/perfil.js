@@ -572,6 +572,11 @@ function renderProfile(athlete) {
   // CALENDARIO Y PRÓXIMAS COMPETICIONES
   // ==========================================
 
+  
+  // ==========================================
+  // CALENDARIO E HISTORIAL DE COMPETICIONES
+  // ==========================================
+
   let events = athlete.calendario;
 
   if (typeof events === "string") {
@@ -583,8 +588,6 @@ function renderProfile(athlete) {
   }
 
   if (Array.isArray(events)) {
-
-    // Fecha actual en formato local YYYY-MM-DD
     const now = new Date();
 
     const today =
@@ -592,80 +595,90 @@ function renderProfile(athlete) {
       String(now.getMonth() + 1).padStart(2, "0") + "-" +
       String(now.getDate()).padStart(2, "0");
 
-    // Mostrar solamente eventos de hoy o futuros
-    const upcomingEvents = events
+    const validEvents = events
       .filter(event => {
         if (!event || typeof event !== "object") return false;
-
-        const eventDate = event.fecha || event.date;
-
-        return eventDate && eventDate >= today;
+        return Boolean(event.fecha || event.date);
       })
       .sort((a, b) => {
         const dateA = a.fecha || a.date;
         const dateB = b.fecha || b.date;
-
         return dateA.localeCompare(dateB);
       });
 
+    const upcomingEvents = validEvents.filter(event =>
+      (event.fecha || event.date) >= today
+    );
+
+    const pastEvents = validEvents.filter(event =>
+      (event.fecha || event.date) < today
+    );
+
+    function renderCalendarEvent(section, event, past = false) {
+      const item = el(section, "div", "profile-calendar-item");
+
+      const eventDate = event.fecha || event.date;
+
+      el(item, "strong", "", formatSpanishDate(eventDate));
+
+      const eventName =
+        event.evento || event.nombre || event.event;
+
+      if (eventName) {
+        el(item, "span", "", eventName);
+      }
+
+      if (event.lugar) {
+        el(item, "span", "", event.lugar);
+      }
+
+      el(
+        item,
+        "span",
+        "",
+        event.estado || (past ? "Finalizado" : "Próximamente")
+      );
+
+      if (event.resultado || event.result) {
+        el(item, "span", "", event.resultado || event.result);
+      }
+
+      if (event.url) {
+        const link = el(item, "a", "", "Ver competición");
+        link.href = event.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+    }
+
     if (upcomingEvents.length) {
-
       const section = el(card, "section", "profile-section");
-
       el(section, "h2", "", "Próximas competiciones");
 
-      upcomingEvents.forEach(event => {
+      upcomingEvents.forEach(event =>
+        renderCalendarEvent(section, event, false)
+      );
+    }
 
-        const item = el(
-          section,
-          "div",
-          "profile-calendar-item"
-        );
-
-        const eventDate = event.fecha || event.date;
-
-        el(
-          item,
-          "strong",
-          "",
-          formatSpanishDate(eventDate)
-        );
-
-        const eventName =
-          event.evento || event.nombre || event.event;
-
-        if (eventName) {
-          el(item, "span", "", eventName);
-        }
-
-        if (event.estado) {
-          el(item, "span", "", event.estado);
-        }
-
-        if (event.resultado || event.result) {
-          el(
-            item,
-            "span",
-            "",
-            event.resultado || event.result
-          );
-        }
-
-      });
-
-    } else {
-
+    if (pastEvents.length) {
       const section = el(card, "section", "profile-section");
+      el(section, "h2", "", "Resultados e historial");
 
-      el(section, "h2", "", "Próximas competiciones");
+      pastEvents.slice().reverse().forEach(event =>
+        renderCalendarEvent(section, event, true)
+      );
+    }
+
+    if (!validEvents.length) {
+      const section = el(card, "section", "profile-section");
+      el(section, "h2", "", "Calendario y resultados");
 
       el(
         section,
         "p",
         "profile-biography",
-        "No hay competiciones programadas próximamente."
+        "Todavía no hay competiciones registradas."
       );
-
     }
   }
 
