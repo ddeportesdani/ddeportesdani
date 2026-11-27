@@ -520,62 +520,21 @@ function renderProfile(athlete) {
     el(section, "p", "profile-biography", athlete.biografia);
   }
 
+  
+  // ==========================================
   // ESTADÍSTICAS
+  // ==========================================
 
   const stats = normalizeStats(athlete.estadisticas);
 
-  const ignored = [
-    "temporada",
-    "deporte",
-    "universidad",
-    "division",
-    "nombre",
-    "apellido"
-  ];
-
-  const entries = Object.entries(stats).filter(([key, value]) =>
-    !ignored.includes(key.toLowerCase()) &&
-    value !== null &&
-    value !== undefined &&
-    value !== "" &&
-    ["string", "number", "boolean"].includes(typeof value)
+  const statsSection = el(
+    card,
+    "section",
+    "profile-section"
   );
 
-  if (entries.length) {
-    const section = el(card, "section", "profile-section");
+  renderStats(statsSection, stats, athlete);
 
-    el(section, "h2", "", "Estadísticas");
-
-    const season = athlete.temporada || stats.temporada;
-
-    if (season) {
-      el(section, "p", "profile-season", `Temporada ${season}`);
-    }
-
-    const grid = el(section, "div", "profile-stat-grid");
-
-    entries.forEach(([key, value]) => {
-      const stat = el(grid, "div", "profile-stat");
-
-      const isDate =
-        /fecha|date/i.test(key) &&
-        /^\d{4}-\d{2}-\d{2}/.test(String(value));
-
-      el(
-        stat,
-        "strong",
-        "",
-        isDate ? formatSpanishDate(value) : String(value)
-      );
-
-      el(
-        stat,
-        "span",
-        "",
-        statLabel(key, athlete.deporte)
-      );
-    });
-  }
 
   // GALERÍA
 
