@@ -1,29 +1,17 @@
 const SUPABASE_URL = "https://qizogdfgjkgzjhdzhnmc.supabase.co";
 const SUPABASE_KEY = "sb_publishable_lopHHwGv5NBOfIswGOlJ6Q_qvs2K9X3";
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const container = document.getElementById("profileContent");
 const athleteId = new URLSearchParams(location.search).get("id");
 
-// ==========================================
 // UTILIDADES
-// ==========================================
-
 function el(parent, tag, className, value) {
   const node = document.createElement(tag);
-
   if (className) node.className = className;
-
-  if (value !== undefined && value !== null) {
-    node.textContent = value;
-  }
-
+  if (value !== undefined && value !== null) node.textContent = value;
   parent.appendChild(node);
-
   return node;
 }
 
@@ -36,26 +24,16 @@ function validImage(url) {
   }
 }
 
-// ==========================================
-// FECHAS EN FORMATO ESPAÑOL
-// ==========================================
-
+// FECHAS
 function formatSpanishDate(value) {
   if (!value) return "";
-
   const text = String(value).trim();
-
   const match = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
 
-  if (match) {
-    return `${match[3]}/${match[2]}/${match[1]}`;
-  }
+  if (match) return `${match[3]}/${match[2]}/${match[1]}`;
 
   const date = new Date(text);
-
-  if (Number.isNaN(date.getTime())) {
-    return text;
-  }
+  if (Number.isNaN(date.getTime())) return text;
 
   return new Intl.DateTimeFormat("es-ES", {
     day: "2-digit",
@@ -65,10 +43,7 @@ function formatSpanishDate(value) {
   }).format(date);
 }
 
-// ==========================================
 // NORMALIZAR ESTADÍSTICAS JSONB
-// ==========================================
-
 function normalizeStats(value) {
   if (typeof value === "string") {
     try {
@@ -82,10 +57,7 @@ function normalizeStats(value) {
     return Object.assign(
       {},
       ...value.filter(
-        item =>
-          item &&
-          typeof item === "object" &&
-          !Array.isArray(item)
+        item => item && typeof item === "object" && !Array.isArray(item)
       )
     );
   }
@@ -93,10 +65,7 @@ function normalizeStats(value) {
   return value && typeof value === "object" ? value : {};
 }
 
-// ==========================================
 // TRADUCIR ESTADÍSTICAS
-// ==========================================
-
 function statLabel(key, sport) {
   const common = {
     games: "Partidos",
@@ -153,44 +122,31 @@ function statLabel(key, sport) {
   };
 
   const normalized = key.toLowerCase();
-
-  if (common[normalized]) {
-    return common[normalized];
-  }
+  if (common[normalized]) return common[normalized];
 
   const sportName = String(sport || "").toLowerCase();
 
-  if (
-    sportName.includes("baloncesto") ||
-    sportName.includes("basketball")
-  ) {
+  if (sportName.includes("baloncesto") || sportName.includes("basketball")) {
     if (normalized.includes("rebound")) return "Rebotes";
     if (normalized.includes("assist")) return "Asistencias";
     if (normalized.includes("point")) return "Puntos";
   }
 
-  if (
-    sportName.includes("futbol") ||
-    sportName.includes("soccer")
-  ) {
+  if (sportName.includes("futbol") || sportName.includes("soccer")) {
     if (normalized.includes("goal")) return "Goles";
     if (normalized.includes("assist")) return "Asistencias";
     if (normalized.includes("save")) return "Paradas";
   }
 
-  if (
-    sportName.includes("tenis") ||
-    sportName.includes("tennis")
-  ) {
+  if (sportName.includes("tenis") || sportName.includes("tennis")) {
     if (normalized.includes("ace")) return "Aces";
     if (normalized.includes("win")) return "Victorias";
   }
 
-  return key
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, letter => letter.toUpperCase());
+  return key.replace(/_/g, " ").replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
+// MOSTRAR ESTADÍSTICAS
 function renderStats(section, stats, athlete) {
   const sport = String(athlete.deporte || "").toLowerCase();
 
@@ -324,10 +280,14 @@ function renderStats(section, stats, athlete) {
     }
 
     if (stats.unidad || stats.piscina) {
-      el(section, "p", "profile-season", [stats.piscina, stats.unidad].filter(Boolean).join(" · "));
+      el(
+        section,
+        "p",
+        "profile-season",
+        [stats.piscina, stats.unidad].filter(Boolean).join(" · ")
+      );
     }
 
-    // Estructuras de marcas por tipo de piscina.
     const poolGroups = [
       ["Piscina de 25 metros (SCM)", ["piscina_25m", "mejores_marcas_scm", "mejores_marcas_25m"]],
       ["Piscina de 50 metros (LCM)", ["piscina_50m", "mejores_marcas_lcm", "mejores_marcas_50m"]],
@@ -338,18 +298,19 @@ function renderStats(section, stats, athlete) {
 
     poolGroups.forEach(([title, keys]) => {
       const combined = {};
+
       keys.forEach(key => {
         const value = stats[key];
+
         if (value && typeof value === "object" && !Array.isArray(value)) {
           Object.assign(combined, value);
           renderedKeys.add(key);
         }
       });
+
       showMarks(title, combined);
     });
-
-    // Otros formatos que ya existen en los registros de Supabase.
-    const otherMarkKeys = [
+        const otherMarkKeys = [
       ["Marcas registradas", "pruebas"],
       ["Mejores marcas personales", "mejores_marcas_personales"],
       ["Mejores marcas", "mejores_marcas"],
@@ -364,12 +325,10 @@ function renderStats(section, stats, athlete) {
       renderedKeys.add(key);
     });
 
-    // Resultados recientes en formato de objeto.
     if (stats.resultados_recientes && typeof stats.resultados_recientes === "object") {
       showRecentResult("Resultados recientes", stats.resultados_recientes);
     }
 
-    // Resultados de temporada, que pueden venir como objeto plano.
     Object.entries(stats).forEach(([key, value]) => {
       if (!/^resultados_\d{4}[_-]\d{2,4}$/i.test(key)) return;
       if (!value || typeof value !== "object" || Array.isArray(value)) return;
@@ -380,17 +339,18 @@ function renderStats(section, stats, athlete) {
       );
     });
 
-    // Logros y palmarés.
     const achievements = stats.logros;
+
     if (Array.isArray(achievements) && achievements.length) {
       const group = el(section, "div", "profile-swim-group");
       el(group, "h3", "profile-swim-title", "Palmarés y logros");
+
       const list = el(group, "ul", "profile-achievements");
       achievements.forEach(achievement => el(list, "li", "", String(achievement)));
     }
 
-    // Historial de competiciones.
     const history = stats.historial_competiciones;
+
     if (Array.isArray(history) && history.length) {
       const group = el(section, "div", "profile-swim-group");
       el(group, "h3", "profile-swim-title", "Historial de competiciones");
@@ -423,7 +383,6 @@ function renderStats(section, stats, athlete) {
     return;
   }
 
-  // Estadísticas generales para el resto de deportes.
   const ignored = [
     "temporada", "deporte", "universidad", "division", "nombre", "apellido"
   ];
@@ -446,51 +405,40 @@ function renderStats(section, stats, athlete) {
     });
   }
 }
-// ==========================================
-// ERRORES
-// ==========================================
 
+// ERRORES
 function showError(title, message) {
   if (!container) return;
 
   container.replaceChildren();
 
   const box = el(container, "div", "profile-error");
-
   el(box, "div", "empty-icon", "🇪🇸");
   el(box, "h2", "", title);
   el(box, "p", "", message);
 }
 
-// ==========================================
 // CONSTRUIR PERFIL
-// ==========================================
-
 function renderProfile(athlete) {
   container.replaceChildren();
 
   const card = el(container, "article", "profile-card");
-
-  // CABECERA
-
   const cover = el(card, "section", "profile-cover");
 
   if (validImage(athlete.foto_url)) {
     const image = document.createElement("img");
-
     image.className = "profile-main-photo";
     image.src = athlete.foto_url;
     image.alt = `Fotografía de ${athlete.nombre || ""} ${athlete.apellido || ""}`;
     image.onerror = () => image.remove();
-
     cover.appendChild(image);
   }
 
   const heading = el(cover, "div", "profile-heading");
 
   const fullName =
-    `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim()
-    || "Deportista español";
+    `${athlete.nombre || ""} ${athlete.apellido || ""}`.trim() ||
+    "Deportista español";
 
   el(heading, "div", "eyebrow", "DEPORTISTA ESPAÑOL · NCAA");
   el(heading, "h1", "profile-name", fullName);
@@ -513,8 +461,6 @@ function renderProfile(athlete) {
     el(tags, "span", "profile-tag", tag);
   });
 
-  // INFORMACIÓN DEPORTIVA
-
   const fields = [
     ["Deporte", athlete.deporte],
     ["Universidad", athlete.universidad],
@@ -527,46 +473,28 @@ function renderProfile(athlete) {
 
   if (fields.length) {
     const section = el(card, "section", "profile-section");
-
     el(section, "h2", "", "Información deportiva");
 
     const grid = el(section, "div", "profile-detail-grid");
 
     fields.forEach(([label, value]) => {
       const item = el(grid, "div", "profile-detail-item");
-
       el(item, "span", "", label);
       el(item, "strong", "", value);
     });
   }
 
-  // BIOGRAFÍA
-
   if (athlete.biografia) {
     const section = el(card, "section", "profile-section");
-
     el(section, "h2", "", "Biografía");
     el(section, "p", "profile-biography", athlete.biografia);
   }
 
-  
-  // ==========================================
-  // ESTADÍSTICAS
-  // ==========================================
-
   const stats = normalizeStats(athlete.estadisticas);
-
-  const statsSection = el(
-    card,
-    "section",
-    "profile-section"
-  );
-
+  const statsSection = el(card, "section", "profile-section");
   renderStats(statsSection, stats, athlete);
 
-
   // GALERÍA
-
   const photos = [
     athlete.foto_url,
     athlete.foto_competicion_url
@@ -576,36 +504,23 @@ function renderProfile(athlete) {
 
   if (photos.length) {
     const section = el(card, "section", "profile-section");
-
     el(section, "h2", "", "Galería de fotografías");
 
     const gallery = el(section, "div", "profile-gallery");
 
     photos.forEach((url, index) => {
       const image = document.createElement("img");
-
       image.src = url;
       image.alt = index === 0
         ? "Fotografía del deportista"
         : "Fotografía de competición";
-
       image.loading = "lazy";
       image.onerror = () => image.remove();
-
       gallery.appendChild(image);
     });
   }
 
-  
-  // ==========================================
-  // CALENDARIO Y PRÓXIMAS COMPETICIONES
-  // ==========================================
-
-  
-  // ==========================================
-  // CALENDARIO E HISTORIAL DE COMPETICIONES
-  // ==========================================
-
+  // CALENDARIO E HISTORIAL
   let events = athlete.calendario;
 
   if (typeof events === "string") {
@@ -629,8 +544,10 @@ function renderProfile(athlete) {
 
     events.forEach(event => {
       if (!event || typeof event !== "object") return;
+
       const signature = JSON.stringify(event);
       if (seenEvents.has(signature)) return;
+
       seenEvents.add(signature);
       uniqueEvents.push(event);
     });
@@ -653,7 +570,6 @@ function renderProfile(athlete) {
 
     function renderCalendarEvent(section, event, past = false) {
       const item = el(section, "div", "profile-calendar-item");
-
       const eventDate = event.fecha || event.date;
 
       el(item, "strong", "", formatSpanishDate(eventDate));
@@ -661,13 +577,8 @@ function renderProfile(athlete) {
       const eventName =
         event.competicion || event.evento || event.nombre || event.event;
 
-      if (eventName) {
-        el(item, "span", "", eventName);
-      }
-
-      if (event.lugar) {
-        el(item, "span", "", event.lugar);
-      }
+      if (eventName) el(item, "span", "", eventName);
+      if (event.lugar) el(item, "span", "", event.lugar);
 
       el(
         item,
@@ -680,17 +591,24 @@ function renderProfile(athlete) {
         el(item, "span", "", event.resultado || event.result);
       }
 
-      // Algunos registros guardan los resultados como objeto JSON anidado.
-      if (event.resultados && typeof event.resultados === "object" &&
-          !Array.isArray(event.resultados)) {
+      if (
+        event.resultados &&
+        typeof event.resultados === "object" &&
+        !Array.isArray(event.resultados)
+      ) {
         const resultGrid = el(item, "div", "profile-stat-grid");
 
         Object.entries(event.resultados).forEach(([key, value]) => {
-          if (value === null || value === undefined || value === "" ||
-              typeof value === "object") return;
+          if (
+            value === null ||
+            value === undefined ||
+            value === "" ||
+            typeof value === "object"
+          ) return;
 
           const resultItem = el(resultGrid, "div", "profile-stat");
           el(resultItem, "strong", "", String(value));
+
           el(
             resultItem,
             "span",
@@ -709,8 +627,7 @@ function renderProfile(athlete) {
         link.rel = "noopener noreferrer";
       }
     }
-
-    if (upcomingEvents.length) {
+        if (upcomingEvents.length) {
       const section = el(card, "section", "profile-section");
       el(section, "h2", "", "Próximas competiciones");
 
@@ -741,15 +658,11 @@ function renderProfile(athlete) {
     }
   }
 
-
   // COMPARTIR
-
   const share = el(card, "div", "profile-share");
-
   el(share, "span", "", "Comparte este perfil.");
 
   const button = el(share, "button", "", "COMPARTIR PERFIL");
-
   button.type = "button";
 
   button.addEventListener("click", async () => {
@@ -774,10 +687,7 @@ function renderProfile(athlete) {
   });
 }
 
-// ==========================================
 // CARGAR DATOS DE SUPABASE
-// ==========================================
-
 async function loadProfile() {
   if (!container) {
     console.error("No existe el elemento profileContent.");
@@ -852,8 +762,5 @@ async function loadProfile() {
   }
 }
 
-// ==========================================
 // INICIAR PERFIL
-// ==========================================
-
 loadProfile();
