@@ -383,7 +383,10 @@ function renderProfile(athlete) {
     });
   }
 
-  // CALENDARIO
+  
+  // ==========================================
+  // CALENDARIO Y PRÓXIMAS COMPETICIONES
+  // ==========================================
 
   let events = athlete.calendario;
 
@@ -395,46 +398,93 @@ function renderProfile(athlete) {
     }
   }
 
-  if (Array.isArray(events) && events.length) {
-    const section = el(card, "section", "profile-section");
+  if (Array.isArray(events)) {
 
-    el(section, "h2", "", "Calendario y resultados");
+    // Fecha actual en formato local YYYY-MM-DD
+    const now = new Date();
 
-    events.forEach(event => {
-      if (!event || typeof event !== "object") return;
+    const today =
+      now.getFullYear() + "-" +
+      String(now.getMonth() + 1).padStart(2, "0") + "-" +
+      String(now.getDate()).padStart(2, "0");
 
-      const item = el(section, "div", "profile-calendar-item");
+    // Mostrar solamente eventos de hoy o futuros
+    const upcomingEvents = events
+      .filter(event => {
+        if (!event || typeof event !== "object") return false;
 
-      const eventDate = event.fecha || event.date;
+        const eventDate = event.fecha || event.date;
 
-      if (eventDate) {
+        return eventDate && eventDate >= today;
+      })
+      .sort((a, b) => {
+        const dateA = a.fecha || a.date;
+        const dateB = b.fecha || b.date;
+
+        return dateA.localeCompare(dateB);
+      });
+
+    if (upcomingEvents.length) {
+
+      const section = el(card, "section", "profile-section");
+
+      el(section, "h2", "", "Próximas competiciones");
+
+      upcomingEvents.forEach(event => {
+
+        const item = el(
+          section,
+          "div",
+          "profile-calendar-item"
+        );
+
+        const eventDate = event.fecha || event.date;
+
         el(
           item,
           "strong",
           "",
           formatSpanishDate(eventDate)
         );
-      }
 
-      if (event.evento || event.nombre || event.event) {
-        el(
-          item,
-          "span",
-          "",
-          event.evento || event.nombre || event.event
-        );
-      }
+        const eventName =
+          event.evento || event.nombre || event.event;
 
-      if (event.resultado || event.result) {
-        el(
-          item,
-          "span",
-          "",
-          event.resultado || event.result
-        );
-      }
-    });
+        if (eventName) {
+          el(item, "span", "", eventName);
+        }
+
+        if (event.estado) {
+          el(item, "span", "", event.estado);
+        }
+
+        if (event.resultado || event.result) {
+          el(
+            item,
+            "span",
+            "",
+            event.resultado || event.result
+          );
+        }
+
+      });
+
+    } else {
+
+      const section = el(card, "section", "profile-section");
+
+      el(section, "h2", "", "Próximas competiciones");
+
+      el(
+        section,
+        "p",
+        "profile-biography",
+        "No hay competiciones programadas próximamente."
+      );
+
+    }
   }
+
 
   // COMPARTIR
 
