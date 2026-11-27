@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="Actualidad deportiva española. Noticias, clasificados olímpicos y paralímpicos, mínimas y sistemas de clasificación.">
+<meta name="description" content="Actualidad deportiva española. Noticias, deportistas clasificados y sistemas de clasificación olímpicos y paralímpicos.">
 
 <title>Actualidad Deportiva | DDeportes Dani</title>
 
@@ -95,7 +95,7 @@ nav a:hover {
   color: var(--lightblue);
 }
 
-/* NUEVA CABECERA CON IMAGEN DE FONDO */
+/* CABECERA PRINCIPAL */
 
 .hero {
   background:
@@ -175,9 +175,11 @@ nav a:hover {
   color: white;
 }
 
+/* ACCESOS RÁPIDOS */
+
 .quick {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-top: -35px;
   position: relative;
@@ -233,6 +235,8 @@ section {
   color: var(--muted);
 }
 
+/* NOTICIAS */
+
 .news-section {
   background: white;
 }
@@ -253,13 +257,16 @@ section {
 }
 
 .news-image {
-  min-height: 145px;
-  background: linear-gradient(130deg, #071b38, #2875bd);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 42px;
+  height: 190px;
+  min-height: 190px;
+  overflow: hidden;
+}
+
+.news-image img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
 }
 
 .news-content,
@@ -295,6 +302,8 @@ section {
   font-weight: 900;
   margin-top: 15px;
 }
+
+/* CLASIFICADOS */
 
 .dark-section {
   background: var(--bg);
@@ -441,6 +450,8 @@ tbody tr:hover {
   margin: 7px 0;
 }
 
+/* FUENTES OFICIALES */
+
 .sources {
   display: flex;
   gap: 12px;
@@ -460,40 +471,6 @@ tbody tr:hover {
   color: #2875bd;
 }
 
-.minima-card {
-  background: white !important;
-  border: 1px solid #e1e8f0;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 5px 18px rgba(7, 27, 56, .05);
-}
-
-.minima-card .data-content {
-  padding: 24px;
-}
-
-.minima-card h3 {
-  color: #071b38 !important;
-  margin: 12px 0;
-}
-
-.minima-card p {
-  color: #52657b !important;
-  margin: 8px 0;
-  font-size: 13px;
-}
-
-.minima-mark {
-  color: #164878 !important;
-  background: #e8f2fc;
-  border-radius: 8px;
-  padding: 15px;
-  margin: 15px 0;
-  font-size: 25px;
-  font-weight: 900;
-  overflow-wrap: anywhere;
-}
-
 .empty {
   color: var(--muted);
   padding: 25px;
@@ -505,6 +482,8 @@ tbody tr:hover {
   color: var(--muted);
   padding: 20px;
 }
+
+/* PIE DE PÁGINA */
 
 footer {
   background: var(--navy);
@@ -536,6 +515,8 @@ footer p {
   color: #26364a !important;
   -webkit-text-fill-color: #26364a !important;
 }
+
+/* RESPONSIVE */
 
 @media(max-width: 800px) {
   .quick {
@@ -585,20 +566,6 @@ footer p {
     grid-template-columns: 1fr;
   }
 }
-  
-.news-image {
-  height: 190px;
-  min-height: 190px;
-  overflow: hidden;
-}
-
-.news-image img {
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
-  display: block;
-}
-
 </style>
 </head>
 
@@ -614,33 +581,39 @@ footer p {
     <a href="/">Inicio</a>
     <a href="#noticias">Actualidad</a>
     <a href="#clasificados">Clasificados</a>
-    <a href="#minimas">Mínimas</a>
     <a href="#sistemas">Clasificación</a>
   </nav>
 </header>
 
 <main>
 
+<!-- PORTADA -->
+
 <section class="hero">
   <div class="container">
+
     <span class="eyebrow">DEPORTE · COMUNICACIÓN · ACTUALIDAD</span>
 
     <h1>ACTUALIDAD<br><span>DEPORTIVA</span></h1>
 
     <p>
       El deporte español tiene su espacio.
-      Noticias, protagonistas, deportistas clasificados,
-      mínimas y sistemas de clasificación.
+      Noticias, protagonistas, deportistas clasificados
+      y sistemas de clasificación.
     </p>
 
     <div class="hero-buttons">
       <a class="btn btn-primary" href="#noticias">VER ACTUALIDAD →</a>
       <a class="btn btn-outline" href="#clasificados">CONSULTAR CLASIFICADOS</a>
     </div>
+
   </div>
 </section>
 
+<!-- ACCESOS RÁPIDOS -->
+
 <div class="container quick">
+
   <a href="#noticias">
     <span class="number">01 / ACTUALIDAD</span>
     <h3>Noticias deportivas</h3>
@@ -653,67 +626,83 @@ footer p {
     <p>Seguimiento de las plazas españolas.</p>
   </a>
 
-  <a href="#minimas">
-    <span class="number">03 / MARCAS</span>
-    <h3>Mínimas y marcas</h3>
-    <p>Requisitos para competir.</p>
-  </a>
-
   <a href="#sistemas">
-    <span class="number">04 / COMPETICIONES</span>
+    <span class="number">03 / COMPETICIONES</span>
     <h3>Sistemas de clasificación</h3>
     <p>Cómo conseguir una plaza.</p>
   </a>
+
 </div>
 
+<!-- ACTUALIDAD DEPORTIVA -->
+
 <section class="news-section" id="noticias">
+
   <div class="container">
+
     <div class="section-heading">
       <span class="eyebrow">INFORMACIÓN DEPORTIVA</span>
       <h2>Actualidad deportiva</h2>
       <p>Noticias y novedades del deporte español.</p>
     </div>
 
-    
-<div class="news-grid" id="news">
+    <div class="news-grid" id="news">
 
-  <article class="news-card">
-    <div class="news-image">
-      <img src="deporte-espanol.jpg" alt="Deporte español">
-    </div>
-    <div class="news-content">
-      <span class="category">Deporte español</span>
-      <h3>Próximamente, toda la actualidad deportiva</h3>
-      <p>Un espacio para seguir las noticias, resultados y protagonistas de nuestras disciplinas deportivas.</p>
-    </div>
-  </article>
+      <article class="news-card">
+        <div class="news-image">
+          <img src="deporte-espanol.jpg" alt="Deporte español">
+        </div>
 
-  <article class="news-card">
-    <div class="news-image">
-      <img src="grandes-citas.jpg" alt="Grandes citas deportivas">
-    </div>
-    <div class="news-content">
-      <span class="category">Camino a las grandes citas</span>
-      <h3>El camino hacia los grandes campeonatos</h3>
-      <p>Seguimiento de los procesos de clasificación y de los deportistas españoles.</p>
-    </div>
-  </article>
+        <div class="news-content">
+          <span class="category">Deporte español</span>
+          <h3>Próximamente, toda la actualidad deportiva</h3>
+          <p>
+            Un espacio para seguir las noticias, resultados
+            y protagonistas de nuestras disciplinas deportivas.
+          </p>
+        </div>
+      </article>
 
-  <article class="news-card">
-    <div class="news-image">
-      <img src="deporte-paralimpico.jpg" alt="Deporte paralímpico">
-    </div>
-    <div class="news-content">
-      <span class="category">Deporte paralímpico</span>
-      <h3>El deporte paralímpico también es protagonista</h3>
-      <p>Clasificación, reglamentos, modalidades y protagonistas del deporte paralímpico.</p>
-    </div>
-  </article>
+      <article class="news-card">
+        <div class="news-image">
+          <img src="grandes-citas.jpg" alt="Grandes citas deportivas">
+        </div>
 
-</div>
+        <div class="news-content">
+          <span class="category">Camino a las grandes citas</span>
+          <h3>El camino hacia los grandes campeonatos</h3>
+          <p>
+            Seguimiento de los procesos de clasificación
+            y de los deportistas españoles.
+          </p>
+        </div>
+      </article>
 
+      <article class="news-card">
+        <div class="news-image">
+          <img src="deporte-paralimpico.jpg" alt="Deporte paralímpico">
+        </div>
+
+        <div class="news-content">
+          <span class="category">Deporte paralímpico</span>
+          <h3>El deporte paralímpico también es protagonista</h3>
+          <p>
+            Clasificación, reglamentos, modalidades
+            y protagonistas del deporte paralímpico.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- DEPORTISTAS CLASIFICADOS -->
 
 <section class="dark-section" id="clasificados">
+
   <div class="container">
 
     <div class="section-heading">
@@ -723,6 +712,7 @@ footer p {
     </div>
 
     <div class="classified-stats">
+
       <div>
         <strong id="classified-count">0</strong>
         <span>Clasificados nominales</span>
@@ -732,6 +722,7 @@ footer p {
         <strong id="places-count">0</strong>
         <span>Plazas no nominales</span>
       </div>
+
     </div>
 
     <h3>Deportistas clasificados</h3>
@@ -741,6 +732,7 @@ footer p {
     <div id="classified-places" class="classified-grid"></div>
 
     <div class="filters">
+
       <select id="sport-filter">
         <option value="">Todos los deportes</option>
       </select>
@@ -750,9 +742,11 @@ footer p {
         <option value="olimpico">Olímpico</option>
         <option value="paralimpico">Paralímpico</option>
       </select>
+
     </div>
 
     <div class="table-wrap">
+
       <table>
         <thead>
           <tr>
@@ -769,39 +763,33 @@ footer p {
             <td colspan="5">Cargando clasificados...</td>
           </tr>
         </tbody>
+
       </table>
+
     </div>
 
     <div class="notice">
-      Las plazas y clasificaciones se publicarán tras contrastarlas con los organismos y federaciones oficiales.
+      Las plazas y clasificaciones se publicarán tras contrastarlas
+      con los organismos y federaciones oficiales.
     </div>
 
   </div>
+
 </section>
 
-<section id="minimas">
-  <div class="container">
-
-    <div class="section-heading">
-      <span class="eyebrow">MARCAS Y REQUISITOS</span>
-      <h2>Mínimas y marcas</h2>
-      <p>Consulta las marcas exigidas para acceder a campeonatos.</p>
-    </div>
-
-    <div class="data-grid" id="minimums">
-      <p class="loading">Cargando mínimas...</p>
-    </div>
-
-  </div>
-</section>
+<!-- SISTEMAS DE CLASIFICACIÓN -->
 
 <section class="dark-section" id="sistemas">
+
   <div class="container">
 
     <div class="section-heading">
       <span class="eyebrow">CÓMO CONSEGUIR UNA PLAZA</span>
       <h2>Sistemas de clasificación</h2>
-      <p>Consulta los criterios oficiales de acceso a las grandes competiciones.</p>
+      <p>
+        Consulta los criterios oficiales de acceso
+        a las grandes competiciones.
+      </p>
     </div>
 
     <div class="data-grid" id="systems">
@@ -810,14 +798,25 @@ footer p {
         <div class="data-content">
           <h3>Clasificación olímpica</h3>
           <p>Vías de clasificación, rankings, cuotas y requisitos.</p>
-<a class="more" href="https://www.olympics.com/ioc/documents/olympic-games/la28/" target="_blank" rel="noopener">CONSULTAR COI →</a>        </div>
+          <a class="more"
+             href="https://www.olympics.com/ioc/documents/olympic-games/la28/"
+             target="_blank"
+             rel="noopener">
+             CONSULTAR COI →
+          </a>
+        </div>
       </article>
 
       <article class="data-card">
         <div class="data-content">
           <h3>Clasificación paralímpica</h3>
           <p>Clases deportivas, criterios y procesos de clasificación.</p>
-          <a class="more" href="https://www.paralympic.org/" target="_blank" rel="noopener">CONSULTAR IPC →</a>
+          <a class="more"
+             href="https://www.paralympic.org/"
+             target="_blank"
+             rel="noopener">
+             CONSULTAR IPC →
+          </a>
         </div>
       </article>
 
@@ -825,15 +824,25 @@ footer p {
         <div class="data-content">
           <h3>Selección española</h3>
           <p>Criterios de selección de las federaciones nacionales.</p>
-          <a class="more" href="https://www.csd.gob.es/" target="_blank" rel="noopener">CONSULTAR CSD →</a>
+          <a class="more"
+             href="https://www.csd.gob.es/"
+             target="_blank"
+             rel="noopener">
+             CONSULTAR CSD →
+          </a>
         </div>
       </article>
 
     </div>
+
   </div>
+
 </section>
 
+<!-- FUENTES OFICIALES -->
+
 <section>
+
   <div class="container">
 
     <div class="section-heading">
@@ -843,17 +852,37 @@ footer p {
     </div>
 
     <div class="sources" id="sources">
-      <a href="https://www.coe.es/" target="_blank" rel="noopener">Comité Olímpico Español ↗</a>
-      <a href="https://www.paralimpicos.es/" target="_blank" rel="noopener">Comité Paralímpico Español ↗</a>
-      <a href="https://www.csd.gob.es/" target="_blank" rel="noopener">Consejo Superior de Deportes ↗</a>
+
+      <a href="https://www.coe.es/"
+         target="_blank"
+         rel="noopener">
+         Comité Olímpico Español ↗
+      </a>
+
+      <a href="https://www.paralimpicos.es/"
+         target="_blank"
+         rel="noopener">
+         Comité Paralímpico Español ↗
+      </a>
+
+      <a href="https://www.csd.gob.es/"
+         target="_blank"
+         rel="noopener">
+         Consejo Superior de Deportes ↗
+      </a>
+
     </div>
 
   </div>
+
 </section>
 
 </main>
 
+<!-- PIE DE PÁGINA -->
+
 <footer>
+
   <a class="logo" href="/" style="justify-content:center">
     <img src="../logo.jpg" alt="">
     <span>DDEPORTES <strong>DANI</strong></span>
@@ -861,7 +890,10 @@ footer p {
 
   <p>Actualidad Deportiva · Deporte español</p>
   <p><a href="/">Volver a la página principal</a></p>
+
 </footer>
+
+<!-- CONEXIÓN Y FUNCIONALIDAD -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="actualidad.js"></script>
