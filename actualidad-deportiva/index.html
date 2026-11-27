@@ -95,8 +95,17 @@ nav a:hover {
   color: var(--lightblue);
 }
 
+/* NUEVA CABECERA CON IMAGEN DE FONDO */
+
 .hero {
-  background: linear-gradient(115deg, #071b38, #164878);
+  background:
+    linear-gradient(
+      115deg,
+      rgba(7, 27, 56, 0.76),
+      rgba(7, 27, 56, 0.84)
+    ),
+    url('/portada-deportes.jpg') center center / cover no-repeat;
+
   color: white;
   padding: 90px 0 105px;
   position: relative;
@@ -113,6 +122,7 @@ nav a:hover {
   border-radius: 50%;
   right: -100px;
   top: -100px;
+  pointer-events: none;
 }
 
 .eyebrow {
@@ -556,6 +566,7 @@ footer p {
 
   .hero {
     padding: 65px 0 80px;
+    background-position: center center;
   }
 
   section {
