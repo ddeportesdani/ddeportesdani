@@ -192,6 +192,231 @@ function statLabel(key, sport) {
     .replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
+function renderStats(section, stats, athlete) {
+  const sport = String(athlete.deporte || "").toLowerCase();
+
+  const isSwimming =
+    sport.includes("natación") ||
+    sport.includes("natacion") ||
+    sport.includes("swimming") ||
+    stats.piscina_25m ||
+    stats.piscina_50m ||
+    stats.piscina_yardas;
+
+  const labels = {
+    "50_libre": "50 libre",
+    "100_libre": "100 libre",
+    "200_libre": "200 libre",
+    "400_libre": "400 libre",
+    "800_libre": "800 libre",
+    "1500_libre": "1500 libre",
+    "50_mariposa": "50 mariposa",
+    "100_mariposa": "100 mariposa",
+    "200_mariposa": "200 mariposa",
+    "50_espalda": "50 espalda",
+    "100_espalda": "100 espalda",
+    "200_espalda": "200 espalda",
+    "50_braza": "50 braza",
+    "100_braza": "100 braza",
+    "200_braza": "200 braza",
+    "100_estilos": "100 estilos",
+    "200_estilos": "200 estilos",
+    "400_estilos": "400 estilos"
+  };
+
+  function showMarks(title, marks) {
+    if (!marks || typeof marks !== "object" ||
+        Array.isArray(marks)) return;
+
+    const validMarks = Object.entries(marks).filter(
+      ([, value]) =>
+        value !== null &&
+        value !== undefined &&
+        value !== ""
+    );
+
+    if (!validMarks.length) return;
+
+    const group = el(section, "div", "profile-swim-group");
+
+    el(group, "h3", "profile-swim-title", title);
+
+    const grid = el(group, "div", "profile-stat-grid");
+
+    validMarks.forEach(([key, value]) => {
+      const item = el(grid, "div", "profile-stat");
+
+      el(
+        item,
+        "strong",
+        "",
+        String(value)
+      );
+
+      el(
+        item,
+        "span",
+        "",
+        labels[key] ||
+        key.replace(/_/g, " ")
+      );
+    });
+  }
+
+  if (isSwimming) {
+    el(section, "h2", "", "Marcas y estadísticas");
+
+    if (stats.temporada || athlete.temporada) {
+      el(
+        section,
+        "p",
+        "profile-season",
+        `Temporada ${stats.temporada || athlete.temporada}`
+      );
+    }
+
+    showMarks("Piscina de 25 metros (SCM)", stats.piscina_25m);
+    showMarks("Piscina de 50 metros (LCM)", stats.piscina_50m);
+    showMarks("Piscina de yardas (SCY)", stats.piscina_yardas);
+
+    showMarks("Mejores marcas personales (SCY)", stats.marcas_personales_scy);
+    showMarks("Mejores marcas de temporada", stats.mejoras_temporada);
+    showMarks("Mejores marcas 2025-2026", stats.mejoras_marcas_2025_26);
+
+    const recent = stats.resultados_recientes;
+
+    if (recent && typeof recent === "object") {
+      const group = el(section, "div", "profile-swim-group");
+
+      el(group, "h3", "profile-swim-title", "Resultados recientes");
+
+      if (recent.competicion) {
+        el(group, "p", "profile-biography", recent.competicion);
+      }
+
+      if (recent.fecha) {
+        el(
+          group,
+          "p",
+          "profile-season",
+          formatSpanishDate(recent.fecha)
+        );
+      }
+
+      if (recent.piscina) {
+        el(group, "p", "", recent.piscina);
+      }
+
+      const results = Object.entries(recent).filter(
+        ([key, value]) =>
+          !["fecha", "competicion", "piscina"].includes(key) &&
+          value !== null &&
+          value !== undefined &&
+          typeof value !== "object"
+      );
+
+      const grid = el(group, "div", "profile-stat-grid");
+
+      results.forEach(([key, value]) => {
+        const item = el(grid, "div", "profile-stat");
+
+        el(item, "strong", "", String(value));
+        el(item, "span", "", labels[key] || key.replace(/_/g, " "));
+      });
+    }
+
+    const achievements = stats.logros;
+
+    if (Array.isArray(achievements) && achievements.length) {
+      const group = el(section, "div", "profile-swim-group");
+
+      el(group, "h3", "profile-swim-title", "Palmarés y logros");
+
+      const list = el(group, "ul", "profile-achievements");
+
+      achievements.forEach(achievement => {
+        el(list, "li", "", String(achievement));
+      });
+    }
+
+    const history = stats.historial_competiciones;
+
+    if (Array.isArray(history) && history.length) {
+      const group = el(section, "div", "profile-swim-group");
+
+      el(group, "h3", "profile-swim-title", "Historial de competiciones");
+
+      history.forEach(meet => {
+        if (!meet || typeof meet !== "object") return;
+
+        const item = el(group, "div", "profile-calendar-item");
+
+        el(
+          item,
+          "strong",
+          "",
+          meet.competicion || "Competición"
+        );
+
+        if (meet.fecha || meet.temporada) {
+          el(
+            item,
+            "span",
+            "",
+            meet.fecha
+              ? formatSpanishDate(meet.fecha)
+              : `Temporada ${meet.temporada}`
+          );
+        }
+
+        if (meet.piscina) {
+          el(item, "span", "", meet.piscina);
+        }
+
+        if (meet.resultados) {
+          showMarks(
+            meet.competicion || "Resultados",
+            meet.resultados
+          );
+        }
+      });
+    }
+
+    return;
+  }
+
+  // Estadísticas generales para el resto de deportes
+  const ignored = [
+    "temporada",
+    "deporte",
+    "universidad",
+    "division",
+    "nombre",
+    "apellido"
+  ];
+
+  const entries = Object.entries(stats).filter(
+    ([key, value]) =>
+      !ignored.includes(key.toLowerCase()) &&
+      value !== null &&
+      value !== undefined &&
+      ["string", "number", "boolean"].includes(typeof value)
+  );
+
+  if (entries.length) {
+    el(section, "h2", "", "Estadísticas");
+
+    const grid = el(section, "div", "profile-stat-grid");
+
+    entries.forEach(([key, value]) => {
+      const item = el(grid, "div", "profile-stat");
+
+      el(item, "strong", "", String(value));
+      el(item, "span", "", statLabel(key, athlete.deporte));
+    });
+  }
+}
+
 // ==========================================
 // ERRORES
 // ==========================================
