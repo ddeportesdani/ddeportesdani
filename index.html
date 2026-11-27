@@ -782,6 +782,84 @@ footer p { font-size: 13px; margin-top: 8px; }
   }
 }
 
+/* NUEVA PORTADA EDITORIAL */
+
+.hero-editorial {
+  padding: 0;
+  background: #ffffff;
+}
+
+.hero-image {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 48vw, 570px);
+  overflow: hidden;
+  background: #071b38;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-image-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 30px 8%;
+  background: linear-gradient(
+    transparent 55%,
+    rgba(7,27,56,.65)
+  );
+}
+
+.hero-image-overlay span {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hero-editorial-content {
+  max-width: 1000px;
+  margin: auto;
+  padding: 65px 25px 75px;
+  text-align: center;
+}
+
+.hero-editorial-content h1 {
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.15;
+  color: #071b38;
+  margin: 20px auto;
+}
+
+.hero-editorial-content h1 span {
+  display: block;
+  color: #2875bd;
+}
+
+.hero-editorial-content p {
+  max-width: 680px;
+  margin: 0 auto 28px;
+  font-size: 17px;
+  color: #687487;
+}
+
+@media(max-width: 600px) {
+  .hero-image {
+    height: 300px;
+  }
+
+  .hero-editorial-content {
+    padding: 45px 22px 55px;
+  }
+}
+
 </style>
 </head>
 
